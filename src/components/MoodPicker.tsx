@@ -1,8 +1,7 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-// import _ from 'lodash';
-//я бы хотел использовать ... <Text key={_.uniqueId("option.emoji_")} style={styles.moodText}> ...
+import { AppContext } from '../App.provider.tsx';
 import { MoodOptionType } from '../types.ts';
 import { theme } from '../theme.ts';
 
@@ -14,19 +13,17 @@ const moodOptions: MoodOptionType[] = [
   { emoji: '😤', description: 'frustrated' },
 ];
 
-type MoodPickerProps = {
-  onSelect: (mood: MoodOptionType) => void;
-};
-
-export const MoodPicker: React.FC<MoodPickerProps> = ({ onSelect }) => {
+export const MoodPicker: React.FC = () => {
   const [selectedMood, setSelectedMood] = useState<MoodOptionType>();
+
+  const { handleSelectMood } = useContext(AppContext);
 
   const handleSelect = React.useCallback(() => {
     if (selectedMood) {
-      onSelect(selectedMood);
+      handleSelectMood(selectedMood);
       setSelectedMood(undefined);
     }
-  }, [onSelect, selectedMood]);
+  }, [handleSelectMood, selectedMood]);
 
   return (
     <View style={styles.container}>
