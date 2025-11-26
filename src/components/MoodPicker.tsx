@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
   container: {
     borderWidth: 2,
     borderColor: theme.colorPurple,
+    backgroundColor: 'rgba(0,0,0,0.2)',
     margin: 10,
     borderRadius: 10,
     padding: 20,
@@ -113,6 +114,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   heading: {
+    color: theme.colorWhite,
     fontSize: 20,
     fontWeight: 'bold',
     letterSpacing: 1,
