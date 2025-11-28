@@ -1,11 +1,11 @@
 import React from 'react';
-import { useState, useContext } from 'react';
+import { useState, useContext, useCallback } from 'react';
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import { AppContext } from '../App.provider.tsx';
 import { MoodOptionType } from '../types.ts';
 import { theme } from '../theme.ts';
 
-const imageSrc = require('../assets/butterflies.png');
+const imageSrc = require('../../assets/butterflies.png');
 
 const moodOptions: MoodOptionType[] = [
   { emoji: '🧑‍💻', description: 'studious' },
@@ -21,7 +21,7 @@ export const MoodPicker: React.FC = () => {
 
   const { handleSelectMood } = useContext(AppContext);
 
-  const handleSelect = React.useCallback(() => {
+  const handleSelect = useCallback(() => {
     if (selectedMood) {
       handleSelectMood(selectedMood);
       setSelectedMood(undefined);
