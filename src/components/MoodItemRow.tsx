@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { format } from 'date-fns/format';
 import { MoodOptionWithTimestamp } from '../types.ts';
 import { theme } from '../theme.ts';
+import { AppText } from './AppText.tsx';
 
 type MoodItemRowProps = {
   item: MoodOptionWithTimestamp;
@@ -13,11 +14,13 @@ export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
     <View style={styles.moodItem}>
       <View style={styles.iconAndDescription}>
         <Text style={styles.moodValue}>{item.mood.emoji}</Text>
-        <Text style={styles.moodDescription}>{item.mood.description}</Text>
+        <AppText style={styles.moodDescription} variant="bold">
+          {item.mood.description}
+        </AppText>
       </View>
-      <Text style={styles.moodDate}>
+      <AppText style={styles.moodDate}>
         {format(new Date(item.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
-      </Text>
+      </AppText>
     </View>
   );
 };
@@ -43,7 +46,6 @@ const styles = StyleSheet.create({
   moodDescription: {
     fontSize: 18,
     color: theme.colorPurple,
-    fontWeight: 'bold',
   },
   iconAndDescription: {
     flexDirection: 'row',

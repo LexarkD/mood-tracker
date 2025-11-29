@@ -4,6 +4,7 @@ import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import { AppContext } from '../App.provider.tsx';
 import { MoodOptionType } from '../types.ts';
 import { theme } from '../theme.ts';
+import { AppText } from './AppText.tsx';
 
 const imageSrc = require('../../assets/butterflies.png');
 
@@ -34,7 +35,9 @@ export const MoodPicker: React.FC = () => {
       <View style={styles.container}>
         <Image source={imageSrc} style={styles.image} />
         <Pressable style={styles.button} onPress={() => setHasSelected(false)}>
-          <Text style={styles.buttonText}>Back</Text>
+          <AppText style={styles.buttonText} variant="bold">
+            Back
+          </AppText>
         </Pressable>
       </View>
     );
@@ -42,7 +45,9 @@ export const MoodPicker: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>How are you right now?</Text>
+      <AppText style={styles.heading} variant="bold">
+        How are you right now?
+      </AppText>
       <View style={styles.moodList}>
         {moodOptions.map(option => (
           <View key={option.emoji}>
@@ -57,14 +62,16 @@ export const MoodPicker: React.FC = () => {
             >
               <Text style={styles.moodText}>{option.emoji}</Text>
             </Pressable>
-            <Text style={styles.descriptionText}>
+            <AppText style={styles.descriptionText} variant="bold">
               {selectedMood?.emoji === option.emoji ? option.description : ' '}
-            </Text>
+            </AppText>
           </View>
         ))}
       </View>
       <Pressable style={styles.button} onPress={handleSelect}>
-        <Text style={styles.buttonText}>Choose</Text>
+        <AppText style={styles.buttonText} variant="bold">
+          Choose
+        </AppText>
       </Pressable>
     </View>
   );
@@ -93,7 +100,6 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     color: theme.colorPurple,
-    fontWeight: 'bold',
     fontSize: 10,
     textAlign: 'center',
   },
@@ -116,7 +122,7 @@ const styles = StyleSheet.create({
   heading: {
     color: theme.colorWhite,
     fontSize: 20,
-    fontWeight: 'bold',
+
     letterSpacing: 1,
     textAlign: 'center',
     marginBottom: 20,
@@ -132,7 +138,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: theme.colorWhite,
     textAlign: 'center',
-    fontWeight: 'bold',
   },
 });
 
