@@ -1,6 +1,9 @@
-import React from 'react';
-import { useState, useContext, useCallback } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import { View, Image, StyleSheet, Pressable } from 'react-native';
+import Reanimated, {
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 import { AppContext } from '../App.provider.tsx';
 import { MoodOptionType } from '../types.ts';
 import { theme } from '../theme.ts';
@@ -29,6 +32,16 @@ export const MoodPicker: React.FC = () => {
       setHasSelected(true);
     }
   }, [handleSelectMood, selectedMood]);
+
+  const ReanimatedPressable = Reanimated.createAnimatedComponent(Pressable);
+
+  const buttonStyle = useAnimatedStyle(
+    () => ({
+      opacity: selectedMood ? withTiming(1) : withTiming(0.5),
+      transform: [{ scale: selectedMood ? withTiming(1) : 0.8 }],
+    }),
+    [selectedMood],
+  );
 
   if (hasSelected) {
     return (
@@ -68,11 +81,14 @@ export const MoodPicker: React.FC = () => {
           </View>
         ))}
       </View>
-      <Pressable style={styles.button} onPress={handleSelect}>
+      <ReanimatedPressable
+        style={[styles.button, buttonStyle]}
+        onPress={handleSelect}
+      >
         <AppText style={styles.buttonText} variant="bold">
           Choose
         </AppText>
-      </Pressable>
+      </ReanimatedPressable>
     </View>
   );
 };
