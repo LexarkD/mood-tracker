@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useContext, useCallback } from 'react';
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
+import { View, Image, StyleSheet, Pressable } from 'react-native';
 import { AppContext } from '../App.provider.tsx';
 import { MoodOptionType } from '../types.ts';
 import { theme } from '../theme.ts';
@@ -60,7 +60,7 @@ export const MoodPicker: React.FC = () => {
                   : undefined,
               ]}
             >
-              <Text style={styles.moodText}>{option.emoji}</Text>
+              <AppText style={styles.moodText}>{option.emoji}</AppText>
             </Pressable>
             <AppText style={styles.descriptionText} variant="bold">
               {selectedMood?.emoji === option.emoji ? option.description : ' '}

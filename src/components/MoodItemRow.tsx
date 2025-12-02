@@ -1,6 +1,7 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Pressable, StyleSheet, LayoutAnimation } from 'react-native';
 import { format } from 'date-fns/format';
+import { AppContext } from '../App.provider.tsx';
 import { MoodOptionWithTimestamp } from '../types.ts';
 import { theme } from '../theme.ts';
 import { AppText } from './AppText.tsx';
@@ -10,10 +11,17 @@ type MoodItemRowProps = {
 };
 
 export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
+  const { handleDeleteMood } = useContext(AppContext);
+
+  const handleDeletedRow = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    handleDeleteMood(item);
+  };
+
   return (
     <View style={styles.moodItem}>
       <View style={styles.iconAndDescription}>
-        <Text style={styles.moodValue}>{item.mood.emoji}</Text>
+        <AppText style={styles.moodValue}>{item.mood.emoji}</AppText>
         <AppText style={styles.moodDescription} variant="bold">
           {item.mood.description}
         </AppText>
@@ -21,6 +29,11 @@ export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
       <AppText style={styles.moodDate}>
         {format(new Date(item.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
       </AppText>
+      <Pressable hitSlop={16} onPress={() => handleDeletedRow()}>
+        <AppText style={styles.deleteText} variant="light">
+          Delete
+        </AppText>
+      </Pressable>
     </View>
   );
 };
@@ -50,5 +63,8 @@ const styles = StyleSheet.create({
   iconAndDescription: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  deleteText: {
+    color: theme.colorBlue,
   },
 });
