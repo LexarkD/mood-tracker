@@ -29,7 +29,7 @@ export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
       <AppText style={styles.moodDate}>
         {format(new Date(item.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
       </AppText>
-      <Pressable hitSlop={16} onPress={() => handleDeletedRow()}>
+      <Pressable hitSlop={16} onPress={handleDeletedRow}>
         <AppText style={styles.deleteText} variant="light">
           Delete
         </AppText>
