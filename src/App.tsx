@@ -1,6 +1,7 @@
 import React from 'react';
-import { Platform, UIManager } from 'react-native';
+import { StyleSheet, Platform, UIManager } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomTabsNavigator } from './screens/BottomTabs.navigator.tsx';
 import { AppProvider } from './App.provider.tsx';
 
@@ -12,9 +13,16 @@ export const App: React.FC = () => {
   }
   return (
     <AppProvider>
-      <NavigationContainer>
-        <BottomTabsNavigator />
-      </NavigationContainer>
+      <GestureHandlerRootView style={styles.container}>
+        <NavigationContainer>
+          <BottomTabsNavigator />
+        </NavigationContainer>
+      </GestureHandlerRootView>
     </AppProvider>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

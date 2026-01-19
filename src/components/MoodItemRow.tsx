@@ -1,5 +1,12 @@
 import React, { useContext } from 'react';
 import { View, Pressable, StyleSheet, LayoutAnimation } from 'react-native';
+import { scheduleOnRN } from 'react-native-worklets';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 import { format } from 'date-fns/format';
 import { AppContext } from '../App.provider.tsx';
 import { MoodOptionWithTimestamp } from '../types.ts';
@@ -18,23 +25,58 @@ export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
     handleDeleteMood(item);
   };
 
+  const removeWithDelay = () => {
+    setTimeout(() => {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      handleDeleteMood(item);
+    }, 250);
+  };
+
+  const offset = useSharedValue<number>(0);
+  const isRemoving = useSharedValue(false);
+  const maxPan = 80;
+
+  const pan = Gesture.Pan()
+    .minDistance(10)
+    .failOffsetY([-1, 1])
+    .onChange(event => {
+      if (isRemoving.value) return;
+      offset.value = event.translationX;
+    })
+    .onEnd(() => {
+      if (Math.abs(offset.value) > maxPan) {
+        isRemoving.value = true;
+
+        offset.value = withTiming(Math.sign(offset.value) * 2000);
+        scheduleOnRN(removeWithDelay);
+      } else {
+        offset.value = withTiming(0);
+      }
+    });
+
+  const animatedStyles = useAnimatedStyle(() => ({
+    transform: [{ translateX: offset.value }],
+  }));
+
   return (
-    <View style={styles.moodItem}>
-      <View style={styles.iconAndDescription}>
-        <AppText style={styles.moodValue}>{item.mood.emoji}</AppText>
-        <AppText style={styles.moodDescription} variant="bold">
-          {item.mood.description}
+    <GestureDetector gesture={pan}>
+      <Animated.View style={[animatedStyles, styles.moodItem]}>
+        <View style={styles.iconAndDescription}>
+          <AppText style={styles.moodValue}>{item.mood.emoji}</AppText>
+          <AppText style={styles.moodDescription} variant="bold">
+            {item.mood.description}
+          </AppText>
+        </View>
+        <AppText style={styles.moodDate}>
+          {format(new Date(item.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
         </AppText>
-      </View>
-      <AppText style={styles.moodDate}>
-        {format(new Date(item.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
-      </AppText>
-      <Pressable hitSlop={16} onPress={handleDeletedRow}>
-        <AppText style={styles.deleteText} variant="light">
-          Delete
-        </AppText>
-      </Pressable>
-    </View>
+        <Pressable hitSlop={16} onPress={handleDeletedRow}>
+          <AppText style={styles.deleteText} variant="light">
+            Delete
+          </AppText>
+        </Pressable>
+      </Animated.View>
+    </GestureDetector>
   );
 };
 
