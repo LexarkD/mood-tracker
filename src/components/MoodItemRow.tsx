@@ -33,20 +33,16 @@ export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
   };
 
   const offset = useSharedValue<number>(0);
-  const isRemoving = useSharedValue(false);
   const maxPan = 80;
 
   const pan = Gesture.Pan()
     .minDistance(10)
     .failOffsetY([-1, 1])
     .onChange(event => {
-      if (isRemoving.value) return;
       offset.value = event.translationX;
     })
     .onEnd(() => {
       if (Math.abs(offset.value) > maxPan) {
-        isRemoving.value = true;
-
         offset.value = withTiming(Math.sign(offset.value) * 2000);
         scheduleOnRN(removeWithDelay);
       } else {
