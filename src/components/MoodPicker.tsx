@@ -138,7 +138,6 @@ const styles = StyleSheet.create({
   heading: {
     color: theme.colorWhite,
     fontSize: 20,
-
     letterSpacing: 1,
     textAlign: 'center',
     marginBottom: 20,
