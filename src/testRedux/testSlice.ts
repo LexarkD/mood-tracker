@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from './store.ts';
+import type { RootState } from '../store/store.ts';
 
-interface CounterMoodState {
+type CounterMoodState = {
   value: number;
-}
+};
 
 const initialState: CounterMoodState = {
   value: 0,
@@ -29,9 +29,6 @@ export const counterMoodSlice = createSlice({
 export const { increment, decrement, incrementByAmount } =
   counterMoodSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-// В другом коде, например, в селекторах, можно использовать импортированный тип `RootState`.
-// ЗАЧЕМ????
-export const selectCount = (state: RootState) => state.counter.value;
+export const selectCount = (state: RootState) => state.testCounter.value;
 
 export default counterMoodSlice.reducer;

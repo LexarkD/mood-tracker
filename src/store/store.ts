@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterMoodReducer from './moodSlice';
+import testCounterReducer from '../testRedux/testSlice.ts';
 
 export const store = configureStore({
   reducer: {
-    counter: counterMoodReducer,
+    testCounter: testCounterReducer,
   },
 });
 

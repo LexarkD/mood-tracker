@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { TestCounterRedux } from '../components/TestCounterRedux';
+import { TestCounterRedux } from '../testRedux/TestCounterRedux.tsx';
+
 export const Analytics: React.FC = () => {
   return (
     <View style={styles.container}>
