@@ -4,9 +4,10 @@ import { AppText } from '../components/AppText.tsx';
 import { theme } from '../theme.ts';
 import { useAppSelector, useAppDispatch } from '../hooks/redux.hooks.ts';
 import { decrement, increment, incrementByAmount } from './testSlice.ts';
+import { selectTestCounter } from './testSlice.ts';
 
 export const TestCounterRedux: React.FC = () => {
-  const count = useAppSelector(state => state.testCounter.value);
+  const count = useAppSelector(selectTestCounter);
   const dispatch = useAppDispatch();
 
   return (

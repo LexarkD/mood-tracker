@@ -29,6 +29,6 @@ export const counterMoodSlice = createSlice({
 export const { increment, decrement, incrementByAmount } =
   counterMoodSlice.actions;
 
-export const selectCount = (state: RootState) => state.testCounter.value;
+export const selectTestCounter = (state: RootState) => state.testCounter.value;
 
 export default counterMoodSlice.reducer;

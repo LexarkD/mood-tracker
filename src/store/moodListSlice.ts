@@ -1,37 +1,54 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './store.ts';
+import _ from 'lodash';
 
-interface TestCounterMoodState {
-  value: number;
-}
-
-const initialState: TestCounterMoodState = {
-  value: 0,
+export type Mood = {
+  emoji: string;
+  description: string;
 };
 
-export const testCounterMoodSlice = createSlice({
-  name: 'testCounterMood',
+export type MoodWithTimestamp = Mood & {
+  timestamp: number;
+};
+
+type MoodListState = {
+  moodList: MoodWithTimestamp[];
+};
+
+const initialState: MoodListState = {
+  moodList: [],
+};
+
+export const moodListSlice = createSlice({
+  name: 'moodList',
   initialState,
   reducers: {
-    increment: state => {
-      state.value += 1;
+    addMood: {
+      reducer: (state, action: PayloadAction<MoodWithTimestamp>) => {
+        state.moodList = [action.payload, ...state.moodList];
+      },
+      prepare: mood => {
+        return {
+          payload: { ...mood, timestamp: Date.now() },
+        };
+      },
     },
-    decrement: state => {
-      state.value -= 1;
+
+    removeMood: (state, action) => {
+      state.moodList = state.moodList.filter(
+        mood => mood.timestamp !== action.payload,
+      );
     },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
+
+    clearMoods: state => {
+      state.moodList = [];
     },
   },
 });
 
-export const { increment, decrement, incrementByAmount } =
-  testCounterMoodSlice.actions;
+export const { addMood, removeMood, clearMoods } = moodListSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-// В другом коде, например, в селекторах, можно использовать импортированный тип `RootState`.
-// ЗАЧЕМ????
-export const selectCount = (state: RootState) => state.testCounter.value;
+export const selectMoodList = (state: RootState) => state.moodList.moodList;
 
-export default testCounterMoodSlice.reducer;
+export default moodListSlice.reducer;
