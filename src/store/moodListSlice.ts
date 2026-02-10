@@ -1,14 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './store.ts';
-import _ from 'lodash';
 
-export type Mood = {
+export type MoodType = {
   emoji: string;
   description: string;
 };
 
-export type MoodWithTimestamp = Mood & {
+export type MoodWithTimestamp = MoodType & {
   timestamp: number;
 };
 

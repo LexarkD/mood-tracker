@@ -1,8 +1,7 @@
 import React from 'react';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeRedux } from './Home.screen.redux.tsx';
-import { HistoryRedux } from './History.screen.redux.tsx';
+import { Home } from './Home.screen.tsx';
+import { History } from './History.screen.tsx';
 import { Analytics } from './Analytics.screen.tsx';
 import {
   HomeIcon,
@@ -40,12 +39,12 @@ export const BottomTabsNavigator: React.FC = () => {
     >
       <BottomTabs.Screen
         name="Home"
-        component={HomeRedux}
+        component={Home}
         options={{ title: "Today's Mood" }}
       />
       <BottomTabs.Screen
         name="History"
-        component={HistoryRedux}
+        component={History}
         options={{ title: 'Past Moods' }}
       />
       <BottomTabs.Screen

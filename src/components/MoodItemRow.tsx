@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { View, Pressable, StyleSheet, LayoutAnimation } from 'react-native';
 import { scheduleOnRN } from 'react-native-worklets';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
@@ -8,27 +8,28 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { format } from 'date-fns/format';
-import { AppContext } from '../App.provider.tsx';
-import { MoodOptionWithTimestamp } from '../types.ts';
 import { theme } from '../theme.ts';
 import { AppText } from './AppText.tsx';
+import { useAppDispatch } from '../hooks/redux.hooks.ts';
+import type { MoodWithTimestamp } from '../store/moodListSlice.ts';
+import { removeMood } from '../store/moodListSlice.ts';
 
 type MoodItemRowProps = {
-  item: MoodOptionWithTimestamp;
+  item: MoodWithTimestamp;
 };
 
 export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
-  const { handleDeleteMood } = useContext(AppContext);
+  const dispatch = useAppDispatch();
 
   const handleDeletedRow = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    handleDeleteMood(item);
+    dispatch(removeMood(item.timestamp));
   };
 
   const removeWithDelay = () => {
     setTimeout(() => {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      handleDeleteMood(item);
+      dispatch(removeMood(item.timestamp));
     }, 250);
   };
 
@@ -58,9 +59,9 @@ export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
     <GestureDetector gesture={pan}>
       <Animated.View style={[animatedStyles, styles.moodItem]}>
         <View style={styles.iconAndDescription}>
-          <AppText style={styles.moodValue}>{item.mood.emoji}</AppText>
+          <AppText style={styles.moodValue}>{item.emoji}</AppText>
           <AppText style={styles.moodDescription} variant="bold">
-            {item.mood.description}
+            {item.description}
           </AppText>
         </View>
         <AppText style={styles.moodDate}>
