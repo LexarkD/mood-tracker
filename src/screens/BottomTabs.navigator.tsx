@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home } from './Home.screenTEST.tsx';
-import { History } from './History.screenTEST.tsx';
+import { Home } from './Home.screen.tsx';
+import { History } from './History.screen.tsx';
 import { Analytics } from './Analytics.screen.tsx';
 import {
   HomeIcon,
