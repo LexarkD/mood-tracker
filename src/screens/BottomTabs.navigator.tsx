@@ -55,21 +55,3 @@ export const BottomTabsNavigator: React.FC = () => {
     </BottomTabs.Navigator>
   );
 };
-
-// пропс screenOptions(компонента BottomTabs.Navigator) в качетсве значения может ожидать объект с свойствами или функцию, которая возвраащет объект с свойствами.
-// Функция ожидает от react-navigation в качестве параметра объект { route, navigation }, которые определяются под копотом.
-// route содержит-
-// route = {
-// key: string,           Уникальный ключ маршрута
-// name: string,          Имя маршрута ("Home", "History", "Analytics")
-// path?: string          Опционально: путь
-//}
-// есть альтернативный вариант "options prop on Screen" для каждого < BottomTabs.Screen /> отдельно.
-
-// tabBarIcon имеет значение -функцию. Функция должна вернуть компонент Иконку.
-// Эта функция ожидает параметры {color , size, focused} от react-navigation.
-// React-navigation высчитывает эти параметры под капотом на основании других свойств пропса screenOptions, параметров платформы и значений по-умолчанию,
-// а передает их в фунцию автоматически.
-// Сигнатура- ({color , size, focused}) => <NameIcon color ={color}, size={size}, focused={focused} />
-// Обертка в виде функции createTabBarIcon(route.name) мне нужна просто, чтоб замкнуть соответствующие значения rout.name внутри
-// tabBarIcon: ({color , size }) => {} для каждого таба.

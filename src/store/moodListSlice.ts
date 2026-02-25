@@ -47,7 +47,6 @@ export const moodListSlice = createSlice({
 
 export const { addMood, removeMood, clearMoods } = moodListSlice.actions;
 
-// Указание типа MoodWithTimestamp[] технически является необязательным т.к. typeScript выведет этот тип автоматически через type RootState = ReturnType<typeof store.getState>(store.ts). Оставил его для читаемости кода.
 export const selectMoodList = (state: RootState): MoodWithTimestamp[] =>
   state.moodList.moodList;
 

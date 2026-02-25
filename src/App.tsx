@@ -27,6 +27,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-// PersistGate - контролирует отрисовку. Отрисовка начнется тогда, когда данные вернутся из async storage.
-// Параметр loading - можно задать, что я буду видеть, пока данные загружаются с async storage.
