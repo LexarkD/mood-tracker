@@ -6,7 +6,6 @@ export type MoodType = {
   description: string;
 };
 
-//Добавил тип, чтоб указать его в removeMood - PayloadAction
 export type TimeStamp = number;
 
 export type MoodWithTimestamp = MoodType & { timestamp: TimeStamp };
@@ -24,13 +23,8 @@ export const moodListSlice = createSlice({
   initialState,
   reducers: {
     addMood: {
-      reducer: (
-        state: MoodListState,
-        action: PayloadAction<MoodWithTimestamp>,
-      ) => {
-        state.moodList = [action.payload, ...(state.moodList || [])];
-        //пришлось отдельно указать возможность пустого массива, хотя выше уже было указано
-        // в initialState. Откуда была эта трабла??
+      reducer: (state, action: PayloadAction<MoodWithTimestamp>) => {
+        state.moodList = [action.payload, ...state.moodList];
       },
       prepare: mood => {
         return {
@@ -39,13 +33,13 @@ export const moodListSlice = createSlice({
       },
     },
 
-    removeMood: (state: MoodListState, action: PayloadAction<TimeStamp>) => {
+    removeMood: (state, action: PayloadAction<TimeStamp>) => {
       state.moodList = state.moodList.filter(
         mood => mood.timestamp !== action.payload,
       );
     },
 
-    clearMoods: (state: MoodListState) => {
+    clearMoods: state => {
       state.moodList = [];
     },
   },
@@ -53,16 +47,8 @@ export const moodListSlice = createSlice({
 
 export const { addMood, removeMood, clearMoods } = moodListSlice.actions;
 
-//мой прошлый вариант объявления селектора
-//export const selectMoodList = (state: RootState) => state.moodList.moodList;
-
-//зачем тут указание MoodWithTimestamp[]?
+// Указание типа MoodWithTimestamp[] технически является необязательным т.к. typeScript выведет этот тип автоматически через type RootState = ReturnType<typeof store.getState>(store.ts). Оставил его для читаемости кода.
 export const selectMoodList = (state: RootState): MoodWithTimestamp[] =>
-  state.moodList?.moodList ?? []; //пришлось добавить вариант, если массив пустой
-
-//Пытался объявить селектор, по примеру из курса. Он не работает, но я хочу понять почему
-// export const selectMoodList = (state: {
-//   moodList: MoodListState;
-// }): MoodListState['moodList'] => state.moodList.moodList;
+  state.moodList.moodList;
 
 export default moodListSlice.reducer;
