@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import moodListReducer from './moodListSlice.ts';
+import moodListReducer from './slices/moodListSlice.ts';
 import { baseApi } from './api/baseApi.ts';
 import {
   PersistConfig,
@@ -12,6 +12,7 @@ import {
   REGISTER,
   persistStore,
 } from 'redux-persist';
+import { STORAGE_KEY } from '../constants/storageKey.ts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const combinedReducer = combineReducers({
@@ -22,7 +23,7 @@ const combinedReducer = combineReducers({
 type RootReducerState = ReturnType<typeof combinedReducer>;
 
 const persistConfig: PersistConfig<RootReducerState> = {
-  key: 'root',
+  key: STORAGE_KEY,
   storage: AsyncStorage,
   whitelist: ['moodList'],
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, TextProps } from 'react-native';
-import { theme } from '../theme';
+import { theme } from '../constants/theme';
 
 type AppTextProps = TextProps & {
   variant?: 'regular' | 'bold' | 'light';

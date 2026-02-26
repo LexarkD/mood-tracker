@@ -4,13 +4,12 @@ import Reanimated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { theme } from '../theme.ts';
+import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
-import { useAppDispatch } from '../hooks/redux.hooks.ts';
-import { addMood } from '../store/moodListSlice.ts';
-import type { MoodType } from '../store/moodListSlice.ts';
+import type { MoodType } from '../store/slices/moodListSlice.ts';
+import useMoodList from '../hooks/useMoodList.ts';
 
-const imageSrc = require('../../assets/butterflies.png');
+const imageSrc = require('../../assets/images/butterflies.png');
 
 const moodOptions: MoodType[] = [
   { emoji: '🧑‍💻', description: 'studious' },
@@ -24,11 +23,11 @@ export const MoodPicker: React.FC = () => {
   const [selectedMood, setSelectedMood] = useState<MoodType>();
   const [hasSelected, setHasSelected] = useState(false);
 
-  const dispatch = useAppDispatch();
+  const { onAddMood } = useMoodList();
 
   const handleSelect = () => {
     if (selectedMood) {
-      dispatch(addMood(selectedMood));
+      onAddMood(selectedMood);
       setSelectedMood(undefined);
       setHasSelected(true);
     }

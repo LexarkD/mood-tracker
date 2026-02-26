@@ -8,28 +8,27 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { format } from 'date-fns/format';
-import { theme } from '../theme.ts';
+import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
-import { useAppDispatch } from '../hooks/redux.hooks.ts';
-import type { MoodWithTimestamp } from '../store/moodListSlice.ts';
-import { removeMood } from '../store/moodListSlice.ts';
+import type { MoodWithTimestamp } from '../store/slices/moodListSlice.ts';
+import useMoodList from '../hooks/useMoodList.ts';
 
 type MoodItemRowProps = {
   item: MoodWithTimestamp;
 };
 
 export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
-  const dispatch = useAppDispatch();
+  const { onDeleteMood } = useMoodList();
 
   const handleDeletedRow = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    dispatch(removeMood(item.timestamp));
+    onDeleteMood(item.timestamp);
   };
 
   const removeWithDelay = () => {
     setTimeout(() => {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      dispatch(removeMood(item.timestamp));
+      onDeleteMood(item.timestamp);
     }, 250);
   };
 

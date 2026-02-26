@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from './store.ts';
+import type { RootState } from '../store.ts';
 
 export type MoodType = {
   emoji: string;
@@ -26,7 +26,7 @@ export const moodListSlice = createSlice({
       reducer: (state, action: PayloadAction<MoodWithTimestamp>) => {
         state.moodList = [action.payload, ...state.moodList];
       },
-      prepare: mood => {
+      prepare: (mood: MoodType) => {
         return {
           payload: { ...mood, timestamp: Date.now() },
         };

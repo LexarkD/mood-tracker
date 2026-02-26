@@ -9,7 +9,7 @@ import {
   AnalyticsIcon,
   IconProps,
 } from '../components/Icons';
-import { theme } from '../theme.ts';
+import { theme } from '../constants/theme.ts';
 
 export type TabBarIconProps = Required<IconProps>; // Версия IconProps с обязательными значениям.
 
