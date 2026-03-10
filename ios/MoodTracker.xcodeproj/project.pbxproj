@@ -15,6 +15,8 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8E3488736421484A945782B1 /* Kalam-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 044D69BB517243B29D36830D /* Kalam-Regular.ttf */; };
 		E6635AEA7E1E4B1D9BF8DA93 /* Kalam-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FC3210C43F9483A945D24F1 /* Kalam-Light.ttf */; };
+		8B05970251FA458E8162D4F3 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E308E959E5844C458867A6B8 /* BootSplash.storyboard */; };
+		586E0157EDB0446888D903A6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 198ADF8AA3044AFF9B920347 /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MoodTracker/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA70886E2CFE442BBBC85940 /* Kalam-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Kalam-Bold.ttf"; path = "../assets/fonts/Kalam-Bold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		E308E959E5844C458867A6B8 /* BootSplash.storyboard */ = {isa = PBXFileReference; name = "BootSplash.storyboard"; path = "MoodTracker/BootSplash.storyboard"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		198ADF8AA3044AFF9B920347 /* Colors.xcassets */ = {isa = PBXFileReference; name = "Colors.xcassets"; path = "MoodTracker/Colors.xcassets"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = folder.assetcatalog; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
+				E308E959E5844C458867A6B8 /* BootSplash.storyboard */,
+				198ADF8AA3044AFF9B920347 /* Colors.xcassets */,
 			);
 			name = MoodTracker;
 			sourceTree = "<group>";
@@ -181,6 +187,8 @@
 				01770F4F815F49F2ACEC8144 /* Kalam-Bold.ttf in Resources */,
 				E6635AEA7E1E4B1D9BF8DA93 /* Kalam-Light.ttf in Resources */,
 				8E3488736421484A945782B1 /* Kalam-Regular.ttf in Resources */,
+				8B05970251FA458E8162D4F3 /* BootSplash.storyboard in Resources */,
+				586E0157EDB0446888D903A6 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
