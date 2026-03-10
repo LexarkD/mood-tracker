@@ -12,6 +12,7 @@ const useMoodList = () => {
   const dispatch = useAppDispatch();
 
   const onAddMood = (selectedMood: MoodType) => {
+    //мой addMood reducer использует prepare - добавляет timestamp. Но вообще я могу сделать это здесь - в кастомном хуке, но не уверен, что хочу.
     dispatch(addMood(selectedMood));
   };
   const onDeleteMood = (timestamp: TimeStamp) => {
