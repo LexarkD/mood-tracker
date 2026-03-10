@@ -1,15 +1,14 @@
 import React from 'react';
-import { useContext } from 'react';
 import { ScrollView } from 'react-native';
-import { AppContext } from '../App.provider.tsx';
-import { MoodOptionWithTimestamp } from '../types.ts';
+import type { MoodWithTimestamp } from '../store/slices/moodListSlice.ts';
 import { MoodItemRow } from '../components/MoodItemRow.tsx';
+import useMoodList from '../hooks/useMoodList.ts';
 
 export const History: React.FC = () => {
-  const { moodList } = useContext(AppContext);
+  const { moodList } = useMoodList();
   return (
     <ScrollView>
-      {moodList.map((item: MoodOptionWithTimestamp) => (
+      {moodList.map((item: MoodWithTimestamp) => (
         <MoodItemRow item={item} key={item.timestamp} />
       ))}
     </ScrollView>

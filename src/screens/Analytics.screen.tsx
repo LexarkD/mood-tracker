@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { AppText } from '../components/AppText.tsx';
 
 export const Analytics: React.FC = () => {
   return (
     <View style={styles.container}>
-      <Text>Analytics</Text>
+      <AppText>Analytics</AppText>
     </View>
   );
 };

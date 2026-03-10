@@ -1,17 +1,17 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState } from 'react';
 import { View, Image, StyleSheet, Pressable } from 'react-native';
 import Reanimated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { AppContext } from '../App.provider.tsx';
-import { MoodOptionType } from '../types.ts';
-import { theme } from '../theme.ts';
+import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
+import type { MoodType } from '../store/slices/moodListSlice.ts';
+import useMoodList from '../hooks/useMoodList.ts';
 
-const imageSrc = require('../../assets/butterflies.png');
+const imageSrc = require('../../assets/images/butterflies.png');
 
-const moodOptions: MoodOptionType[] = [
+const moodOptions: MoodType[] = [
   { emoji: '🧑‍💻', description: 'studious' },
   { emoji: '🤔', description: 'pensive' },
   { emoji: '😊', description: 'happy' },
@@ -20,18 +20,18 @@ const moodOptions: MoodOptionType[] = [
 ];
 
 export const MoodPicker: React.FC = () => {
-  const [selectedMood, setSelectedMood] = useState<MoodOptionType>();
+  const [selectedMood, setSelectedMood] = useState<MoodType>();
   const [hasSelected, setHasSelected] = useState(false);
 
-  const { handleSelectMood } = useContext(AppContext);
+  const { onAddMood } = useMoodList();
 
-  const handleSelect = useCallback(() => {
+  const handleSelect = () => {
     if (selectedMood) {
-      handleSelectMood(selectedMood);
+      onAddMood(selectedMood);
       setSelectedMood(undefined);
       setHasSelected(true);
     }
-  }, [handleSelectMood, selectedMood]);
+  };
 
   const ReanimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
@@ -62,21 +62,21 @@ export const MoodPicker: React.FC = () => {
         How are you right now?
       </AppText>
       <View style={styles.moodList}>
-        {moodOptions.map(option => (
-          <View key={option.emoji}>
+        {moodOptions.map(mood => (
+          <View key={mood.emoji}>
             <Pressable
-              onPress={() => setSelectedMood(option)}
+              onPress={() => setSelectedMood(mood)}
               style={[
                 styles.moodItem,
-                option.emoji === selectedMood?.emoji
+                mood.emoji === selectedMood?.emoji
                   ? styles.selectedMoodItem
                   : undefined,
               ]}
             >
-              <AppText style={styles.moodText}>{option.emoji}</AppText>
+              <AppText style={styles.moodText}>{mood.emoji}</AppText>
             </Pressable>
             <AppText style={styles.descriptionText} variant="bold">
-              {selectedMood?.emoji === option.emoji ? option.description : ' '}
+              {selectedMood?.emoji === mood.emoji ? mood.description : ' '}
             </AppText>
           </View>
         ))}
@@ -138,7 +138,6 @@ const styles = StyleSheet.create({
   heading: {
     color: theme.colorWhite,
     fontSize: 20,
-
     letterSpacing: 1,
     textAlign: 'center',
     marginBottom: 20,
@@ -156,6 +155,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-//считаю, что список эмоций(ряд с эмодзи), должен быть в отдельном компоненте- сейчас он мапится нутри верстки.
-//считаю, что логику стилизации <Pressable> эмоции (отрисовка нажатия на эмоджи), нужно вынести отдельно от верстки.
