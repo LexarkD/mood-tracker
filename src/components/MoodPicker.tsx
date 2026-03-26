@@ -12,11 +12,9 @@ import useMoodList from '../hooks/useMoodList.ts';
 const imageSrc = require('../../assets/images/butterflies.png');
 
 const moodOptions: MoodType[] = [
-  { emoji: '🧑‍💻', description: 'studious' },
-  { emoji: '🤔', description: 'pensive' },
-  { emoji: '😊', description: 'happy' },
-  { emoji: '🥳', description: 'celebratory' },
-  { emoji: '😤', description: 'frustrated' },
+  { emoji: '😊', description: 'funny' },
+  { emoji: '😐', description: 'neutral' },
+  { emoji: '☹️', description: 'sad' },
 ];
 
 export const MoodPicker: React.FC = () => {

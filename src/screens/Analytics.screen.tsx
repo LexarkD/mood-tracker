@@ -1,11 +1,13 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { AppText } from '../components/AppText.tsx';
+import { AppPieChart } from '../components/AppPieChart.tsx';
 
 export const Analytics: React.FC = () => {
   return (
     <View style={styles.container}>
-      <AppText>Analytics</AppText>
+      <View>
+        <AppPieChart />
+      </View>
     </View>
   );
 };
