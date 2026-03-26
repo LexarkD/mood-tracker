@@ -3,14 +3,14 @@ import type { RootState } from '../store.ts';
 
 export type MoodType = {
   emoji: string;
-  description: string;
+  description: 'funny' | 'neutral' | 'sad';
 };
 
 export type TimeStamp = number;
 
 export type MoodWithTimestamp = MoodType & { timestamp: TimeStamp };
 
-type MoodListState = {
+export type MoodListState = {
   moodList: MoodWithTimestamp[];
 };
 
