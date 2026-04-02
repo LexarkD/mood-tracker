@@ -18,9 +18,10 @@ export const History: React.FC = () => {
     <FlatList
       ref={flatListRef}
       data={moodList}
-      renderItem={({ item }: { item: MoodWithTimestamp }) => (
-        <MoodItemRow item={item} />
-      )}
+      renderItem={({ item, index }) => {
+        const isEven = index % 2 === 0;
+        return <MoodItemRow item={item} isEven={isEven} />;
+      }}
       keyExtractor={(item: MoodWithTimestamp) => item.timestamp.toString()}
     />
   );
