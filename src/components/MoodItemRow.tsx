@@ -15,9 +15,10 @@ import useMoodList from '../hooks/useMoodList.ts';
 
 type MoodItemRowProps = {
   item: MoodWithTimestamp;
+  isEven: boolean;
 };
 
-export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item }) => {
+export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item, isEven }) => {
   const { onDeleteMood } = useMoodList();
 
   const handleDeletedRow = () => {
