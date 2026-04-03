@@ -57,7 +57,13 @@ export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item, isEven }) => {
 
   return (
     <GestureDetector gesture={pan}>
-      <Animated.View style={[animatedStyles, styles.moodItem]}>
+      <Animated.View
+        style={[
+          animatedStyles,
+          styles.moodItem,
+          isEven ? styles.evenItemZebra : styles.oddItemZebra,
+        ]}
+      >
         <View style={styles.iconAndDescription}>
           <AppText style={styles.moodValue}>{item.emoji}</AppText>
           <AppText style={styles.moodDescription} variant="bold">
@@ -88,12 +94,17 @@ const styles = StyleSheet.create({
     color: theme.colorLavender,
   },
   moodItem: {
-    backgroundColor: 'white',
     marginBottom: 10,
     padding: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  evenItemZebra: {
+    backgroundColor: '#e4ebd0',
+  },
+  oddItemZebra: {
+    backgroundColor: '#fff3dd',
   },
   moodDescription: {
     fontSize: 18,
