@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, ImageBackground } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { MoodPicker } from '../components/MoodPicker.tsx';
 
 const imageUrl =
@@ -8,7 +9,9 @@ const imageUrl =
 export const Home: React.FC = () => {
   return (
     <ImageBackground source={{ uri: imageUrl }} style={styles.container}>
-      <MoodPicker />
+      <SafeAreaView edges={['top', 'right', 'left']}>
+        <MoodPicker />
+      </SafeAreaView>
     </ImageBackground>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomTabsNavigator } from './screens/BottomTabs.navigator.tsx';
@@ -12,11 +13,13 @@ export const App: React.FC = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <GestureHandlerRootView style={styles.container}>
-          <NavigationContainer>
-            <BottomTabsNavigator />
-          </NavigationContainer>
-        </GestureHandlerRootView>
+        <SafeAreaProvider>
+          <GestureHandlerRootView style={styles.container}>
+            <NavigationContainer>
+              <BottomTabsNavigator />
+            </NavigationContainer>
+          </GestureHandlerRootView>
+        </SafeAreaProvider>
       </PersistGate>
     </Provider>
   );

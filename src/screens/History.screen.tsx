@@ -1,5 +1,6 @@
 import React, { useRef, useCallback } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import type { MoodWithTimestamp } from '../store/slices/moodListSlice.ts';
 import { MoodItemRow } from '../components/MoodItemRow.tsx';
@@ -17,14 +18,16 @@ export const History: React.FC = () => {
   );
 
   return (
-    <FlatList
-      ref={flatListRef}
-      data={moodList}
-      renderItem={({ item, index }) => {
-        const isEven = index % 2 === 0;
-        return <MoodItemRow item={item} isEven={isEven} />;
-      }}
-      keyExtractor={(item: MoodWithTimestamp) => item.timestamp.toString()}
-    />
+    <SafeAreaView edges={['top', 'right', 'left']}>
+      <FlatList
+        ref={flatListRef}
+        data={moodList}
+        renderItem={({ item, index }) => {
+          const isEven = index % 2 === 0;
+          return <MoodItemRow item={item} isEven={isEven} />;
+        }}
+        keyExtractor={(item: MoodWithTimestamp) => item.timestamp.toString()}
+      />
+    </SafeAreaView>
   );
 };
