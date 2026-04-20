@@ -33,7 +33,7 @@ export const BottomTabsNavigator: React.FC = () => {
         tabBarActiveTintColor: theme.colorBlue,
         tabBarInactiveTintColor: theme.colorGrey,
         tabBarShowLabel: false,
-        headerTitleStyle: { fontFamily: theme.fontFamilyBold },
+        headerShown: false,
         tabBarIcon: createTabBarIcon(route.name),
       })}
     >
