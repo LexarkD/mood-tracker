@@ -1,9 +1,10 @@
+import { ImageSourcePropType } from 'react-native';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store.ts';
 
 export type MoodType = {
-  emoji: string;
-  description: 'funny' | 'neutral' | 'sad';
+  emoji: ImageSourcePropType;
+  description: 'awesome' | 'happy' | 'neutral' | 'sad' | 'terrible';
 };
 
 export type TimeStamp = number;

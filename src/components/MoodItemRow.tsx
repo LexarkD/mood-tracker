@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, Pressable, StyleSheet, LayoutAnimation } from 'react-native';
+import {
+  View,
+  Pressable,
+  StyleSheet,
+  LayoutAnimation,
+  Image,
+} from 'react-native';
 import { scheduleOnRN } from 'react-native-worklets';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
@@ -64,8 +70,8 @@ export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item, isEven }) => {
           isEven ? styles.evenItemZebra : styles.oddItemZebra,
         ]}
       >
-        <View style={styles.iconAndDescription}>
-          <AppText style={styles.moodValue}>{item.emoji}</AppText>
+        <View style={styles.emojiAndDescription}>
+          <Image style={styles.emojiValue} source={item.emoji} />
           <AppText style={styles.moodDescription} variant="bold">
             {item.description}
           </AppText>
@@ -84,9 +90,14 @@ export const MoodItemRow: React.FC<MoodItemRowProps> = ({ item, isEven }) => {
 };
 
 const styles = StyleSheet.create({
-  moodValue: {
-    textAlign: 'center',
-    fontSize: 40,
+  // moodValue: {
+  //   textAlign: 'center',
+  //   fontSize: 40,
+  //   marginRight: 10,
+  // },
+  emojiValue: {
+    width: 40,
+    height: 40,
     marginRight: 10,
   },
   moodDate: {
@@ -110,7 +121,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: theme.colorPurple,
   },
-  iconAndDescription: {
+  emojiAndDescription: {
     flexDirection: 'row',
     alignItems: 'center',
   },

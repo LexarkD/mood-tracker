@@ -11,10 +11,33 @@ import useMoodList from '../hooks/useMoodList.ts';
 
 const imageSrc = require('../../assets/images/butterflies.png');
 
+// const moodOptions: MoodType[] = [
+//   { emoji: '😊', description: 'funny' },
+//   { emoji: '😐', description: 'neutral' },
+//   { emoji: '☹️', description: 'sad' },
+// ];
+
 const moodOptions: MoodType[] = [
-  { emoji: '😊', description: 'funny' },
-  { emoji: '😐', description: 'neutral' },
-  { emoji: '☹️', description: 'sad' },
+  {
+    emoji: require('../../assets/images/emoji/1.png'),
+    description: 'awesome',
+  },
+  {
+    emoji: require('../../assets/images/emoji/2.png'),
+    description: 'happy',
+  },
+  {
+    emoji: require('../../assets/images/emoji/3.png'),
+    description: 'neutral',
+  },
+  {
+    emoji: require('../../assets/images/emoji/4.png'),
+    description: 'sad',
+  },
+  {
+    emoji: require('../../assets/images/emoji/5.png'),
+    description: 'terrible',
+  },
 ];
 
 export const MoodPicker: React.FC = () => {
@@ -61,7 +84,7 @@ export const MoodPicker: React.FC = () => {
       </AppText>
       <View style={styles.moodList}>
         {moodOptions.map(mood => (
-          <View key={mood.emoji}>
+          <View key={mood.description}>
             <Pressable
               onPress={() => setSelectedMood(mood)}
               style={[
@@ -71,10 +94,13 @@ export const MoodPicker: React.FC = () => {
                   : undefined,
               ]}
             >
-              <AppText style={styles.moodText}>{mood.emoji}</AppText>
+              <Image style={styles.emoji} source={mood.emoji} />
+              {/* <AppText style={styles.moodText}>{mood.emoji}</AppText> */}
             </Pressable>
             <AppText style={styles.descriptionText} variant="bold">
-              {selectedMood?.emoji === mood.emoji ? mood.description : ' '}
+              {selectedMood?.description === mood.description
+                ? mood.description
+                : ' '}
             </AppText>
           </View>
         ))}
@@ -92,8 +118,12 @@ export const MoodPicker: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  moodText: {
-    fontSize: 24,
+  // moodText: {
+  //   fontSize: 24,
+  // },
+  emoji: {
+    width: 30,
+    height: 30,
   },
   moodList: {
     flexDirection: 'row',

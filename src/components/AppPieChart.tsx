@@ -47,9 +47,11 @@ export const AppPieChart: React.FC = () => {
     );
 
     const chartData = [
-      { value: moodCount.funny || 0, color: '#90C343' },
+      { value: moodCount.awesome || 0, color: '#248f26' },
+      { value: moodCount.happy || 0, color: '#7dc343' },
       { value: moodCount.neutral || 0, color: '#FDCE37' },
       { value: moodCount.sad || 0, color: '#E9333E' },
+      { value: moodCount.terrible || 0, color: '#980401' },
     ];
     return chartData;
   };
