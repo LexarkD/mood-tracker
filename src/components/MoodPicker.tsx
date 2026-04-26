@@ -5,53 +5,15 @@ import Reanimated, {
   withTiming,
 } from 'react-native-reanimated';
 import useMoodList from '../hooks/useMoodList.ts';
-import type { MoodType } from '../store/slices/moodListSlice.ts';
+import { moodOptions, MoodType } from '../store/slices/moodListSlice.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
 import { AppMoodEmoji } from './AppMoodEmoji.tsx';
 
 const imageSrc = require('../../assets/images/butterflies.png');
 
-// const moodOptions: MoodType[] = [
-//   { emoji: '😊', description: 'funny' },
-//   { emoji: '😐', description: 'neutral' },
-//   { emoji: '☹️', description: 'sad' },
-// ];
-
-// const moodOptions: MoodType[] = [
-//   {
-//     emoji: require('../../assets/images/emoji/1.png'),
-//     description: 'awesome',
-//   },
-//   {
-//     emoji: require('../../assets/images/emoji/2.png'),
-//     description: 'happy',
-//   },
-//   {
-//     emoji: require('../../assets/images/emoji/3.png'),
-//     description: 'neutral',
-//   },
-//   {
-//     emoji: require('../../assets/images/emoji/4.png'),
-//     description: 'sad',
-//   },
-//   {
-//     emoji: require('../../assets/images/emoji/5.png'),
-//     description: 'terrible',
-//   },
-// ];
-
-// 'awesome' | 'happy' | 'neutral' | 'sad' | 'terrible'
-const moodOptions: MoodType['description'][] = [
-  'awesome',
-  'happy',
-  'neutral',
-  'sad',
-  'terrible',
-];
-
 export const MoodPicker: React.FC = () => {
-  const [selectedMood, setSelectedMood] = useState<MoodType['description']>();
+  const [selectedMood, setSelectedMood] = useState<MoodType>();
   const [hasSelected, setHasSelected] = useState(false);
 
   const { onAddMood } = useMoodList();
@@ -99,17 +61,13 @@ export const MoodPicker: React.FC = () => {
               onPress={() => setSelectedMood(mood)}
               style={[
                 styles.moodItem,
-                mood === selectedMood?.emoji
-                  ? styles.selectedMoodItem
-                  : undefined,
+                mood === selectedMood ? styles.selectedMoodItem : undefined,
               ]}
             >
-              <AppMoodEmoji size={30} description={mood} />
-              {/* <Image style={styles.emoji} source={mood.emoji} /> */}
-              {/* <AppText style={styles.moodText}>{mood.emoji}</AppText> */}
+              <AppMoodEmoji size={theme.iconSize.small} description={mood} />
             </Pressable>
             <AppText style={styles.descriptionText} variant="bold">
-              {selectedMood?.description === mood ? mood : ' '}
+              {selectedMood === mood ? mood : ' '}
             </AppText>
           </View>
         ))}
@@ -127,13 +85,6 @@ export const MoodPicker: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  // moodText: {
-  //   fontSize: 24,
-  // },
-  // emoji: {  => теперь переадю размер через пропс size={30}
-  //   width: 30,
-  //   height: 30,
-  // },
   moodList: {
     flexDirection: 'row',
     justifyContent: 'space-between',

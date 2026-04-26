@@ -36,7 +36,7 @@ export const AppPieChart: React.FC = () => {
       }
     };
 
-    type PartialMoodCount = Partial<Record<MoodType['description'], number>>;
+    type PartialMoodCount = Partial<Record<MoodType, number>>;
 
     const moodCount = getFiltredMood().reduce<PartialMoodCount>(
       (acc, { description }) => {

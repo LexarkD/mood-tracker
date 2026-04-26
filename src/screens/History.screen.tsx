@@ -31,7 +31,7 @@ export const History: React.FC = () => {
         data={moodList}
         renderItem={({ item, index }) => {
           const isEven = index % 2 === 0;
-          return <MoodItemRow item={item} isEven={isEven} />;
+          return <MoodItemRow mood={item} isEven={isEven} />;
         }}
         keyExtractor={(item: MoodWithTimestamp) => item.timestamp.toString()}
       />

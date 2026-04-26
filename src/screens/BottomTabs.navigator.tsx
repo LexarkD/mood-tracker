@@ -37,11 +37,11 @@ export const BottomTabsNavigator: React.FC = () => {
         tabBarIcon: createTabBarIcon(route.name),
       })}
     >
-      {/* <BottomTabs.Screen
+      <BottomTabs.Screen
         name="Home"
         component={Home}
         options={{ title: "Today's Mood" }}
-      /> */}
+      />
       <BottomTabs.Screen
         name="History"
         component={History}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 import {
   AwesomeEmoji,
   HappyEmoji,
@@ -6,29 +7,32 @@ import {
   SadEmoji,
   TerribleEmoji,
 } from './MoodEmoji.tsx';
+import type { MoodType } from '../store/slices/moodListSlice.ts';
 
 type AppMoodEmojiProps = {
-  description: 'awesome' | 'happy' | 'neutral' | 'sad' | 'terrible';
+  description: MoodType;
   size?: number;
+  style?: StyleProp<ViewStyle>;
 };
 
 export const AppMoodEmoji: React.FC<AppMoodEmojiProps> = ({
   description,
   size,
+  style,
 }) => {
   if (description === 'awesome') {
-    return <AwesomeEmoji size={size} />;
+    return <AwesomeEmoji style={style} size={size} />;
   }
   if (description === 'happy') {
-    return <HappyEmoji size={size} />;
+    return <HappyEmoji style={style} size={size} />;
   }
   if (description === 'neutral') {
-    return <NeutralEmoji size={size} />;
+    return <NeutralEmoji style={style} size={size} />;
   }
   if (description === 'sad') {
-    return <SadEmoji size={size} />;
+    return <SadEmoji style={style} size={size} />;
   }
   if (description === 'terrible') {
-    return <TerribleEmoji size={size} />;
+    return <TerribleEmoji style={style} size={size} />;
   }
 };

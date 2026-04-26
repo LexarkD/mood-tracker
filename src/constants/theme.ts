@@ -1,4 +1,8 @@
 export const theme = {
+  iconSize: {
+    small: 30,
+    medium: 40,
+  },
   colorPurple: '#454C73',
   colorWhite: '#fff',
   colorLavender: '#87677B',
