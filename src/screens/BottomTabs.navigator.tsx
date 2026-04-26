@@ -8,7 +8,7 @@ import {
   HistoryIcon,
   AnalyticsIcon,
   IconProps,
-} from '../components/Icons';
+} from '../components/TabBarIcons.tsx';
 import { theme } from '../constants/theme.ts';
 
 export type TabBarIconProps = Required<IconProps>; // Версия IconProps с обязательными значениям.
@@ -37,11 +37,11 @@ export const BottomTabsNavigator: React.FC = () => {
         tabBarIcon: createTabBarIcon(route.name),
       })}
     >
-      <BottomTabs.Screen
+      {/* <BottomTabs.Screen
         name="Home"
         component={Home}
         options={{ title: "Today's Mood" }}
-      />
+      /> */}
       <BottomTabs.Screen
         name="History"
         component={History}
