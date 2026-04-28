@@ -64,7 +64,7 @@ export const AppPieChart: React.FC = () => {
           onPress={() => setSelectedMoodFilter('all')}
         >
           <AppText style={styles.buttonText} variant="bold">
-            All
+            ALL
           </AppText>
         </Pressable>
 
@@ -73,7 +73,7 @@ export const AppPieChart: React.FC = () => {
           onPress={() => setSelectedMoodFilter('week')}
         >
           <AppText style={styles.buttonText} variant="bold">
-            Week
+            WEEK
           </AppText>
         </Pressable>
       </View>
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: theme.colorPurple,
-    height: 40,
+    height: 60,
     paddingVertical: 10,
     width: 150,
     borderRadius: 20,

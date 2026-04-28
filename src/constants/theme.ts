@@ -19,4 +19,12 @@ export const theme = {
   fontFamilyBold: 'Kalam-Bold',
   fontFamilyRegular: 'Kalam-Regular',
   fontFamilyLight: 'Kalam-Light',
+
+  fontCygreBold: 'Cygre-Bold',
+  fontCygreRegular: 'Cygre-Regular',
+  fontCygreLight: 'Cygre-Light',
+
+  fontNextArtBold: 'NEXTART-Bold',
+  fontNextArtRegular: 'NEXTART',
+  fontNextArtLight: 'NEXTART-Light',
 };

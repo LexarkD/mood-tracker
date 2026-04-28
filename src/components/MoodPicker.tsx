@@ -8,6 +8,8 @@ import useMoodList from '../hooks/useMoodList.ts';
 import { moodOptions, MoodType } from '../store/slices/moodListSlice.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
+import { AppHeaderText } from './AppHeaderText.tsx';
+
 import { AppMoodEmoji } from './AppMoodEmoji.tsx';
 
 const imageSrc = require('../../assets/images/butterflies.png');
@@ -42,7 +44,7 @@ export const MoodPicker: React.FC = () => {
         <Image source={imageSrc} style={styles.image} />
         <Pressable style={styles.button} onPress={() => setHasSelected(false)}>
           <AppText style={styles.buttonText} variant="bold">
-            Back
+            BACK
           </AppText>
         </Pressable>
       </View>
@@ -51,9 +53,9 @@ export const MoodPicker: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <AppText style={styles.heading} variant="bold">
+      <AppHeaderText style={styles.heading} variant="bold">
         How are you right now?
-      </AppText>
+      </AppHeaderText>
       <View style={styles.moodList}>
         {moodOptions.map(mood => (
           <View key={mood}>
@@ -77,7 +79,7 @@ export const MoodPicker: React.FC = () => {
         onPress={handleSelect}
       >
         <AppText style={styles.buttonText} variant="bold">
-          Choose
+          CHOOSE
         </AppText>
       </ReanimatedPressable>
     </View>
