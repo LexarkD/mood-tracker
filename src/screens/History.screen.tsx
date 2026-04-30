@@ -20,7 +20,7 @@ export const History: React.FC = () => {
   );
 
   return (
-    <SafeAreaView edges={['top', 'right', 'left']}>
+    <SafeAreaView edges={['top', 'right', 'left']} style={styles.container}>
       <Pressable hitSlop={16} onPress={onClearMoodList}>
         <AppText style={styles.deleteText} variant="light">
           Clear history
@@ -40,7 +40,12 @@ export const History: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colorGreen,
+  },
+
   deleteText: {
-    color: theme.colorBlue,
+    color: theme.colorBrown,
   },
 });

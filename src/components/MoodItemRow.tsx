@@ -84,24 +84,26 @@ const styles = StyleSheet.create({
   },
   moodDate: {
     textAlign: 'center',
-    color: theme.colorLavender,
+    color: theme.colorBrown,
   },
   moodItem: {
-    marginBottom: 10,
-    padding: 10,
+    borderRadius: 10,
+    marginHorizontal: 10,
+    marginBottom: 4,
+    padding: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   evenItemZebra: {
-    backgroundColor: '#e4ebd0',
+    backgroundColor: theme.colorWhiteCold,
   },
   oddItemZebra: {
-    backgroundColor: '#fff3dd',
+    backgroundColor: theme.colorWhiteHeat,
   },
   moodDescription: {
     fontSize: 18,
-    color: theme.colorPurple,
+    color: theme.colorBrown,
   },
   emojiAndDescription: {
     flexDirection: 'row',

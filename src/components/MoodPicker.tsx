@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, StyleSheet, Pressable } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
 import Reanimated, {
   useAnimatedStyle,
   withTiming,
@@ -9,40 +9,51 @@ import { moodOptions, MoodType } from '../store/slices/moodListSlice.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
 import { AppHeaderText } from './AppHeaderText.tsx';
-
 import { AppMoodEmoji } from './AppMoodEmoji.tsx';
+import { FocusableEmojiButton } from './FocusableEmojiButton.tsx';
 
-const imageSrc = require('../../assets/images/butterflies.png');
+const ReanimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
 export const MoodPicker: React.FC = () => {
+  const { onAddMood } = useMoodList();
   const [selectedMood, setSelectedMood] = useState<MoodType>();
   const [hasSelected, setHasSelected] = useState(false);
-
-  const { onAddMood } = useMoodList();
+  const chosenMood = Boolean(selectedMood);
 
   const handleSelect = () => {
     if (selectedMood) {
       onAddMood(selectedMood);
-      setSelectedMood(undefined);
       setHasSelected(true);
     }
   };
 
-  const ReanimatedPressable = Reanimated.createAnimatedComponent(Pressable);
+  const handleBack = () => {
+    if (selectedMood) {
+      setSelectedMood(undefined);
+      setHasSelected(false);
+    }
+  };
 
   const buttonStyle = useAnimatedStyle(
     () => ({
-      opacity: selectedMood ? withTiming(1) : withTiming(0.5),
-      transform: [{ scale: selectedMood ? withTiming(1) : 0.8 }],
+      opacity: chosenMood ? withTiming(1) : withTiming(0.5),
+      transform: [{ scale: chosenMood ? withTiming(1) : 0.8 }],
     }),
-    [selectedMood],
+    [chosenMood],
   );
 
-  if (hasSelected) {
+  if (hasSelected && selectedMood) {
     return (
       <View style={styles.container}>
-        <Image source={imageSrc} style={styles.image} />
-        <Pressable style={styles.button} onPress={() => setHasSelected(false)}>
+        <AppMoodEmoji
+          style={styles.backBoxEmoji}
+          description={selectedMood}
+          size={theme.iconSize.large}
+        />
+        <AppText style={styles.descriptionText} variant="bold">
+          {selectedMood}
+        </AppText>
+        <Pressable style={styles.button} onPress={handleBack}>
           <AppText style={styles.buttonText} variant="bold">
             BACK
           </AppText>
@@ -59,15 +70,11 @@ export const MoodPicker: React.FC = () => {
       <View style={styles.moodList}>
         {moodOptions.map(mood => (
           <View key={mood}>
-            <Pressable
+            <FocusableEmojiButton
+              mood={mood}
+              selectedMood={selectedMood === mood}
               onPress={() => setSelectedMood(mood)}
-              style={[
-                styles.moodItem,
-                mood === selectedMood ? styles.selectedMoodItem : undefined,
-              ]}
-            >
-              <AppMoodEmoji size={theme.iconSize.small} description={mood} />
-            </Pressable>
+            />
             <AppText style={styles.descriptionText} variant="bold">
               {selectedMood === mood ? mood : ' '}
             </AppText>
@@ -87,37 +94,34 @@ export const MoodPicker: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  moodList: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  backBoxEmoji: {
+    alignSelf: 'center',
+    marginTop: 25,
   },
-  moodItem: {
-    width: 60,
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 30,
-    marginBottom: 5,
-  },
-  selectedMoodItem: {
-    borderWidth: 2,
-    backgroundColor: theme.colorPurple,
-    borderColor: theme.colorWhite,
-  },
-  descriptionText: {
-    color: theme.colorPurple,
-    fontSize: 10,
-    textAlign: 'center',
+  button: {
+    backgroundColor: theme.colorOrange,
+    width: 150,
+    borderRadius: 20,
+    marginTop: 20,
+    alignSelf: 'center',
+    padding: 10,
   },
   container: {
-    borderWidth: 2,
-    borderColor: theme.colorPurple,
-    backgroundColor: 'rgba(0,0,0,0.2)',
+    backgroundColor: theme.colorWhite,
     margin: 10,
     borderRadius: 10,
     padding: 20,
     justifyContent: 'space-between',
     height: 230,
+  },
+  moodList: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  descriptionText: {
+    color: theme.colorBrown,
+    fontSize: 15,
+    textAlign: 'center',
   },
   image: {
     height: 100,
@@ -126,19 +130,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   heading: {
-    color: theme.colorWhite,
+    color: theme.colorBrown,
     fontSize: 20,
     letterSpacing: 1,
     textAlign: 'center',
     marginBottom: 20,
-  },
-  button: {
-    backgroundColor: theme.colorPurple,
-    width: 150,
-    borderRadius: 20,
-    marginTop: 20,
-    alignSelf: 'center',
-    padding: 10,
   },
   buttonText: {
     color: theme.colorWhite,
