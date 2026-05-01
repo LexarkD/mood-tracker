@@ -12,39 +12,42 @@ type ChartItem = {
   value: number;
   color: string;
   description: MoodType;
+  percent: number;
 };
 
 type MoodFilterOptions = 'week' | 'all';
 
 export const AppPieChart: React.FC = () => {
-  const [selectedMoodFilter, setSelectedMoodFilter] =
+  const { moodList } = useMoodList();
+  const [selectedFilterOptions, setSelectedFilterOptions] =
     useState<MoodFilterOptions>('all');
 
-  const { moodList } = useMoodList();
+  const moodFilter = () => {
+    if (selectedFilterOptions === 'all') {
+      const filtredMood = moodList;
+      return filtredMood;
+    } else {
+      const nowDate = new Date();
+      const startDate = new Date(nowDate);
+      startDate.setDate(nowDate.getDate() - 3);
+      startDate.setHours(0, 0, 0, 0);
+      const endDate = new Date(nowDate);
+      endDate.setHours(23, 59, 59, 999);
+      const start = startDate.getTime();
+      const end = endDate.getTime();
 
-  const selectedPieData = () => {
-    const getFiltredMood = () => {
-      if (selectedMoodFilter === 'all') {
-        const filtredMood = moodList;
-        return filtredMood;
-      } else {
-        const nowDate = new Date();
-        const startDate = new Date(nowDate);
-        startDate.setDate(nowDate.getDate() - 7);
-        startDate.setHours(0, 0, 0, 0);
-        const endDate = new Date(nowDate);
-        endDate.setHours(23, 59, 59, 999);
-        const start = startDate.getTime();
-        const end = endDate.getTime();
+      const filtredMood = moodList.filter(
+        ({ timestamp }) => timestamp >= start && timestamp <= end,
+      );
 
-        const filtredMood = moodList.filter(
-          ({ timestamp }) => timestamp >= start && timestamp <= end,
-        );
-        return filtredMood;
-      }
-    };
+      return filtredMood;
+    }
+  };
 
-    const moodCount = getFiltredMood().reduce<PartialMoodCount>(
+  const filtredMood = moodFilter();
+
+  const countChartData = () => {
+    const moodCount = filtredMood.reduce<PartialMoodCount>(
       (acc, { description }) => {
         acc[description] = (acc[description] || 0) + 1;
         return acc;
@@ -52,37 +55,49 @@ export const AppPieChart: React.FC = () => {
       {},
     );
 
+    const moodPercent = (mood = 0) => {
+      const summMood = filtredMood.length;
+      const percentMood = (mood * 100) / summMood;
+      return Math.round(percentMood);
+    };
+
     const chartData: ChartItem[] = [
       {
         value: moodCount.awesome || 0,
         color: 'rgb(96, 178, 85)',
         description: 'awesome',
+        percent: moodPercent(moodCount.awesome) || 0,
       },
       {
         value: moodCount.happy || 0,
         color: 'rgba(178,214,28,1)',
         description: 'happy',
+        percent: moodPercent(moodCount.happy) || 0,
       },
       {
         value: moodCount.neutral || 0,
         color: 'rgba(239,221,7,1)',
         description: 'neutral',
+        percent: moodPercent(moodCount.neutral) || 0,
       },
       {
         value: moodCount.sad || 0,
         color: 'rgb(245, 156, 47)',
         description: 'sad',
+        percent: moodPercent(moodCount.sad) || 0,
       },
       {
         value: moodCount.terrible || 0,
         color: 'rgb(240, 105, 1)',
         description: 'terrible',
+        percent: moodPercent(moodCount.terrible) || 0,
       },
     ];
     return chartData;
   };
-  // TODO: renderLegend должен считать и отображать процентное значение.
-  // TODO: Вынести renderLegend в отдельный компонент. Мапить его внутри AppPieChart.
+
+  const chartData = countChartData();
+
   // TODO: Переработать стилизацию renderLegend.
 
   const renderLegend = (chartData: ChartItem[]) => {
@@ -104,7 +119,7 @@ export const AppPieChart: React.FC = () => {
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'center',
+            justifyContent: 'space-between',
             marginBottom: 10,
           }}
         >
@@ -119,7 +134,7 @@ export const AppPieChart: React.FC = () => {
           >
             {renderDot(chartData[0].color)}
             <AppHeaderText style={{ color: theme.colorBrown }}>
-              {chartData[0].description}: {chartData[0].value}
+              {chartData[0].description}: {chartData[0].percent}%
             </AppHeaderText>
           </View>
           <View
@@ -127,19 +142,25 @@ export const AppPieChart: React.FC = () => {
           >
             {renderDot(chartData[1].color)}
             <AppHeaderText style={{ color: theme.colorBrown }}>
-              {chartData[1].description}: {chartData[1].value}
+              {chartData[1].description}: {chartData[1].percent}%
             </AppHeaderText>
           </View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginBottom: 10,
+          }}
+        >
           <View
             style={{ flexDirection: 'row', alignItems: 'center', width: 120 }}
           >
             {renderDot(chartData[2].color)}
             <AppHeaderText style={{ color: theme.colorBrown }}>
-              {chartData[2].description}: {chartData[2].value}
+              {chartData[2].description}: {chartData[2].percent}%
             </AppHeaderText>
           </View>
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
           <View
             style={{
               flexDirection: 'row',
@@ -150,15 +171,23 @@ export const AppPieChart: React.FC = () => {
           >
             {renderDot(chartData[3].color)}
             <AppHeaderText style={{ color: theme.colorBrown }}>
-              {chartData[3].description}: {chartData[3].value}
+              {chartData[3].description}: {chartData[3].percent}%
             </AppHeaderText>
           </View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginBottom: 10,
+          }}
+        >
           <View
             style={{ flexDirection: 'row', alignItems: 'center', width: 120 }}
           >
             {renderDot(chartData[4].color)}
             <AppHeaderText style={{ color: theme.colorBrown }}>
-              {chartData[4].description}: {chartData[4].value}
+              {chartData[4].description}: {chartData[4].percent}%
             </AppHeaderText>
           </View>
         </View>
@@ -171,7 +200,7 @@ export const AppPieChart: React.FC = () => {
       <View style={styles.buttonsContainer}>
         <Pressable
           style={styles.button}
-          onPress={() => setSelectedMoodFilter('all')}
+          onPress={() => setSelectedFilterOptions('all')}
         >
           <AppHeaderText style={styles.buttonAppText} variant="bold">
             All
@@ -180,7 +209,7 @@ export const AppPieChart: React.FC = () => {
 
         <Pressable
           style={styles.button}
-          onPress={() => setSelectedMoodFilter('week')}
+          onPress={() => setSelectedFilterOptions('week')}
         >
           <AppHeaderText style={styles.buttonAppText} variant="bold">
             Week
@@ -189,9 +218,9 @@ export const AppPieChart: React.FC = () => {
       </View>
 
       <View style={styles.pie}>
-        <PieChart data={selectedPieData()} radius={120} />
+        <PieChart data={chartData} radius={120} />
       </View>
-      <View>{renderLegend(selectedPieData())}</View>
+      <View>{renderLegend(chartData)}</View>
     </View>
   );
 };
