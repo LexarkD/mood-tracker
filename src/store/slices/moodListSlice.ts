@@ -1,14 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store.ts';
 
-export type MoodType = {
-  emoji: string;
-  description: 'funny' | 'neutral' | 'sad';
-};
+export const moodOptions = [
+  'awesome',
+  'happy',
+  'neutral',
+  'sad',
+  'terrible',
+] as const;
+export type MoodType = (typeof moodOptions)[number];
 
 export type TimeStamp = number;
 
-export type MoodWithTimestamp = MoodType & { timestamp: TimeStamp };
+export type MoodWithTimestamp = {
+  description: MoodType;
+  timestamp: TimeStamp;
+};
 
 export type MoodListState = {
   moodList: MoodWithTimestamp[];
@@ -28,7 +35,7 @@ export const moodListSlice = createSlice({
       },
       prepare: (mood: MoodType) => {
         return {
-          payload: { ...mood, timestamp: Date.now() },
+          payload: { description: mood, timestamp: Date.now() },
         };
       },
     },

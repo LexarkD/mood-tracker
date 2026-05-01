@@ -8,7 +8,7 @@ import {
   HistoryIcon,
   AnalyticsIcon,
   IconProps,
-} from '../components/Icons';
+} from '../components/TabBarIcons.tsx';
 import { theme } from '../constants/theme.ts';
 
 export type TabBarIconProps = Required<IconProps>; // Версия IconProps с обязательными значениям.
@@ -30,10 +30,11 @@ export const BottomTabsNavigator: React.FC = () => {
   return (
     <BottomTabs.Navigator
       screenOptions={({ route }) => ({
-        tabBarActiveTintColor: theme.colorBlue,
+        tabBarStyle: { backgroundColor: theme.colorWhite },
+        tabBarActiveTintColor: theme.colorBrown,
         tabBarInactiveTintColor: theme.colorGrey,
         tabBarShowLabel: false,
-        headerTitleStyle: { fontFamily: theme.fontFamilyBold },
+        headerShown: false,
         tabBarIcon: createTabBarIcon(route.name),
       })}
     >

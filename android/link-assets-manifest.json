@@ -2,6 +2,18 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "assets/fonts/Cygre-Bold.ttf",
+      "sha1": "3bc30e32afb289aa93eaaf8f4ce9d96f2992b2f6"
+    },
+    {
+      "path": "assets/fonts/Cygre-Light.ttf",
+      "sha1": "d18eb2657c83a175509cfb67ddc0424fcff07b3e"
+    },
+    {
+      "path": "assets/fonts/Cygre-Regular.ttf",
+      "sha1": "6d2b1ea0cc1ed1c8bb621e64abf1090726d1b798"
+    },
+    {
       "path": "assets/fonts/Kalam-Bold.ttf",
       "sha1": "2a559015d425e2197d24dd64ec5f575b713c008f"
     },
@@ -12,6 +24,18 @@
     {
       "path": "assets/fonts/Kalam-Regular.ttf",
       "sha1": "8780563680372a86968c46c50cba05143654fe49"
+    },
+    {
+      "path": "assets/fonts/NEXTART-Bold.otf",
+      "sha1": "295e913ac183c582deb07269fdf2ad3d263ce2a4"
+    },
+    {
+      "path": "assets/fonts/NEXTART-Light.otf",
+      "sha1": "1c057348b8da54b07b3276202d2c1545a119628a"
+    },
+    {
+      "path": "assets/fonts/NEXTART.otf",
+      "sha1": "99513b95f8c785071b374d5001408c80a6e076f5"
     }
   ]
 }

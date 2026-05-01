@@ -7,7 +7,7 @@ type AppTextProps = TextProps & {
   children: React.ReactNode;
 };
 
-export const AppText: React.FC<AppTextProps> = ({
+export const AppHeaderText: React.FC<AppTextProps> = ({
   variant = 'regular',
   style,
   children,
@@ -16,12 +16,12 @@ export const AppText: React.FC<AppTextProps> = ({
   const getFontFamily = (): string => {
     switch (variant) {
       case 'bold':
-        return theme.fontCygreBold;
+        return theme.fontNextArtBold;
       case 'light':
-        return theme.fontCygreLight;
+        return theme.fontNextArtLight;
       case 'regular':
       default:
-        return theme.fontCygreRegular;
+        return theme.fontNextArtRegular;
     }
   };
 

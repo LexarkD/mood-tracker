@@ -1,19 +1,25 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppPieChart } from '../components/AppPieChart.tsx';
+import { theme } from '../constants/theme.ts';
 
 export const Analytics: React.FC = () => {
   return (
-    <View style={styles.container}>
-      <View>
-        <AppPieChart />
-      </View>
-    </View>
+    <SafeAreaView style={styles.container} edges={['top', 'right', 'left']}>
+      <ScrollView>
+        <View>
+          <AppPieChart />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    backgroundColor: theme.colorGreen,
   },
 });

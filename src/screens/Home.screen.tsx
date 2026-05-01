@@ -1,21 +1,23 @@
 import React from 'react';
-import { StyleSheet, ImageBackground } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { MoodPicker } from '../components/MoodPicker.tsx';
-
-const imageUrl =
-  'https://images.unsplash.com/photo-1474540412665-1cdae210ae6b?q=80&w=2366&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+import { theme } from '../constants/theme.ts';
 
 export const Home: React.FC = () => {
   return (
-    <ImageBackground source={{ uri: imageUrl }} style={styles.container}>
+    <SafeAreaView edges={['top', 'right', 'left']} style={styles.container}>
       <MoodPicker />
-    </ImageBackground>
+    </SafeAreaView>
   );
 };
+
+// TODO: Мне не нравится, что часть стилей находится тут, другая - в MoodPicker
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    backgroundColor: theme.colorGreen,
   },
 });

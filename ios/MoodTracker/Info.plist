@@ -32,7 +32,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>RCTNewArchEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -54,6 +54,12 @@
 		<string>Kalam-Bold.ttf</string>
 		<string>Kalam-Light.ttf</string>
 		<string>Kalam-Regular.ttf</string>
+		<string>NEXTART-Bold.otf</string>
+		<string>NEXTART-Light.otf</string>
+		<string>NEXTART.otf</string>
+		<string>Cygre-Bold.ttf</string>
+		<string>Cygre-Light.ttf</string>
+		<string>Cygre-Regular.ttf</string>
 	</array>
 </dict>
 </plist>
