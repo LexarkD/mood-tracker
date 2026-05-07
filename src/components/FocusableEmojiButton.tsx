@@ -4,19 +4,21 @@ import Reanimated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { MoodType } from '../store/slices/moodListSlice.ts';
+import { MoodType, SleepType } from '../store/slices/moodListSlice.ts';
 import { theme } from '../constants/theme.ts';
 import { AppMoodEmoji } from './AppMoodEmoji.tsx';
 
 type FocusableEmojiButton = {
-  mood: MoodType;
+  description: MoodType | SleepType;
+  // mood: MoodType;
   selectedMood: boolean;
   onPress: () => void;
 };
 const ReanimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
 export const FocusableEmojiButton: React.FC<FocusableEmojiButton> = ({
-  mood,
+  description,
+  //TODO: selectedMood => найминг по типу selectedOption
   selectedMood,
   onPress,
 }) => {
@@ -32,7 +34,7 @@ export const FocusableEmojiButton: React.FC<FocusableEmojiButton> = ({
       onPress={onPress}
       style={[styles.moodItem, emojiStyleSelect]}
     >
-      <AppMoodEmoji size={theme.iconSize.small} description={mood} />
+      <AppMoodEmoji size={theme.iconSize.small} description={description} />
     </ReanimatedPressable>
   );
 };

@@ -5,7 +5,12 @@ import Reanimated, {
   withTiming,
 } from 'react-native-reanimated';
 import useMoodList from '../hooks/useMoodList.ts';
-import { moodOptions, MoodType } from '../store/slices/moodListSlice.ts';
+import {
+  moodOptions,
+  sleepOptions,
+  MoodType,
+  SleepType,
+} from '../store/slices/moodListSlice.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
 import { AppHeaderText } from './AppHeaderText.tsx';
@@ -15,21 +20,24 @@ import { FocusableEmojiButton } from './FocusableEmojiButton.tsx';
 const ReanimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
 export const MoodPicker: React.FC = () => {
-  const { onAddMood } = useMoodList();
+  const { onAddMark } = useMoodList();
+  //TODO ренейм selectedMood и selectedSleep. Это выбор опций или поинтов
   const [selectedMood, setSelectedMood] = useState<MoodType>();
+  const [selectedSleep, setSelectedSleep] = useState<SleepType>();
   const [hasSelected, setHasSelected] = useState(false);
-  const chosenMood = Boolean(selectedMood);
+  const chosenMood = Boolean(selectedMood && selectedSleep);
 
   const handleSelect = () => {
-    if (selectedMood) {
-      onAddMood(selectedMood);
+    if (selectedMood && selectedSleep) {
+      onAddMark({ moodOptions: selectedMood, sleepOptions: selectedSleep });
       setHasSelected(true);
     }
   };
 
   const handleBack = () => {
-    if (selectedMood) {
+    if (selectedMood && selectedSleep) {
       setSelectedMood(undefined);
+      setSelectedSleep(undefined);
       setHasSelected(false);
     }
   };
@@ -44,7 +52,7 @@ export const MoodPicker: React.FC = () => {
 
   if (hasSelected && selectedMood) {
     return (
-      <View style={styles.container}>
+      <View style={styles.optionsContainer}>
         <AppMoodEmoji
           style={styles.backBoxEmoji}
           description={selectedMood}
@@ -64,22 +72,43 @@ export const MoodPicker: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <AppHeaderText style={styles.heading} variant="bold">
-        How are you right now?
-      </AppHeaderText>
-      <View style={styles.moodList}>
-        {moodOptions.map(mood => (
-          <View key={mood}>
-            <FocusableEmojiButton
-              mood={mood}
-              selectedMood={selectedMood === mood}
-              onPress={() => setSelectedMood(mood)}
-            />
-            <AppText style={styles.descriptionText} variant="bold">
-              {selectedMood === mood ? mood : ' '}
-            </AppText>
-          </View>
-        ))}
+      <View style={styles.optionsContainer}>
+        <AppHeaderText style={styles.heading} variant="bold">
+          How are you right now?
+        </AppHeaderText>
+        <View style={styles.moodList}>
+          {moodOptions.map(mood => (
+            <View key={mood}>
+              <FocusableEmojiButton
+                description={mood}
+                selectedMood={selectedMood === mood}
+                onPress={() => setSelectedMood(mood)}
+              />
+              <AppText style={styles.descriptionText} variant="bold">
+                {selectedMood === mood ? mood : ' '}
+              </AppText>
+            </View>
+          ))}
+        </View>
+      </View>
+      <View style={styles.optionsContainer}>
+        <AppHeaderText style={styles.heading} variant="bold">
+          How are you right now?
+        </AppHeaderText>
+        <View style={styles.moodList}>
+          {sleepOptions.map(sleep => (
+            <View key={sleep}>
+              <FocusableEmojiButton
+                description={sleep}
+                selectedMood={selectedSleep === sleep}
+                onPress={() => setSelectedSleep(sleep)}
+              />
+              <AppText style={styles.descriptionText} variant="bold">
+                {selectedSleep === sleep ? sleep : ' '}
+              </AppText>
+            </View>
+          ))}
+        </View>
       </View>
       <ReanimatedPressable
         style={[styles.button, buttonStyle]}
@@ -107,12 +136,15 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   container: {
+    flex: 1,
+  },
+  optionsContainer: {
     backgroundColor: theme.colorWhite,
     margin: 10,
     borderRadius: 10,
     padding: 20,
     justifyContent: 'space-between',
-    height: 230,
+    // height: 230,
   },
   moodList: {
     flexDirection: 'row',

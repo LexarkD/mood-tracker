@@ -1,16 +1,21 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import {
-  AwesomeEmoji,
-  HappyEmoji,
-  NeutralEmoji,
-  SadEmoji,
-  TerribleEmoji,
+  AwesomeMoodEmoji,
+  HappyMoodEmoji,
+  NeutralMoodEmoji,
+  SadMoodEmoji,
+  TerribleMoodEmoji,
 } from './MoodEmoji.tsx';
-import type { MoodType } from '../store/slices/moodListSlice.ts';
+import {
+  CheerfulSleepEmoji,
+  NormSleepEmoji,
+  SleepySleepEmoji,
+} from './SleepEmoji.tsx';
+import type { MoodType, SleepType } from '../store/slices/moodListSlice.ts';
 
 type AppMoodEmojiProps = {
-  description: MoodType;
+  description: MoodType | SleepType;
   size?: number;
   style?: StyleProp<ViewStyle>;
 };
@@ -21,18 +26,27 @@ export const AppMoodEmoji: React.FC<AppMoodEmojiProps> = ({
   style,
 }) => {
   if (description === 'awesome') {
-    return <AwesomeEmoji style={style} size={size} />;
+    return <AwesomeMoodEmoji style={style} size={size} />;
   }
   if (description === 'happy') {
-    return <HappyEmoji style={style} size={size} />;
+    return <HappyMoodEmoji style={style} size={size} />;
   }
   if (description === 'neutral') {
-    return <NeutralEmoji style={style} size={size} />;
+    return <NeutralMoodEmoji style={style} size={size} />;
   }
   if (description === 'sad') {
-    return <SadEmoji style={style} size={size} />;
+    return <SadMoodEmoji style={style} size={size} />;
   }
   if (description === 'terrible') {
-    return <TerribleEmoji style={style} size={size} />;
+    return <TerribleMoodEmoji style={style} size={size} />;
+  }
+  if (description === 'cheerful') {
+    return <CheerfulSleepEmoji style={style} size={size} />;
+  }
+  if (description === 'norm') {
+    return <NormSleepEmoji style={style} size={size} />;
+  }
+  if (description === 'sleepy') {
+    return <SleepySleepEmoji style={style} size={size} />;
   }
 };

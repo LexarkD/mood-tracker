@@ -2,14 +2,14 @@ import React, { useRef, useCallback } from 'react';
 import { FlatList, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
-import type { MoodWithTimestamp } from '../store/slices/moodListSlice.ts';
+import type { EntryMarkWithTimestamp } from '../store/slices/moodListSlice.ts';
 import { MoodItemRow } from '../components/MoodItemRow.tsx';
-import useMoodList from '../hooks/useMoodList.ts';
+import useMarkList from '../hooks/useMoodList.ts';
 import { AppText } from '../components/AppText.tsx';
 import { theme } from '../constants/theme.ts';
 
 export const History: React.FC = () => {
-  const { onClearMoodList, moodList } = useMoodList();
+  const { onClearMarkList, markList } = useMarkList();
   const flatListRef = useRef<FlatList>(null);
 
   useFocusEffect(
@@ -18,22 +18,24 @@ export const History: React.FC = () => {
       return () => {};
     }, []),
   );
-
+  console.log(markList);
   return (
     <SafeAreaView edges={['top', 'right', 'left']} style={styles.container}>
-      <Pressable hitSlop={16} onPress={onClearMoodList}>
+      <Pressable hitSlop={16} onPress={onClearMarkList}>
         <AppText style={styles.deleteText} variant="light">
           Clear history
         </AppText>
       </Pressable>
       <FlatList
         ref={flatListRef}
-        data={moodList}
+        data={markList}
         renderItem={({ item, index }) => {
           const isEven = index % 2 === 0;
-          return <MoodItemRow mood={item} isEven={isEven} />;
+          return <MoodItemRow mark={item} isEven={isEven} />;
         }}
-        keyExtractor={(item: MoodWithTimestamp) => item.timestamp.toString()}
+        keyExtractor={(item: EntryMarkWithTimestamp) =>
+          item.timestamp.toString()
+        }
       />
     </SafeAreaView>
   );

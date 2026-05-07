@@ -16,7 +16,7 @@ import { STORAGE_KEY } from '../constants/storageKey.ts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const combinedReducer = combineReducers({
-  moodList: moodListReducer,
+  markList: moodListReducer,
   [baseApi.reducerPath]: baseApi.reducer,
 });
 
@@ -25,7 +25,7 @@ type RootReducerState = ReturnType<typeof combinedReducer>;
 const persistConfig: PersistConfig<RootReducerState> = {
   key: STORAGE_KEY,
   storage: AsyncStorage,
-  whitelist: ['moodList'],
+  whitelist: ['markList'],
 };
 
 const persistedReducer = persistReducer(persistConfig, combinedReducer);

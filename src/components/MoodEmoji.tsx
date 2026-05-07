@@ -7,7 +7,10 @@ export type EmojiProps = {
   size?: number;
 };
 
-export const AwesomeEmoji: React.FC<EmojiProps> = ({ style, size = 40 }) => (
+export const AwesomeMoodEmoji: React.FC<EmojiProps> = ({
+  style,
+  size = 40,
+}) => (
   <Svg style={style} width={size} height={size} viewBox="0 0 424 424">
     <Path
       fill="rgba(18,18,18,1)"
@@ -20,7 +23,7 @@ export const AwesomeEmoji: React.FC<EmojiProps> = ({ style, size = 40 }) => (
   </Svg>
 );
 
-export const HappyEmoji: React.FC<EmojiProps> = ({ style, size = 40 }) => (
+export const HappyMoodEmoji: React.FC<EmojiProps> = ({ style, size = 40 }) => (
   <Svg style={style} width={size} height={size} viewBox="0 0 424 424">
     <Path
       fill="rgba(18,18,18,1)"
@@ -33,7 +36,10 @@ export const HappyEmoji: React.FC<EmojiProps> = ({ style, size = 40 }) => (
   </Svg>
 );
 
-export const NeutralEmoji: React.FC<EmojiProps> = ({ style, size = 40 }) => (
+export const NeutralMoodEmoji: React.FC<EmojiProps> = ({
+  style,
+  size = 40,
+}) => (
   <Svg style={style} width={size} height={size} viewBox="0 0 424 424">
     <Path
       fill="rgba(18,18,18,1)"
@@ -46,7 +52,7 @@ export const NeutralEmoji: React.FC<EmojiProps> = ({ style, size = 40 }) => (
   </Svg>
 );
 
-export const SadEmoji: React.FC<EmojiProps> = ({ style, size = 40 }) => (
+export const SadMoodEmoji: React.FC<EmojiProps> = ({ style, size = 40 }) => (
   <Svg style={style} width={size} height={size} viewBox="0 0 424 424">
     <Path
       fill="rgba(18,18,18,1)"
@@ -59,7 +65,10 @@ export const SadEmoji: React.FC<EmojiProps> = ({ style, size = 40 }) => (
   </Svg>
 );
 
-export const TerribleEmoji: React.FC<EmojiProps> = ({ style, size = 40 }) => (
+export const TerribleMoodEmoji: React.FC<EmojiProps> = ({
+  style,
+  size = 40,
+}) => (
   <Svg style={style} width={size} height={size} viewBox="0 0 424 424">
     <Path
       fill="rgba(18,18,18,1)"

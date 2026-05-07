@@ -8,24 +8,24 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { format } from 'date-fns/format';
-import type { MoodWithTimestamp } from '../store/slices/moodListSlice.ts';
-import useMoodList from '../hooks/useMoodList.ts';
+import type { EntryMarkWithTimestamp } from '../store/slices/moodListSlice.ts';
+import useMarkList from '../hooks/useMoodList.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
 import { AppMoodEmoji } from './AppMoodEmoji.tsx';
-
-type MoodItemRowProps = {
-  mood: MoodWithTimestamp;
+//TODO добавить аккардион, с разворотом всех опций
+type MarkRowProps = {
+  mark: EntryMarkWithTimestamp;
   isEven: boolean;
 };
-
-export const MoodItemRow: React.FC<MoodItemRowProps> = ({ mood, isEven }) => {
-  const { onDeleteMood } = useMoodList();
+//TODO: MoodItemRow ренейм в MarkItemRow
+export const MoodItemRow: React.FC<MarkRowProps> = ({ mark, isEven }) => {
+  const { onDeleteMark } = useMarkList();
 
   const removeWithDelay = () => {
     setTimeout(() => {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      onDeleteMood(mood.timestamp);
+      onDeleteMark(mark.timestamp);
     }, 250);
   };
 
@@ -64,14 +64,14 @@ export const MoodItemRow: React.FC<MoodItemRowProps> = ({ mood, isEven }) => {
           <AppMoodEmoji
             style={styles.emojiValue}
             size={theme.iconSize.medium}
-            description={mood.description}
+            description={mark.moodOptions}
           />
           <AppText style={styles.moodDescription} variant="bold">
-            {mood.description}
+            {mark.moodOptions}
           </AppText>
         </View>
         <AppText style={styles.moodDate}>
-          {format(new Date(mood.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
+          {format(new Date(mark.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
         </AppText>
       </Animated.View>
     </GestureDetector>

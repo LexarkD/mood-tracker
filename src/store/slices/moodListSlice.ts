@@ -10,51 +10,58 @@ export const moodOptions = [
 ] as const;
 export type MoodType = (typeof moodOptions)[number];
 
+export const sleepOptions = ['cheerful', 'norm', 'sleepy'] as const;
+export type SleepType = (typeof sleepOptions)[number];
+
+export type MarkEntryType = {
+  // description: MoodType;
+  moodOptions: MoodType;
+  sleepOptions: SleepType;
+};
+
 export type TimeStamp = number;
 
-export type MoodWithTimestamp = {
-  description: MoodType;
-  timestamp: TimeStamp;
+export type EntryMarkWithTimestamp = { timestamp: TimeStamp } & MarkEntryType;
+
+export type MarkListState = {
+  markList: EntryMarkWithTimestamp[];
 };
 
-export type MoodListState = {
-  moodList: MoodWithTimestamp[];
+const initialState: MarkListState = {
+  markList: [],
 };
 
-const initialState: MoodListState = {
-  moodList: [],
-};
-
-export const moodListSlice = createSlice({
-  name: 'moodList',
+export const markListSlice = createSlice({
+  //TODO: сменить name: 'moodList' => name: 'markList'
+  name: 'markList',
   initialState,
   reducers: {
-    addMood: {
-      reducer: (state, action: PayloadAction<MoodWithTimestamp>) => {
-        state.moodList = [action.payload, ...state.moodList];
+    addMark: {
+      reducer: (state, action: PayloadAction<EntryMarkWithTimestamp>) => {
+        state.markList = [action.payload, ...state.markList];
       },
-      prepare: (mood: MoodType) => {
+      prepare: (mark: MarkEntryType) => {
         return {
-          payload: { description: mood, timestamp: Date.now() },
+          payload: { ...mark, timestamp: Date.now() },
         };
       },
     },
 
-    removeMood: (state, action: PayloadAction<TimeStamp>) => {
-      state.moodList = state.moodList.filter(
-        mood => mood.timestamp !== action.payload,
+    removeMark: (state, action: PayloadAction<TimeStamp>) => {
+      state.markList = state.markList.filter(
+        markEntry => markEntry.timestamp !== action.payload,
       );
     },
 
-    clearMoods: state => {
-      state.moodList = [];
+    clearMarkList: state => {
+      state.markList = [];
     },
   },
 });
 
-export const { addMood, removeMood, clearMoods } = moodListSlice.actions;
+export const { addMark, removeMark, clearMarkList } = markListSlice.actions;
 
-export const selectMoodList = (state: RootState): MoodWithTimestamp[] =>
-  state.moodList.moodList;
+export const selectMarkList = (state: RootState): EntryMarkWithTimestamp[] =>
+  state.markList.markList;
 
-export default moodListSlice.reducer;
+export default markListSlice.reducer;

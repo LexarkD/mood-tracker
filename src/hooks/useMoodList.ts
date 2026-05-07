@@ -1,31 +1,34 @@
 import {
-  addMood,
-  removeMood,
-  clearMoods,
-  selectMoodList,
+  addMark,
+  removeMark,
+  clearMarkList,
+  selectMarkList,
 } from '../store/slices/moodListSlice.ts';
-import type { MoodType, TimeStamp } from '../store/slices/moodListSlice.ts';
+import type {
+  MarkEntryType,
+  TimeStamp,
+} from '../store/slices/moodListSlice.ts';
 import { useAppDispatch, useAppSelector } from './redux.hooks.ts';
 
-const useMoodList = () => {
-  const moodList = useAppSelector(selectMoodList);
+const useMarkList = () => {
+  const markList = useAppSelector(selectMarkList);
   const dispatch = useAppDispatch();
 
-  const onAddMood = (selectedMood: MoodType) => {
-    dispatch(addMood(selectedMood));
+  const onAddMark = (selectedMark: MarkEntryType) => {
+    dispatch(addMark(selectedMark));
   };
-  const onDeleteMood = (timestamp: TimeStamp) => {
-    dispatch(removeMood(timestamp));
+  const onDeleteMark = (timestamp: TimeStamp) => {
+    dispatch(removeMark(timestamp));
   };
-  const onClearMoodList = () => {
-    dispatch(clearMoods());
+  const onClearMarkList = () => {
+    dispatch(clearMarkList());
   };
   return {
-    moodList,
-    onAddMood,
-    onDeleteMood,
-    onClearMoodList,
+    markList,
+    onAddMark,
+    onDeleteMark,
+    onClearMarkList,
   };
 };
 
-export default useMoodList;
+export default useMarkList;
