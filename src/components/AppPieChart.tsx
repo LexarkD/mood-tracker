@@ -24,30 +24,30 @@ export const AppPieChart: React.FC = () => {
 
   const moodFilter = () => {
     if (selectedFilterOptions === 'all') {
-      const filtredMood = moodList;
-      return filtredMood;
+      const filteredMood = moodList;
+      return filteredMood;
     } else {
       const nowDate = new Date();
       const startDate = new Date(nowDate);
-      startDate.setDate(nowDate.getDate() - 3);
+      startDate.setDate(nowDate.getDate() - 2);
       startDate.setHours(0, 0, 0, 0);
       const endDate = new Date(nowDate);
       endDate.setHours(23, 59, 59, 999);
       const start = startDate.getTime();
       const end = endDate.getTime();
 
-      const filtredMood = moodList.filter(
+      const filteredMood = moodList.filter(
         ({ timestamp }) => timestamp >= start && timestamp <= end,
       );
 
-      return filtredMood;
+      return filteredMood;
     }
   };
 
-  const filtredMood = moodFilter();
+  const filteredMood = moodFilter();
 
   const countChartData = () => {
-    const moodCount = filtredMood.reduce<PartialMoodCount>(
+    const moodCount = filteredMood.reduce<PartialMoodCount>(
       (acc, { description }) => {
         acc[description] = (acc[description] || 0) + 1;
         return acc;
@@ -56,7 +56,7 @@ export const AppPieChart: React.FC = () => {
     );
 
     const moodPercent = (mood = 0) => {
-      const summMood = filtredMood.length;
+      const summMood = filteredMood.length;
       const percentMood = (mood * 100) / summMood;
       return Math.round(percentMood);
     };
@@ -98,100 +98,18 @@ export const AppPieChart: React.FC = () => {
 
   const chartData = countChartData();
 
-  // TODO: Переработать стилизацию renderLegend.
-
-  const renderLegend = (chartData: ChartItem[]) => {
-    const renderDot = (color: string) => {
-      return (
-        <View
-          style={{
-            height: 15,
-            width: 15,
-            borderRadius: 10,
-            backgroundColor: color,
-            marginRight: 10,
-          }}
-        />
-      );
-    };
+  const renderLegend = () => {
     return (
-      <>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: 10,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-
-              width: 120,
-              marginRight: 15,
-            }}
-          >
-            {renderDot(chartData[0].color)}
-            <AppHeaderText style={{ color: theme.colorBrown }}>
-              {chartData[0].description}: {chartData[0].percent}%
+      <View style={styles.legendContainer}>
+        {chartData.map(item => (
+          <View key={item.description} style={styles.legendItem}>
+            <View style={[styles.legendDot, { backgroundColor: item.color }]} />
+            <AppHeaderText style={styles.legendText}>
+              {item.description}: {item.percent}%
             </AppHeaderText>
           </View>
-          <View
-            style={{ flexDirection: 'row', alignItems: 'center', width: 120 }}
-          >
-            {renderDot(chartData[1].color)}
-            <AppHeaderText style={{ color: theme.colorBrown }}>
-              {chartData[1].description}: {chartData[1].percent}%
-            </AppHeaderText>
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: 10,
-          }}
-        >
-          <View
-            style={{ flexDirection: 'row', alignItems: 'center', width: 120 }}
-          >
-            {renderDot(chartData[2].color)}
-            <AppHeaderText style={{ color: theme.colorBrown }}>
-              {chartData[2].description}: {chartData[2].percent}%
-            </AppHeaderText>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: 120,
-              marginRight: 20,
-            }}
-          >
-            {renderDot(chartData[3].color)}
-            <AppHeaderText style={{ color: theme.colorBrown }}>
-              {chartData[3].description}: {chartData[3].percent}%
-            </AppHeaderText>
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: 10,
-          }}
-        >
-          <View
-            style={{ flexDirection: 'row', alignItems: 'center', width: 120 }}
-          >
-            {renderDot(chartData[4].color)}
-            <AppHeaderText style={{ color: theme.colorBrown }}>
-              {chartData[4].description}: {chartData[4].percent}%
-            </AppHeaderText>
-          </View>
-        </View>
-      </>
+        ))}
+      </View>
     );
   };
 
@@ -216,11 +134,10 @@ export const AppPieChart: React.FC = () => {
           </AppHeaderText>
         </Pressable>
       </View>
-
       <View style={styles.pie}>
         <PieChart data={chartData} radius={120} />
       </View>
-      <View>{renderLegend(chartData)}</View>
+      <View>{renderLegend()}</View>
     </View>
   );
 };
@@ -231,18 +148,18 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colorWhite,
     margin: 10,
     borderRadius: 10,
-    padding: 20,
-    justifyContent: 'space-between',
-    height: 450,
+    padding: 10,
+    justifyContent: 'space-around',
   },
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 10,
+    marginBottom: 20,
   },
   pie: {
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 20,
   },
   button: {
     backgroundColor: theme.colorOrange,
@@ -255,5 +172,28 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: theme.colorWhite,
     textAlign: 'center',
+  },
+  legendContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+    width: '40%',
+    flexGrow: 1,
+    marginHorizontal: 10,
+  },
+  legendDot: {
+    height: 15,
+    width: 15,
+    borderRadius: 10,
+    marginRight: 10,
+  },
+  legendText: {
+    color: theme.colorBrown,
   },
 });

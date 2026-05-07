@@ -87,13 +87,14 @@ const styles = StyleSheet.create({
     color: theme.colorBrown,
   },
   moodItem: {
+    height: 60,
     borderRadius: 10,
     marginHorizontal: 10,
     marginBottom: 4,
-    padding: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingHorizontal: 30,
   },
   evenItemZebra: {
     backgroundColor: theme.colorWhiteCold,
