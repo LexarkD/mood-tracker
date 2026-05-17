@@ -10,7 +10,7 @@ import {
   sleepOptions,
   MoodType,
   SleepType,
-} from '../store/slices/moodListSlice.ts';
+} from '../store/slices/markListSlice.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
 import { AppHeaderText } from './AppHeaderText.tsx';
@@ -20,24 +20,26 @@ import { FocusableEmojiButton } from './FocusableEmojiButton.tsx';
 const ReanimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
 export const MoodPicker: React.FC = () => {
-  const { onAddMark } = useMoodList();
-  //TODO ренейм selectedMood и selectedSleep. Это выбор опций или поинтов
-  const [selectedMood, setSelectedMood] = useState<MoodType>();
-  const [selectedSleep, setSelectedSleep] = useState<SleepType>();
+  const { onAddMarkEntry } = useMoodList();
+  const [selectedMoodMark, setSelectedMoodMark] = useState<MoodType>();
+  const [selectedSleepMark, setSelectedSleepMark] = useState<SleepType>();
   const [hasSelected, setHasSelected] = useState(false);
-  const chosenMood = Boolean(selectedMood && selectedSleep);
+  const chosenMood = Boolean(selectedMoodMark && selectedSleepMark);
 
   const handleSelect = () => {
-    if (selectedMood && selectedSleep) {
-      onAddMark({ moodOptions: selectedMood, sleepOptions: selectedSleep });
+    if (selectedMoodMark && selectedSleepMark) {
+      onAddMarkEntry({
+        moodMark: selectedMoodMark,
+        sleepMark: selectedSleepMark,
+      });
       setHasSelected(true);
     }
   };
 
   const handleBack = () => {
-    if (selectedMood && selectedSleep) {
-      setSelectedMood(undefined);
-      setSelectedSleep(undefined);
+    if (selectedMoodMark && selectedSleepMark) {
+      setSelectedMoodMark(undefined);
+      setSelectedSleepMark(undefined);
       setHasSelected(false);
     }
   };
@@ -50,16 +52,16 @@ export const MoodPicker: React.FC = () => {
     [chosenMood],
   );
 
-  if (hasSelected && selectedMood) {
+  if (hasSelected && selectedMoodMark) {
     return (
       <View style={styles.optionsContainer}>
         <AppMoodEmoji
           style={styles.backBoxEmoji}
-          description={selectedMood}
+          description={selectedMoodMark}
           size={theme.iconSize.large}
         />
         <AppText style={styles.descriptionText} variant="bold">
-          {selectedMood}
+          {selectedMoodMark}
         </AppText>
         <Pressable style={styles.button} onPress={handleBack}>
           <AppText style={styles.buttonText} variant="bold">
@@ -69,7 +71,7 @@ export const MoodPicker: React.FC = () => {
       </View>
     );
   }
-
+  //TODO: придумать другие подписи - хедеры для пикеров
   return (
     <View style={styles.container}>
       <View style={styles.optionsContainer}>
@@ -81,11 +83,11 @@ export const MoodPicker: React.FC = () => {
             <View key={mood}>
               <FocusableEmojiButton
                 description={mood}
-                selectedMood={selectedMood === mood}
-                onPress={() => setSelectedMood(mood)}
+                isSelectOption={selectedMoodMark === mood}
+                onPress={() => setSelectedMoodMark(mood)}
               />
               <AppText style={styles.descriptionText} variant="bold">
-                {selectedMood === mood ? mood : ' '}
+                {selectedMoodMark === mood ? mood : ' '}
               </AppText>
             </View>
           ))}
@@ -100,11 +102,11 @@ export const MoodPicker: React.FC = () => {
             <View key={sleep}>
               <FocusableEmojiButton
                 description={sleep}
-                selectedMood={selectedSleep === sleep}
-                onPress={() => setSelectedSleep(sleep)}
+                isSelectOption={selectedSleepMark === sleep}
+                onPress={() => setSelectedSleepMark(sleep)}
               />
               <AppText style={styles.descriptionText} variant="bold">
-                {selectedSleep === sleep ? sleep : ' '}
+                {selectedSleepMark === sleep ? sleep : ' '}
               </AppText>
             </View>
           ))}

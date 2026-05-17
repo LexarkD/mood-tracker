@@ -8,24 +8,25 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { format } from 'date-fns/format';
-import type { EntryMarkWithTimestamp } from '../store/slices/moodListSlice.ts';
+import type { MarkEntryWithTimestamp } from '../store/slices/markListSlice.ts';
 import useMarkList from '../hooks/useMoodList.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
 import { AppMoodEmoji } from './AppMoodEmoji.tsx';
+
 //TODO добавить аккардион, с разворотом всех опций
 type MarkRowProps = {
-  mark: EntryMarkWithTimestamp;
+  mark: MarkEntryWithTimestamp;
   isEven: boolean;
 };
-//TODO: MoodItemRow ренейм в MarkItemRow
-export const MoodItemRow: React.FC<MarkRowProps> = ({ mark, isEven }) => {
-  const { onDeleteMark } = useMarkList();
+
+export const MarkItemRow: React.FC<MarkRowProps> = ({ mark, isEven }) => {
+  const { onDeleteMarkEntry } = useMarkList();
 
   const removeWithDelay = () => {
     setTimeout(() => {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      onDeleteMark(mark.timestamp);
+      onDeleteMarkEntry(mark.timestamp);
     }, 250);
   };
 
@@ -64,10 +65,10 @@ export const MoodItemRow: React.FC<MarkRowProps> = ({ mark, isEven }) => {
           <AppMoodEmoji
             style={styles.emojiValue}
             size={theme.iconSize.medium}
-            description={mark.moodOptions}
+            description={mark.moodMark}
           />
           <AppText style={styles.moodDescription} variant="bold">
-            {mark.moodOptions}
+            {mark.moodMark}
           </AppText>
         </View>
         <AppText style={styles.moodDate}>
@@ -96,6 +97,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 30,
   },
+  // TODO: мне не нравится цвет зебры. Три оттенка белого на одном экране - это много.
   evenItemZebra: {
     backgroundColor: theme.colorWhiteCold,
   },

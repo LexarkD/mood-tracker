@@ -14,17 +14,16 @@ export const sleepOptions = ['cheerful', 'norm', 'sleepy'] as const;
 export type SleepType = (typeof sleepOptions)[number];
 
 export type MarkEntryType = {
-  // description: MoodType;
-  moodOptions: MoodType;
-  sleepOptions: SleepType;
+  moodMark: MoodType;
+  sleepMark: SleepType;
 };
 
 export type TimeStamp = number;
 
-export type EntryMarkWithTimestamp = { timestamp: TimeStamp } & MarkEntryType;
+export type MarkEntryWithTimestamp = { timestamp: TimeStamp } & MarkEntryType;
 
 export type MarkListState = {
-  markList: EntryMarkWithTimestamp[];
+  markList: MarkEntryWithTimestamp[];
 };
 
 const initialState: MarkListState = {
@@ -32,22 +31,21 @@ const initialState: MarkListState = {
 };
 
 export const markListSlice = createSlice({
-  //TODO: сменить name: 'moodList' => name: 'markList'
   name: 'markList',
   initialState,
   reducers: {
-    addMark: {
-      reducer: (state, action: PayloadAction<EntryMarkWithTimestamp>) => {
+    addMarkEntry: {
+      reducer: (state, action: PayloadAction<MarkEntryWithTimestamp>) => {
         state.markList = [action.payload, ...state.markList];
       },
-      prepare: (mark: MarkEntryType) => {
+      prepare: (markEntry: MarkEntryType) => {
         return {
-          payload: { ...mark, timestamp: Date.now() },
+          payload: { ...markEntry, timestamp: Date.now() },
         };
       },
     },
 
-    removeMark: (state, action: PayloadAction<TimeStamp>) => {
+    removeMarkEntry: (state, action: PayloadAction<TimeStamp>) => {
       state.markList = state.markList.filter(
         markEntry => markEntry.timestamp !== action.payload,
       );
@@ -59,9 +57,10 @@ export const markListSlice = createSlice({
   },
 });
 
-export const { addMark, removeMark, clearMarkList } = markListSlice.actions;
+export const { addMarkEntry, removeMarkEntry, clearMarkList } =
+  markListSlice.actions;
 
-export const selectMarkList = (state: RootState): EntryMarkWithTimestamp[] =>
+export const selectMarkList = (state: RootState): MarkEntryWithTimestamp[] =>
   state.markList.markList;
 
 export default markListSlice.reducer;

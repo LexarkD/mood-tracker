@@ -12,7 +12,7 @@ import {
   NormSleepEmoji,
   SleepySleepEmoji,
 } from './SleepEmoji.tsx';
-import type { MoodType, SleepType } from '../store/slices/moodListSlice.ts';
+import type { MoodType, SleepType } from '../store/slices/markListSlice.ts';
 
 type AppMoodEmojiProps = {
   description: MoodType | SleepType;

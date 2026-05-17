@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
-import type { MoodType } from '../store/slices/moodListSlice.ts';
-import useMoodList from '../hooks/useMoodList.ts';
+import type { MoodType } from '../store/slices/markListSlice.ts';
+import useMarkList from '../hooks/useMoodList.ts';
 import { theme } from '../constants/theme.ts';
 import { AppHeaderText } from './AppHeaderText.tsx';
 
@@ -18,13 +18,13 @@ type ChartItem = {
 type MoodFilterOptions = 'week' | 'all';
 
 export const AppPieChart: React.FC = () => {
-  const { moodList } = useMoodList();
+  const { markList } = useMarkList();
   const [selectedFilterOptions, setSelectedFilterOptions] =
     useState<MoodFilterOptions>('all');
 
   const moodFilter = () => {
     if (selectedFilterOptions === 'all') {
-      const filteredMood = moodList;
+      const filteredMood = markList;
       return filteredMood;
     } else {
       const nowDate = new Date();
@@ -36,7 +36,7 @@ export const AppPieChart: React.FC = () => {
       const start = startDate.getTime();
       const end = endDate.getTime();
 
-      const filteredMood = moodList.filter(
+      const filteredMood = markList.filter(
         ({ timestamp }) => timestamp >= start && timestamp <= end,
       );
 
@@ -48,8 +48,8 @@ export const AppPieChart: React.FC = () => {
 
   const countChartData = () => {
     const moodCount = filteredMood.reduce<PartialMoodCount>(
-      (acc, { description }) => {
-        acc[description] = (acc[description] || 0) + 1;
+      (acc, { moodOptions }) => {
+        acc[moodOptions] = (acc[moodOptions] || 0) + 1;
         return acc;
       },
       {},

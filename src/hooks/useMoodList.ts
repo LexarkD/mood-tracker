@@ -1,32 +1,32 @@
 import {
-  addMark,
-  removeMark,
+  addMarkEntry,
+  removeMarkEntry,
   clearMarkList,
   selectMarkList,
-} from '../store/slices/moodListSlice.ts';
+} from '../store/slices/markListSlice.ts';
 import type {
   MarkEntryType,
   TimeStamp,
-} from '../store/slices/moodListSlice.ts';
+} from '../store/slices/markListSlice.ts';
 import { useAppDispatch, useAppSelector } from './redux.hooks.ts';
 
 const useMarkList = () => {
   const markList = useAppSelector(selectMarkList);
   const dispatch = useAppDispatch();
 
-  const onAddMark = (selectedMark: MarkEntryType) => {
-    dispatch(addMark(selectedMark));
+  const onAddMarkEntry = (selectedMarks: MarkEntryType) => {
+    dispatch(addMarkEntry(selectedMarks));
   };
-  const onDeleteMark = (timestamp: TimeStamp) => {
-    dispatch(removeMark(timestamp));
+  const onDeleteMarkEntry = (timestamp: TimeStamp) => {
+    dispatch(removeMarkEntry(timestamp));
   };
   const onClearMarkList = () => {
     dispatch(clearMarkList());
   };
   return {
     markList,
-    onAddMark,
-    onDeleteMark,
+    onAddMarkEntry,
+    onDeleteMarkEntry,
     onClearMarkList,
   };
 };
