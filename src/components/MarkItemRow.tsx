@@ -9,20 +9,23 @@ import Animated, {
 } from 'react-native-reanimated';
 import { format } from 'date-fns/format';
 import type { MarkEntryWithTimestamp } from '../store/slices/markListSlice.ts';
-import useMarkList from '../hooks/useMoodList.ts';
+import useMarkList from '../hooks/useMarkList.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
-import { AppMoodEmoji } from './AppMoodEmoji.tsx';
+import { AppEmoji } from './AppEmoji.tsx';
 
-//TODO добавить аккардион, с разворотом всех опций
-type MarkRowProps = {
+// TODO: добавить аккардион, с разворотом всех опций
+
+type MarkItemProps = {
   mark: MarkEntryWithTimestamp;
   isEven: boolean;
 };
 
-export const MarkItemRow: React.FC<MarkRowProps> = ({ mark, isEven }) => {
+export const MarkItemRow: React.FC<MarkItemProps> = ({ mark, isEven }) => {
   const { onDeleteMarkEntry } = useMarkList();
 
+  // NOTE: Удаление отметки свайпом.
+  // TODO: Удаление отметки не должно попасть в релизную версию приложения. Так как позволяет исправлять(манипулировать) историю, следовательно - статистику.
   const removeWithDelay = () => {
     setTimeout(() => {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -57,13 +60,13 @@ export const MarkItemRow: React.FC<MarkRowProps> = ({ mark, isEven }) => {
       <Animated.View
         style={[
           animatedStyles,
-          styles.moodItem,
+          styles.itemContainer,
           isEven ? styles.evenItemZebra : styles.oddItemZebra,
         ]}
       >
         <View style={styles.emojiAndDescription}>
-          <AppMoodEmoji
-            style={styles.emojiValue}
+          <AppEmoji
+            style={styles.emoji}
             size={theme.iconSize.medium}
             description={mark.moodMark}
           />
@@ -71,7 +74,7 @@ export const MarkItemRow: React.FC<MarkRowProps> = ({ mark, isEven }) => {
             {mark.moodMark}
           </AppText>
         </View>
-        <AppText style={styles.moodDate}>
+        <AppText style={styles.itemDate}>
           {format(new Date(mark.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
         </AppText>
       </Animated.View>
@@ -80,14 +83,14 @@ export const MarkItemRow: React.FC<MarkRowProps> = ({ mark, isEven }) => {
 };
 
 const styles = StyleSheet.create({
-  emojiValue: {
+  emoji: {
     marginRight: 20,
   },
-  moodDate: {
+  itemDate: {
     textAlign: 'center',
     color: theme.colorBrown,
   },
-  moodItem: {
+  itemContainer: {
     height: 60,
     borderRadius: 10,
     marginHorizontal: 10,
@@ -111,8 +114,5 @@ const styles = StyleSheet.create({
   emojiAndDescription: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  deleteText: {
-    color: theme.colorBlue,
   },
 });

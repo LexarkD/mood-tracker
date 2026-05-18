@@ -14,13 +14,16 @@ import {
 } from './SleepEmoji.tsx';
 import type { MoodType, SleepType } from '../store/slices/markListSlice.ts';
 
+// NOTE: AppEmoji содержит все emoji. Возвращает emoji взависимости от description.
+
 type AppMoodEmojiProps = {
   description: MoodType | SleepType;
   size?: number;
   style?: StyleProp<ViewStyle>;
 };
 
-export const AppMoodEmoji: React.FC<AppMoodEmojiProps> = ({
+// TODO : можно заменить if на switch/case, будт лаконичнее
+export const AppEmoji: React.FC<AppMoodEmojiProps> = ({
   description,
   size,
   style,

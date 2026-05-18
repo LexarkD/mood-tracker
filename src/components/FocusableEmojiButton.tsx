@@ -6,7 +6,9 @@ import Reanimated, {
 } from 'react-native-reanimated';
 import { MoodType, SleepType } from '../store/slices/markListSlice.ts';
 import { theme } from '../constants/theme.ts';
-import { AppMoodEmoji } from './AppMoodEmoji.tsx';
+import { AppEmoji } from './AppEmoji.tsx';
+
+// NOTE: FocusableEmojiButton - является компонентом -оберткой для AppEmoji. Добавляет анимацию при нажатии на AppEmoji.
 
 type FocusableEmojiButton = {
   description: MoodType | SleepType;
@@ -20,7 +22,7 @@ export const FocusableEmojiButton: React.FC<FocusableEmojiButton> = ({
   isSelectOption,
   onPress,
 }) => {
-  const emojiStyleSelect = useAnimatedStyle(
+  const emojiAnimatedStyle = useAnimatedStyle(
     () => ({
       transform: [{ scale: isSelectOption ? withTiming(1.5) : withTiming(1) }],
     }),
@@ -30,15 +32,15 @@ export const FocusableEmojiButton: React.FC<FocusableEmojiButton> = ({
   return (
     <ReanimatedPressable
       onPress={onPress}
-      style={[styles.moodItem, emojiStyleSelect]}
+      style={[styles.emoji, emojiAnimatedStyle]}
     >
-      <AppMoodEmoji size={theme.iconSize.small} description={description} />
+      <AppEmoji size={theme.iconSize.small} description={description} />
     </ReanimatedPressable>
   );
 };
 
 const styles = StyleSheet.create({
-  moodItem: {
+  emoji: {
     width: 60,
     height: 60,
     justifyContent: 'center',

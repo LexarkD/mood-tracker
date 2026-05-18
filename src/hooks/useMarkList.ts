@@ -32,3 +32,5 @@ const useMarkList = () => {
 };
 
 export default useMarkList;
+
+// TODO: useMarkList - кастомный хук-обертка для markListSlice редюсеров

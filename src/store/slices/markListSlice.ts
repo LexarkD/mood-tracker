@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store.ts';
 
+// NOTE: moodOptions является единой входной точкой для для вариантов настроения и его типизации.
 export const moodOptions = [
   'awesome',
   'happy',
@@ -10,6 +11,7 @@ export const moodOptions = [
 ] as const;
 export type MoodType = (typeof moodOptions)[number];
 
+// NOTE: sleepOptions является единой входной точкой для для вариантов качества сна и его типизации.
 export const sleepOptions = ['cheerful', 'norm', 'sleepy'] as const;
 export type SleepType = (typeof sleepOptions)[number];
 
@@ -38,6 +40,7 @@ export const markListSlice = createSlice({
       reducer: (state, action: PayloadAction<MarkEntryWithTimestamp>) => {
         state.markList = [action.payload, ...state.markList];
       },
+      // NOTE: запись с отметками получает поле timestamp
       prepare: (markEntry: MarkEntryType) => {
         return {
           payload: { ...markEntry, timestamp: Date.now() },
