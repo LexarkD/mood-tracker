@@ -10,7 +10,8 @@ export const Analytics: React.FC = () => {
     <SafeAreaView style={styles.container} edges={['top', 'right', 'left']}>
       <ScrollView>
         <View>
-          <AppPieChart />
+          <AppPieChart markOption="moodMark" />
+          <AppPieChart markOption="sleepMark" />
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -17,18 +17,20 @@ import { AppHeaderText } from './AppHeaderText.tsx';
 import { AppEmoji } from './AppEmoji.tsx';
 import { FocusableEmojiButton } from './FocusableEmojiButton.tsx';
 
-//TODO: сделать проверку для "CHOOSE" => handleSelect. Добавить новую запись можно только если после последней записи прошло 24 часа. Добавить окно с оповещением, что в день можно дабвить только одну запись
+// TODO: сделать проверку для "CHOOSE" => handleSelect. Добавить новую запись можно только если после последней записи прошло 24 часа. Добавить окно с оповещением, что в день можно дабвить только одну запись
 const ReanimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
 export const MoodPicker: React.FC = () => {
-  const { onAddMarkEntry } = useMarkList();
+  const { onAddMockData, onClearMarkList, onAddMarkEntry } = useMarkList();
   const [selectedMoodMark, setSelectedMoodMark] = useState<MoodType>();
   const [selectedSleepMark, setSelectedSleepMark] = useState<SleepType>();
+
   // NOTE: hasSelected - по сути отвечает за отображение окна backBox.
-  // TODO: подумать, как семантически правильно назвать этот state. Назвать его в соостветствии с тем, для чего он нужен- отображение backBox (isRenderBackBox)?
+  // TODO: подумать, как семантически правильно назвать этот state. Назвать его в соостветствии с тем, для чего он нужен- отображение backBox (isRenderBackBox)? finished? showFinalResult?
   const [hasSelected, setHasSelected] = useState(false);
+
   // NOTE: chosenMood - булевое значение, отвечает за доступность кнопки "CHOOSE".
-  // TODO: подумать, как семантически правильно назвать эту переменную. Ее имя должно быть связано с тем, что она содержит булево значение -выбраны или нет опции(кпримеру isChosenMoods)? Или имя должно отображать, для чего нужна эта переменная -доступность кнопки (кпримеру isActivityChooseButton)?
+  // TODO: подумать, как семантически правильно назвать эту переменную. Ее имя должно быть связано с тем, что она содержит булево значение -выбраны или нет опции(кпримеру isChosenMoods)? Или имя должно отображать, для чего нужна эта переменная -доступность кнопки (кпримеру isActivityChooseButton)? moodPicked? allValuesPicked?
   const chosenMood = Boolean(selectedMoodMark && selectedSleepMark);
 
   const handleSelect = () => {
@@ -63,14 +65,29 @@ export const MoodPicker: React.FC = () => {
   if (hasSelected && selectedMoodMark && selectedSleepMark) {
     return (
       <View style={styles.backBoxContainer}>
-        <AppEmoji
-          style={styles.backBoxEmoji}
-          description={selectedMoodMark}
-          size={theme.iconSize.large}
-        />
-        <AppText style={styles.descriptionText} variant="bold">
-          {selectedMoodMark}
-        </AppText>
+        <View style={styles.finalResult}>
+          <View>
+            <AppEmoji
+              style={styles.backBoxEmoji}
+              description={selectedMoodMark}
+              size={theme.iconSize.large}
+            />
+            <AppText style={styles.descriptionText} variant="bold">
+              {selectedMoodMark}
+            </AppText>
+          </View>
+          <View>
+            <AppEmoji
+              style={styles.backBoxEmoji}
+              description={selectedSleepMark}
+              size={theme.iconSize.large}
+            />
+            <AppText style={styles.descriptionText} variant="bold">
+              {selectedSleepMark}
+            </AppText>
+          </View>
+        </View>
+
         <Pressable style={styles.button} onPress={handleBack}>
           <AppText style={styles.buttonText} variant="bold">
             BACK
@@ -82,6 +99,18 @@ export const MoodPicker: React.FC = () => {
   //TODO: придумать другие подписи - хедеры для пикеров
   return (
     <View style={styles.pickerContainer}>
+      <View style={styles.serviceContainer}>
+        <Pressable hitSlop={16} onPress={onClearMarkList}>
+          <AppText style={styles.serviceText} variant="light">
+            Clear history
+          </AppText>
+        </Pressable>
+        <Pressable hitSlop={16} onPress={onAddMockData}>
+          <AppText style={styles.serviceText} variant="light">
+            Add Mock Data
+          </AppText>
+        </Pressable>
+      </View>
       <View style={styles.optionsContainer}>
         <AppHeaderText style={styles.header} variant="bold">
           How are you right now?
@@ -143,7 +172,13 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'space-between',
   },
+  finalResult: {
+    flex: 1,
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+  },
   backBoxContainer: {
+    height: '30%',
     backgroundColor: theme.colorWhite,
     margin: 10,
     borderRadius: 10,
@@ -181,5 +216,11 @@ const styles = StyleSheet.create({
   backBoxEmoji: {
     alignSelf: 'center',
     marginTop: 25,
+  },
+  serviceContainer: {
+    flexDirection: 'row',
+  },
+  serviceText: {
+    color: theme.colorBrown,
   },
 });

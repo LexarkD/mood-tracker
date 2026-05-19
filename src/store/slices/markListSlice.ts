@@ -57,10 +57,13 @@ export const markListSlice = createSlice({
     clearMarkList: state => {
       state.markList = [];
     },
+    addMockData: (state, action) => {
+      state.markList = [...action.payload, ...state.markList];
+    },
   },
 });
 
-export const { addMarkEntry, removeMarkEntry, clearMarkList } =
+export const { addMarkEntry, removeMarkEntry, clearMarkList, addMockData } =
   markListSlice.actions;
 
 export const selectMarkList = (state: RootState): MarkEntryWithTimestamp[] =>

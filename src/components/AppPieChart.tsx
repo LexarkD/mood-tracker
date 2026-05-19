@@ -1,121 +1,32 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
-import type { MoodType } from '../store/slices/markListSlice.ts';
+
 import useMarkList from '../hooks/useMarkList.ts';
 import { theme } from '../constants/theme.ts';
 import { AppHeaderText } from './AppHeaderText.tsx';
+import { filterMarkTime } from '../utils/filterMarkTime.ts';
+import { filterMarkOption } from '../utils/filterMarkOption.ts';
 
 // TODO: Стилизовать кнопки под segmented buttons. Сделать три кнопки -  месяц, год, все время. Стилизация кнопки, которая нажата
 // TODO: Сделать AppPieChart переиспользуемым. Для работы будет принимать пропсом ключ объекта состояния .
-//type PieChartProps = 'moodMark' | 'sleepMark';
 
-type PartialMoodCount = Partial<Record<MoodType, number>>;
+export type TimeFilterOptions = 'week' | 'month' | 'all';
 
-type ChartItem = {
-  value: number;
-  color: string;
-  description: MoodType;
-  percent: number;
-};
+type AppPieChartProps = { markOption: 'moodMark' | 'sleepMark' };
 
-type TimeFilterOptions = 'week' | 'all';
-
-export const AppPieChart: React.FC = () => {
+export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
   const { markList } = useMarkList();
   const [selectedFilterOptions, setSelectedFilterOptions] =
     useState<TimeFilterOptions>('all');
-  // NOTE: Функция хелпер, фильтрация массива (эмоций) по периоду времени.
-  // TODO: Вынести функцию как отдельную утилиту. Передавать вкачестве аргумента timePeriod? Переиспользовать для разный pieChart.
-  const timePeriod = 1;
-  const markTimeFilter = () => {
-    if (selectedFilterOptions === 'all') {
-      const filteredMark = markList;
-      return filteredMark;
-    } else {
-      const nowDate = new Date();
-      const startDate = new Date(nowDate);
-      startDate.setDate(nowDate.getDate() - timePeriod);
-      startDate.setHours(0, 0, 0, 0);
-      const endDate = new Date(nowDate);
-      endDate.setHours(23, 59, 59, 999);
-      const startPeriod = startDate.getTime();
-      const endPeriod = endDate.getTime();
 
-      const filteredMark = markList.filter(
-        ({ timestamp }) => timestamp >= startPeriod && timestamp <= endPeriod,
-      );
-
-      return filteredMark;
-    }
-  };
   // NOTE: получаю отфильтрованный массив эмоций, соответственно значению временного периода
-  // TODO: Я могу импортировать в PieChart функцию хелпер и вызывать ее внутри компонента.
-  const filteredMarks = markTimeFilter();
-  console.log(`отфильтрованный стейт ${filteredMarks.length}`);
-  // NOTE: функция countChartData собирает объект moodCount для pieChart и chartLegend.
-  // TODO: Попробовать вынести функцию хелпер из компонента. Вызывать ее из компонента, передавая вкачестве аргумента ключ, по которому должны быть посчитаны все значения
-  // TODO: Перед countChartData можно сразу отделить нужный объект с опциями внутри filteredMarks
+  const filteredMarks = filterMarkTime(selectedFilterOptions, markList);
 
-  // FiltredMark - коллекция объектов типа:
-  // {
-  //  moodMark: MoodType,
-  //  sleepMark: SleepType,
-  //  timestamp: TimeStamp,
-  // }
-
-  const countChartData = () => {
-    const markCount = filteredMarks.reduce<PartialMoodCount>(
-      (acc, { moodMark }) => {
-        acc[moodMark] = (acc[moodMark] || 0) + 1;
-        return acc;
-      },
-      {},
-    );
-
-    const moodPercent = (mood = 0) => {
-      const summMood = filteredMarks.length;
-      const percentMood = (mood * 100) / summMood;
-      return Math.round(percentMood);
-    };
-
-    const chartData: ChartItem[] = [
-      {
-        value: markCount.awesome || 0,
-        color: 'rgb(96, 178, 85)',
-        description: 'awesome',
-        percent: moodPercent(markCount.awesome) || 0,
-      },
-      {
-        value: markCount.happy || 0,
-        color: 'rgba(178,214,28,1)',
-        description: 'happy',
-        percent: moodPercent(markCount.happy) || 0,
-      },
-      {
-        value: markCount.neutral || 0,
-        color: 'rgba(239,221,7,1)',
-        description: 'neutral',
-        percent: moodPercent(markCount.neutral) || 0,
-      },
-      {
-        value: markCount.sad || 0,
-        color: 'rgb(245, 156, 47)',
-        description: 'sad',
-        percent: moodPercent(markCount.sad) || 0,
-      },
-      {
-        value: markCount.terrible || 0,
-        color: 'rgb(240, 105, 1)',
-        description: 'terrible',
-        percent: moodPercent(markCount.terrible) || 0,
-      },
-    ];
-    return chartData;
-  };
+  // TEST !!!!!
   // NOTE: получаю собраный объект для pieChart и chartLegend.
-  // TODO: Это должно остаться внутри компонента. Тут буду вызывать функцию хелпер.
-  const chartData = countChartData();
+  const chartData = filterMarkOption(filteredMarks, markOption);
+  console.log(JSON.stringify(chartData, null, 2));
 
   // NOTE: Функция отрисовывает chartLegend. По сути мапит chartData.
   const renderLegend = () => {

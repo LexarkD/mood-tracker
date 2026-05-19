@@ -1,7 +1,9 @@
+import { generateMockData } from '../utils/generateMockData.ts';
 import {
   addMarkEntry,
   removeMarkEntry,
   clearMarkList,
+  addMockData,
   selectMarkList,
 } from '../store/slices/markListSlice.ts';
 import type {
@@ -23,14 +25,20 @@ const useMarkList = () => {
   const onClearMarkList = () => {
     dispatch(clearMarkList());
   };
+  // NOTE: добавляет историю за 10 последниъх дней с случайными отметками.
+  const onAddMockData = () => {
+    const mockDataArray = generateMockData();
+    dispatch(addMockData(mockDataArray));
+  };
   return {
     markList,
     onAddMarkEntry,
     onDeleteMarkEntry,
     onClearMarkList,
+    onAddMockData,
   };
 };
 
 export default useMarkList;
 
-// TODO: useMarkList - кастомный хук-обертка для markListSlice редюсеров
+// NOTE: useMarkList - кастомный хук-обертка для markListSlice редюсеров

@@ -1,5 +1,5 @@
 import React, { useRef, useCallback } from 'react';
-import { FlatList, Pressable, StyleSheet } from 'react-native';
+import { View, FlatList, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import type { MarkEntryWithTimestamp } from '../store/slices/markListSlice.ts';
@@ -9,7 +9,7 @@ import { AppText } from '../components/AppText.tsx';
 import { theme } from '../constants/theme.ts';
 
 export const History: React.FC = () => {
-  const { onClearMarkList, markList } = useMarkList();
+  const { onAddMockData, onClearMarkList, markList } = useMarkList();
   const flatListRef = useRef<FlatList>(null);
 
   // NOTE: useFocusEffect отвечает за кратковременное отображение скролл индикатора при переходе на экран.
@@ -24,11 +24,18 @@ export const History: React.FC = () => {
   // TODO: Добавить кнопку "burger button" сверху справа. Положить туда "Clear history"
   return (
     <SafeAreaView edges={['top', 'right', 'left']} style={styles.container}>
-      <Pressable hitSlop={16} onPress={onClearMarkList}>
-        <AppText style={styles.serviceText} variant="light">
-          Clear history
-        </AppText>
-      </Pressable>
+      <View style={styles.serviceContainer}>
+        <Pressable hitSlop={16} onPress={onClearMarkList}>
+          <AppText style={styles.serviceText} variant="light">
+            Clear history
+          </AppText>
+        </Pressable>
+        <Pressable hitSlop={16} onPress={onAddMockData}>
+          <AppText style={styles.serviceText} variant="light">
+            Add Mock Data
+          </AppText>
+        </Pressable>
+      </View>
       <FlatList
         ref={flatListRef}
         data={markList}
@@ -50,7 +57,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colorGreen,
   },
-
+  serviceContainer: {
+    flexDirection: 'row',
+  },
   serviceText: {
     color: theme.colorBrown,
   },
