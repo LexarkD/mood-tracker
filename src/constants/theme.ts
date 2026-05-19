@@ -29,3 +29,15 @@ export const theme = {
   fontNextArtRegular: 'NEXTART',
   fontNextArtLight: 'NEXTART-Light',
 };
+
+// TODO: во всем приложении поменять стилизацию кнопок. Сделать  borderRadius: 12
+
+// TODO: добавить объема панелям с помощью теней
+//! для iOS. Контейнер с свойством overflow: 'hidden', должен быть внутри shadowContainer
+// shadowContainer: {
+//     elevation: 3, //тени для android
+//     shadowColor: '#000', //Тени для iOS
+//     shadowOffset: { width: 0, height: 2 }, //Тени для iOS
+//     shadowOpacity: 0.1, //прозрачность тени
+//     shadowRadius: 4, //радиус тени
+// }

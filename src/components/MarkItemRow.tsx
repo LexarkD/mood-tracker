@@ -1,11 +1,19 @@
-import React from 'react';
-import { View, StyleSheet, LayoutAnimation } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  StyleSheet,
+  LayoutAnimation,
+  TouchableOpacity,
+} from 'react-native';
 import { scheduleOnRN } from 'react-native-worklets';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
+  FadeIn,
+  FadeOut,
+  LinearTransition,
 } from 'react-native-reanimated';
 import { format } from 'date-fns/format';
 import type { MarkEntryWithTimestamp } from '../store/slices/markListSlice.ts';
@@ -21,8 +29,11 @@ type MarkItemProps = {
   isEven: boolean;
 };
 
+const AnimatedTouch = Animated.createAnimatedComponent(TouchableOpacity);
+
 export const MarkItemRow: React.FC<MarkItemProps> = ({ mark, isEven }) => {
   const { onDeleteMarkEntry } = useMarkList();
+  const [expanded, setExpanded] = useState(false);
 
   // NOTE: Удаление отметки свайпом.
   // TODO: Удаление отметки не должно попасть в релизную версию приложения. Так как позволяет исправлять(манипулировать) историю, следовательно - статистику.
@@ -51,32 +62,77 @@ export const MarkItemRow: React.FC<MarkItemProps> = ({ mark, isEven }) => {
       }
     });
 
-  const animatedStyles = useAnimatedStyle(() => ({
+  const deleteAnimationStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: offset.value }],
   }));
 
+  const arrowAnimationStyle = useAnimatedStyle(() => {
+    const rotation = withTiming(expanded ? '180deg' : '0deg', {
+      duration: 250,
+    });
+    return {
+      transform: [{ rotate: rotation }],
+    };
+  });
+
+  const toggleExpand = () => {
+    setExpanded(!expanded);
+  };
+
   return (
     <GestureDetector gesture={pan}>
+      {/* Главный контейнер. Должен быть column*/}
       <Animated.View
         style={[
-          animatedStyles,
+          deleteAnimationStyle,
           styles.itemContainer,
           isEven ? styles.evenItemZebra : styles.oddItemZebra,
         ]}
+        layout={LinearTransition}
       >
-        <View style={styles.emojiAndDescription}>
-          <AppEmoji
-            style={styles.emoji}
-            size={theme.iconSize.medium}
-            description={mark.moodMark}
-          />
-          <AppText style={styles.moodDescription} variant="bold">
-            {mark.moodMark}
+        {/* контейнер для видимого хедера. Должен быть row */}
+        <AnimatedTouch
+          style={styles.headerContainer}
+          onPress={toggleExpand}
+          activeOpacity={0.7}
+        >
+          <View style={styles.emojiAndDescription}>
+            <AppEmoji
+              style={styles.emoji}
+              size={theme.iconSize.medium}
+              description={mark.moodMark}
+            />
+            <AppText style={styles.moodDescription} variant="bold">
+              {mark.moodMark}
+            </AppText>
+          </View>
+          <AppText style={styles.itemDate}>
+            {format(new Date(mark.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
           </AppText>
-        </View>
-        <AppText style={styles.itemDate}>
-          {format(new Date(mark.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
-        </AppText>
+          <Animated.Text style={[styles.arrowIcon, arrowAnimationStyle]}>
+            ▼
+          </Animated.Text>
+        </AnimatedTouch>
+        {expanded && (
+          // entering и exiting отвечают за плавное появление/исчезновение текста при монтировании
+          <Animated.View
+            entering={FadeIn.duration(200)}
+            exiting={FadeOut.duration(200)}
+            style={styles.contentContainer}
+          >
+            {/* <Text style={styles.content}>{content}</Text> */}
+            <View style={styles.emojiAndDescription}>
+              <AppEmoji
+                style={styles.emoji}
+                size={theme.iconSize.medium}
+                description={mark.sleepMark}
+              />
+              <AppText style={styles.moodDescription} variant="bold">
+                {mark.sleepMark}
+              </AppText>
+            </View>
+          </Animated.View>
+        )}
       </Animated.View>
     </GestureDetector>
   );
@@ -91,10 +147,20 @@ const styles = StyleSheet.create({
     color: theme.colorBrown,
   },
   itemContainer: {
-    height: 60,
-    borderRadius: 10,
+    overflow: 'hidden',
+    borderRadius: 12,
     marginHorizontal: 10,
     marginBottom: 4,
+  },
+  headerContainer: {
+    minHeight: 60,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 30,
+  },
+  contentContainer: {
+    minHeight: 60,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -115,4 +181,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  arrowIcon: {
+    fontSize: 14,
+    color: theme.colorBrown, // Стильный синий цвет для иконки
+  },
 });
+
+// card: { оснвной контейнер
+//     backgroundColor: '#ffffff',
+//     marginBottom: 12,
+//     borderRadius: 12,
+//     overflow: 'hidden',      //чтоб бы содержимое с углами не выходило за границы закругденного контейнера
+//     elevation: 3,             //тени для android
+//     shadowColor: '#000',     //Тени для iOS
+//     shadowOffset: { width: 0, height: 2 }, //Тени для iOS
+//     shadowOpacity: 0.1,  //прозрачность тени
+//     shadowRadius: 4,   //радиус тени
+//   },

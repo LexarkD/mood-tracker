@@ -18,6 +18,7 @@ import { AppEmoji } from './AppEmoji.tsx';
 import { FocusableEmojiButton } from './FocusableEmojiButton.tsx';
 
 // TODO: сделать проверку для "CHOOSE" => handleSelect. Добавить новую запись можно только если после последней записи прошло 24 часа. Добавить окно с оповещением, что в день можно дабвить только одну запись
+// TODO: при рефакторе переименовать в AnimatedPressable
 const ReanimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
 export const MoodPicker: React.FC = () => {
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
   optionsContainer: {
     backgroundColor: theme.colorWhite,
     margin: 10,
-    borderRadius: 10,
+    borderRadius: 12,
     padding: 20,
     justifyContent: 'space-between',
   },
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
     height: '30%',
     backgroundColor: theme.colorWhite,
     margin: 10,
-    borderRadius: 10,
+    borderRadius: 12,
     padding: 20,
     justifyContent: 'space-between',
   },

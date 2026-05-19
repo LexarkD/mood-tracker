@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colorWhite,
     margin: 10,
-    borderRadius: 10,
+    borderRadius: 12,
     padding: 10,
     justifyContent: 'space-around',
   },
