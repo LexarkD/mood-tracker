@@ -6,6 +6,7 @@ import { theme } from '../constants/theme.ts';
 
 export const Home: React.FC = () => {
   return (
+    // TODO: Ориентация будет залочена на вертикальной, кроме ввода комментарев с клавиатуры. Поэтому надо будет скорректирвоать SafeAreaView edges.
     <SafeAreaView edges={['top', 'right', 'left']} style={styles.container}>
       <MoodPicker />
     </SafeAreaView>

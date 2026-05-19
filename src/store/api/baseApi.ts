@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+// TODO: убрать baseApi, так как функционал, используюший backend, добавляться не будет
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: fetchBaseQuery({
@@ -10,5 +11,3 @@ export const baseApi = createApi({
   }),
   endpoints: () => ({}),
 });
-
-//  В текущем виде приложения, файл baseApi.ts не выполняет никакого функционала.

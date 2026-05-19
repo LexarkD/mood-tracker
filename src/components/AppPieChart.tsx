@@ -1,103 +1,34 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
-import type { MoodType } from '../store/slices/moodListSlice.ts';
-import useMoodList from '../hooks/useMoodList.ts';
+
+import useMarkList from '../hooks/useMarkList.ts';
 import { theme } from '../constants/theme.ts';
 import { AppHeaderText } from './AppHeaderText.tsx';
+import { filterMarkTime } from '../utils/filterMarkTime.ts';
+import { filterMarkOption } from '../utils/filterMarkOption.ts';
 
-type PartialMoodCount = Partial<Record<MoodType, number>>;
+// TODO: Стилизовать кнопки под segmented buttons. Сделать три кнопки -  месяц, год, все время. Стилизация кнопки, которая нажата
+// TODO: Сделать AppPieChart переиспользуемым. Для работы будет принимать пропсом ключ объекта состояния .
 
-type ChartItem = {
-  value: number;
-  color: string;
-  description: MoodType;
-  percent: number;
-};
+export type TimeFilterOptions = 'week' | 'month' | 'all';
 
-type MoodFilterOptions = 'week' | 'all';
+type AppPieChartProps = { markOption: 'moodMark' | 'sleepMark' };
 
-export const AppPieChart: React.FC = () => {
-  const { moodList } = useMoodList();
+export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
+  const { markList } = useMarkList();
   const [selectedFilterOptions, setSelectedFilterOptions] =
-    useState<MoodFilterOptions>('all');
+    useState<TimeFilterOptions>('all');
 
-  const moodFilter = () => {
-    if (selectedFilterOptions === 'all') {
-      const filteredMood = moodList;
-      return filteredMood;
-    } else {
-      const nowDate = new Date();
-      const startDate = new Date(nowDate);
-      startDate.setDate(nowDate.getDate() - 2);
-      startDate.setHours(0, 0, 0, 0);
-      const endDate = new Date(nowDate);
-      endDate.setHours(23, 59, 59, 999);
-      const start = startDate.getTime();
-      const end = endDate.getTime();
+  // NOTE: получаю отфильтрованный массив эмоций, соответственно значению временного периода
+  const filteredMarks = filterMarkTime(selectedFilterOptions, markList);
 
-      const filteredMood = moodList.filter(
-        ({ timestamp }) => timestamp >= start && timestamp <= end,
-      );
+  // TEST !!!!!
+  // NOTE: получаю собраный объект для pieChart и chartLegend.
+  const chartData = filterMarkOption(filteredMarks, markOption);
+  console.log(JSON.stringify(chartData, null, 2));
 
-      return filteredMood;
-    }
-  };
-
-  const filteredMood = moodFilter();
-
-  const countChartData = () => {
-    const moodCount = filteredMood.reduce<PartialMoodCount>(
-      (acc, { description }) => {
-        acc[description] = (acc[description] || 0) + 1;
-        return acc;
-      },
-      {},
-    );
-
-    const moodPercent = (mood = 0) => {
-      const summMood = filteredMood.length;
-      const percentMood = (mood * 100) / summMood;
-      return Math.round(percentMood);
-    };
-
-    const chartData: ChartItem[] = [
-      {
-        value: moodCount.awesome || 0,
-        color: 'rgb(96, 178, 85)',
-        description: 'awesome',
-        percent: moodPercent(moodCount.awesome) || 0,
-      },
-      {
-        value: moodCount.happy || 0,
-        color: 'rgba(178,214,28,1)',
-        description: 'happy',
-        percent: moodPercent(moodCount.happy) || 0,
-      },
-      {
-        value: moodCount.neutral || 0,
-        color: 'rgba(239,221,7,1)',
-        description: 'neutral',
-        percent: moodPercent(moodCount.neutral) || 0,
-      },
-      {
-        value: moodCount.sad || 0,
-        color: 'rgb(245, 156, 47)',
-        description: 'sad',
-        percent: moodPercent(moodCount.sad) || 0,
-      },
-      {
-        value: moodCount.terrible || 0,
-        color: 'rgb(240, 105, 1)',
-        description: 'terrible',
-        percent: moodPercent(moodCount.terrible) || 0,
-      },
-    ];
-    return chartData;
-  };
-
-  const chartData = countChartData();
-
+  // NOTE: Функция отрисовывает chartLegend. По сути мапит chartData.
   const renderLegend = () => {
     return (
       <View style={styles.legendContainer}>
@@ -147,7 +78,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colorWhite,
     margin: 10,
-    borderRadius: 10,
+    borderRadius: 12,
     padding: 10,
     justifyContent: 'space-around',
   },

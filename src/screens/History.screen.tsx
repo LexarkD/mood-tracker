@@ -1,17 +1,18 @@
 import React, { useRef, useCallback } from 'react';
-import { FlatList, Pressable, StyleSheet } from 'react-native';
+import { View, FlatList, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
-import type { MoodWithTimestamp } from '../store/slices/moodListSlice.ts';
-import { MoodItemRow } from '../components/MoodItemRow.tsx';
-import useMoodList from '../hooks/useMoodList.ts';
+import type { MarkEntryWithTimestamp } from '../store/slices/markListSlice.ts';
+import { MarkItemRow } from '../components/MarkItemRow.tsx';
+import useMarkList from '../hooks/useMarkList.ts';
 import { AppText } from '../components/AppText.tsx';
 import { theme } from '../constants/theme.ts';
 
 export const History: React.FC = () => {
-  const { onClearMoodList, moodList } = useMoodList();
+  const { onAddMockData, onClearMarkList, markList } = useMarkList();
   const flatListRef = useRef<FlatList>(null);
 
+  // NOTE: useFocusEffect отвечает за кратковременное отображение скролл индикатора при переходе на экран.
   useFocusEffect(
     useCallback(() => {
       flatListRef.current?.flashScrollIndicators();
@@ -19,21 +20,33 @@ export const History: React.FC = () => {
     }, []),
   );
 
+  // TODO: Ориентация будет залочена на вертикальной. Поэтому надо будет скорректирвоать SafeAreaView edges
+  // TODO: Добавить кнопку "burger button" сверху справа. Положить туда "Clear history"
   return (
     <SafeAreaView edges={['top', 'right', 'left']} style={styles.container}>
-      <Pressable hitSlop={16} onPress={onClearMoodList}>
-        <AppText style={styles.deleteText} variant="light">
-          Clear history
-        </AppText>
-      </Pressable>
+      <View style={styles.serviceContainer}>
+        <Pressable hitSlop={16} onPress={onClearMarkList}>
+          <AppText style={styles.serviceText} variant="light">
+            Clear history
+          </AppText>
+        </Pressable>
+        <Pressable hitSlop={16} onPress={onAddMockData}>
+          <AppText style={styles.serviceText} variant="light">
+            Add Mock Data
+          </AppText>
+        </Pressable>
+      </View>
       <FlatList
         ref={flatListRef}
-        data={moodList}
+        data={markList}
         renderItem={({ item, index }) => {
+          // NOTE: логика стилизации "зеброй" для MarkItemRow.
           const isEven = index % 2 === 0;
-          return <MoodItemRow mood={item} isEven={isEven} />;
+          return <MarkItemRow mark={item} isEven={isEven} />;
         }}
-        keyExtractor={(item: MoodWithTimestamp) => item.timestamp.toString()}
+        keyExtractor={(item: MarkEntryWithTimestamp) =>
+          item.timestamp.toString()
+        }
       />
     </SafeAreaView>
   );
@@ -44,8 +57,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colorGreen,
   },
-
-  deleteText: {
+  serviceContainer: {
+    flexDirection: 'row',
+  },
+  serviceText: {
     color: theme.colorBrown,
   },
 });
