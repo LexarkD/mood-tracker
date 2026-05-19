@@ -9,7 +9,6 @@ import { filterMarkTime } from '../utils/filterMarkTime.ts';
 import { filterMarkOption } from '../utils/filterMarkOption.ts';
 
 // TODO: Стилизовать кнопки под segmented buttons. Сделать три кнопки -  месяц, год, все время. Стилизация кнопки, которая нажата
-// TODO: Сделать AppPieChart переиспользуемым. Для работы будет принимать пропсом ключ объекта состояния .
 
 export type TimeFilterOptions = 'week' | 'month' | 'all';
 
@@ -45,7 +44,7 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, theme.shadowStyle]}>
       <View style={styles.buttonsContainer}>
         <Pressable
           style={styles.button}
@@ -95,7 +94,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: theme.colorOrange,
     width: 150,
-    borderRadius: 20,
+    borderRadius: 12,
     alignSelf: 'center',
     padding: 10,
   },

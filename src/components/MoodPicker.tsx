@@ -61,11 +61,11 @@ export const MoodPicker: React.FC = () => {
   );
 
   // NOTE: окно с итоговым выбором и кнопкой возврата.
-  // TODO: На итоговом окне должны быть показаны все выбраные опции. Анимировать их
+  // Анимировать эмодзи тогового результата
   // TODO: тройные логические конструкции - шляпа. Тут можно сделать проще
   if (hasSelected && selectedMoodMark && selectedSleepMark) {
     return (
-      <View style={styles.backBoxContainer}>
+      <View style={[styles.backBoxContainer, theme.shadowStyle]}>
         <View style={styles.finalResult}>
           <View>
             <AppEmoji
@@ -112,7 +112,7 @@ export const MoodPicker: React.FC = () => {
           </AppText>
         </Pressable>
       </View>
-      <View style={styles.optionsContainer}>
+      <View style={[styles.optionsContainer, theme.shadowStyle]}>
         <AppHeaderText style={styles.header} variant="bold">
           How are you right now?
         </AppHeaderText>
@@ -131,7 +131,7 @@ export const MoodPicker: React.FC = () => {
           ))}
         </View>
       </View>
-      <View style={styles.optionsContainer}>
+      <View style={[styles.optionsContainer, theme.shadowStyle]}>
         <AppHeaderText style={styles.header} variant="bold">
           How are you right now?
         </AppHeaderText>
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: theme.colorOrange,
     width: 150,
-    borderRadius: 20,
+    borderRadius: 12,
     marginTop: 20,
     alignSelf: 'center',
     padding: 10,

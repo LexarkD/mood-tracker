@@ -77,34 +77,34 @@ export const filterMarkOption = <K extends KeyOption>(
 
 // NOTE: Ожидаемая структура объекта chartData:
 //   const chartData = [
-//     {
-//       value: countMark.awesome || 0,
-//       color: 'rgb(96, 178, 85)',
-//       description: 'awesome',
-//       percent: calculatePercent(countMark.awesome) || 0,
-//     },
-//     {
-//       value: countMark.happy || 0,
-//       color: 'rgba(178,214,28,1)',
-//       description: 'happy',
-//       percent: calculatePercent(countMark.happy) || 0,
-//     },
-//     {
-//       value: countMark.neutral || 0,
-//       color: 'rgba(239,221,7,1)',
-//       description: 'neutral',
-//       percent: calculatePercent(countMark.neutral) || 0,
-//     },
-//     {
-//       value: countMark.sad || 0,
-//       color: 'rgb(245, 156, 47)',
-//       description: 'sad',
-//       percent: calculatePercent(countMark.sad) || 0,
-//     },
-//     {
-//       value: countMark.terrible || 0,
-//       color: 'rgb(240, 105, 1)',
-//       description: 'terrible',
-//       percent: calculatePercent(countMark.terrible) || 0,
-//     },
-//   ];
+//   {
+//     "value": 1,
+//     "color": "rgb(96, 178, 85)",
+//     "description": "awesome",
+//     "percent": 9
+//   },
+//   {
+//     "value": 1,
+//     "color": "rgba(178,214,28,1)",
+//     "description": "happy",
+//     "percent": 9
+//   },
+//   {
+//     "value": 6,
+//     "color": "rgba(239,221,7,1)",
+//     "description": "neutral",
+//     "percent": 55
+//   },
+//   {
+//     "value": 3,
+//     "color": "rgb(245, 156, 47)",
+//     "description": "sad",
+//     "percent": 27
+//   },
+//   {
+//     "value": 0,
+//     "color": "rgb(240, 105, 1)",
+//     "description": "terrible",
+//     "percent": 0
+//   }
+// ]
