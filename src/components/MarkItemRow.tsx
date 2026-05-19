@@ -22,8 +22,6 @@ import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
 import { AppEmoji } from './AppEmoji.tsx';
 
-// TODO: добавить аккардион, с разворотом всех опций
-
 type MarkItemProps = {
   mark: MarkEntryWithTimestamp;
   isEven: boolean;
@@ -81,16 +79,15 @@ export const MarkItemRow: React.FC<MarkItemProps> = ({ mark, isEven }) => {
 
   return (
     <GestureDetector gesture={pan}>
-      {/* Главный контейнер. Должен быть column*/}
       <Animated.View
         style={[
           deleteAnimationStyle,
           styles.itemContainer,
+          theme.shadowStyle,
           isEven ? styles.evenItemZebra : styles.oddItemZebra,
         ]}
         layout={LinearTransition}
       >
-        {/* контейнер для видимого хедера. Должен быть row */}
         <AnimatedTouch
           style={styles.headerContainer}
           onPress={toggleExpand}
@@ -114,13 +111,11 @@ export const MarkItemRow: React.FC<MarkItemProps> = ({ mark, isEven }) => {
           </Animated.Text>
         </AnimatedTouch>
         {expanded && (
-          // entering и exiting отвечают за плавное появление/исчезновение текста при монтировании
           <Animated.View
             entering={FadeIn.duration(200)}
             exiting={FadeOut.duration(200)}
             style={styles.contentContainer}
           >
-            {/* <Text style={styles.content}>{content}</Text> */}
             <View style={styles.emojiAndDescription}>
               <AppEmoji
                 style={styles.emoji}
@@ -147,7 +142,6 @@ const styles = StyleSheet.create({
     color: theme.colorBrown,
   },
   itemContainer: {
-    overflow: 'hidden',
     borderRadius: 12,
     marginHorizontal: 10,
     marginBottom: 4,
@@ -166,9 +160,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 30,
   },
-  // TODO: мне не нравится цвет зебры. Три оттенка белого на одном экране - это много.
   evenItemZebra: {
-    backgroundColor: theme.colorWhiteCold,
+    backgroundColor: theme.colorWhite,
   },
   oddItemZebra: {
     backgroundColor: theme.colorWhiteHeat,
@@ -183,18 +176,6 @@ const styles = StyleSheet.create({
   },
   arrowIcon: {
     fontSize: 14,
-    color: theme.colorBrown, // Стильный синий цвет для иконки
+    color: theme.colorBrown,
   },
 });
-
-// card: { оснвной контейнер
-//     backgroundColor: '#ffffff',
-//     marginBottom: 12,
-//     borderRadius: 12,
-//     overflow: 'hidden',      //чтоб бы содержимое с углами не выходило за границы закругденного контейнера
-//     elevation: 3,             //тени для android
-//     shadowColor: '#000',     //Тени для iOS
-//     shadowOffset: { width: 0, height: 2 }, //Тени для iOS
-//     shadowOpacity: 0.1,  //прозрачность тени
-//     shadowRadius: 4,   //радиус тени
-//   },
