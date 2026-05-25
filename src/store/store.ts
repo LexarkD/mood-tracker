@@ -15,7 +15,6 @@ import {
 import { STORAGE_KEY } from '../constants/storageKey.ts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// TODO: убрать combinedReducer, так как функционал, используюший backend, добавляться не будет
 const combinedReducer = combineReducers({
   markList: markListReducer,
   [baseApi.reducerPath]: baseApi.reducer,

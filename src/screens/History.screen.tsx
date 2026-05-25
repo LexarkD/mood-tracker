@@ -20,7 +20,6 @@ export const History: React.FC = () => {
     }, []),
   );
 
-  // TODO: Ориентация будет залочена на вертикальной. Поэтому надо будет скорректирвоать SafeAreaView edges
   // TODO: Добавить кнопку "burger button" сверху справа. Положить туда "Clear history"
   return (
     <SafeAreaView edges={['top', 'right', 'left']} style={styles.container}>
