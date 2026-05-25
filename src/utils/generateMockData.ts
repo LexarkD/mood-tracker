@@ -6,9 +6,10 @@ import {
 
 const moods: MoodType[] = ['awesome', 'happy', 'neutral', 'sad', 'terrible'];
 const sleepQuality: SleepType[] = ['cheerful', 'norm', 'sleepy'];
-// NOTE: Создает случайную историю за 10 днейы
+// NOTE: Создает случайную историю за отрезок времени
+const timePeriod = 434;
 export const generateMockData = (): MarkEntryWithTimestamp[] => {
-  return Array.from({ length: 10 }).map((_, index) => {
+  return Array.from({ length: timePeriod }).map((_, index) => {
     const timestamp = Date.now() - index * 86400000;
 
     return {

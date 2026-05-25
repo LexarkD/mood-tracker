@@ -10,19 +10,19 @@
 		01770F4F815F49F2ACEC8144 /* Kalam-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA70886E2CFE442BBBC85940 /* Kalam-Bold.ttf */; };
 		0C80B921A6F3F58F76C31292 /* libPods-MoodTracker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-MoodTracker.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		1A7BA98111E04A098D234F09 /* Cygre-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84F73CBC4BFE4A66B03C81C7 /* Cygre-Regular.ttf */; };
 		2329C375CF3B45825C12E96D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		586E0157EDB0446888D903A6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 198ADF8AA3044AFF9B920347 /* Colors.xcassets */; };
+		74FC9CDED62249CE8939F698 /* NEXTART-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66CBEA585B1E45BC927EB06B /* NEXTART-Light.otf */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
+		7D3D9538E85A44A5887DFF21 /* NEXTART-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BC1D5B80BABD4F20B71F67C8 /* NEXTART-Bold.otf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8B05970251FA458E8162D4F3 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E308E959E5844C458867A6B8 /* BootSplash.storyboard */; };
 		8E3488736421484A945782B1 /* Kalam-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 044D69BB517243B29D36830D /* Kalam-Regular.ttf */; };
-		E6635AEA7E1E4B1D9BF8DA93 /* Kalam-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FC3210C43F9483A945D24F1 /* Kalam-Light.ttf */; };
-		7D3D9538E85A44A5887DFF21 /* NEXTART-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BC1D5B80BABD4F20B71F67C8 /* NEXTART-Bold.otf */; };
-		74FC9CDED62249CE8939F698 /* NEXTART-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 66CBEA585B1E45BC927EB06B /* NEXTART-Light.otf */; };
-		E817238F11C74D34BD068CC7 /* NEXTART.otf in Resources */ = {isa = PBXBuildFile; fileRef = F5A2769D5E3F4FF48364FCAE /* NEXTART.otf */; };
 		D0D2853589504D18AEB47406 /* Cygre-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C9451D850F44E63ACE9A69E /* Cygre-Bold.ttf */; };
+		E6635AEA7E1E4B1D9BF8DA93 /* Kalam-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FC3210C43F9483A945D24F1 /* Kalam-Light.ttf */; };
+		E817238F11C74D34BD068CC7 /* NEXTART.otf in Resources */ = {isa = PBXBuildFile; fileRef = F5A2769D5E3F4FF48364FCAE /* NEXTART.otf */; };
 		FBAC7F908FA842609AE88CC5 /* Cygre-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D6DAC3371B54EF0BAC5E6CF /* Cygre-Light.ttf */; };
-		1A7BA98111E04A098D234F09 /* Cygre-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84F73CBC4BFE4A66B03C81C7 /* Cygre-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,20 +33,20 @@
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = MoodTracker/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		198ADF8AA3044AFF9B920347 /* Colors.xcassets */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = MoodTracker/Colors.xcassets; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-MoodTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoodTracker.debug.xcconfig"; path = "Target Support Files/Pods-MoodTracker/Pods-MoodTracker.debug.xcconfig"; sourceTree = "<group>"; };
+		4D6DAC3371B54EF0BAC5E6CF /* Cygre-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Cygre-Light.ttf"; path = "../assets/fonts/Cygre-Light.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-MoodTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoodTracker.release.xcconfig"; path = "Target Support Files/Pods-MoodTracker/Pods-MoodTracker.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-MoodTracker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MoodTracker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		66CBEA585B1E45BC927EB06B /* NEXTART-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NEXTART-Light.otf"; path = "../assets/fonts/NEXTART-Light.otf"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = MoodTracker/AppDelegate.swift; sourceTree = "<group>"; };
 		7FC3210C43F9483A945D24F1 /* Kalam-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Kalam-Light.ttf"; path = "../assets/fonts/Kalam-Light.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MoodTracker/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		84F73CBC4BFE4A66B03C81C7 /* Cygre-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Cygre-Regular.ttf"; path = "../assets/fonts/Cygre-Regular.ttf"; sourceTree = "<group>"; };
+		8C9451D850F44E63ACE9A69E /* Cygre-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Cygre-Bold.ttf"; path = "../assets/fonts/Cygre-Bold.ttf"; sourceTree = "<group>"; };
+		BC1D5B80BABD4F20B71F67C8 /* NEXTART-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NEXTART-Bold.otf"; path = "../assets/fonts/NEXTART-Bold.otf"; sourceTree = "<group>"; };
 		E308E959E5844C458867A6B8 /* BootSplash.storyboard */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = BootSplash.storyboard; path = MoodTracker/BootSplash.storyboard; sourceTree = "<group>"; };
 		EA70886E2CFE442BBBC85940 /* Kalam-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Kalam-Bold.ttf"; path = "../assets/fonts/Kalam-Bold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		BC1D5B80BABD4F20B71F67C8 /* NEXTART-Bold.otf */ = {isa = PBXFileReference; name = "NEXTART-Bold.otf"; path = "../assets/fonts/NEXTART-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		66CBEA585B1E45BC927EB06B /* NEXTART-Light.otf */ = {isa = PBXFileReference; name = "NEXTART-Light.otf"; path = "../assets/fonts/NEXTART-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		F5A2769D5E3F4FF48364FCAE /* NEXTART.otf */ = {isa = PBXFileReference; name = "NEXTART.otf"; path = "../assets/fonts/NEXTART.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		8C9451D850F44E63ACE9A69E /* Cygre-Bold.ttf */ = {isa = PBXFileReference; name = "Cygre-Bold.ttf"; path = "../assets/fonts/Cygre-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4D6DAC3371B54EF0BAC5E6CF /* Cygre-Light.ttf */ = {isa = PBXFileReference; name = "Cygre-Light.ttf"; path = "../assets/fonts/Cygre-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		84F73CBC4BFE4A66B03C81C7 /* Cygre-Regular.ttf */ = {isa = PBXFileReference; name = "Cygre-Regular.ttf"; path = "../assets/fonts/Cygre-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F5A2769D5E3F4FF48364FCAE /* NEXTART.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NEXTART.otf; path = ../assets/fonts/NEXTART.otf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
