@@ -97,7 +97,7 @@ export const MoodPicker: React.FC = () => {
       </View>
     );
   }
-  //TODO: добавить другие подписи в ветке feat.  // How are you feeling today?  // How did you sleep?
+
   return (
     <View style={styles.pickerContainer}>
       <View style={styles.serviceContainer}>
@@ -114,7 +114,7 @@ export const MoodPicker: React.FC = () => {
       </View>
       <View style={[styles.optionsContainer, theme.shadowStyle]}>
         <AppHeaderText style={styles.header} variant="bold">
-          How are you right now?
+          How are you feeling today?
         </AppHeaderText>
         <View style={styles.optionsRow}>
           {moodOptions.map(mood => (
@@ -133,7 +133,7 @@ export const MoodPicker: React.FC = () => {
       </View>
       <View style={[styles.optionsContainer, theme.shadowStyle]}>
         <AppHeaderText style={styles.header} variant="bold">
-          How are you right now?
+          How did you sleep?
         </AppHeaderText>
         <View style={styles.optionsRow}>
           {sleepOptions.map(sleep => (
