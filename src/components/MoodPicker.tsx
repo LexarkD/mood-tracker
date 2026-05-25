@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: theme.colorOrange,
+    backgroundColor: theme.colorYellow,
     width: 150,
     borderRadius: 12,
     marginTop: 20,
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   buttonText: {
-    color: theme.colorWhite,
+    color: theme.colorBrown,
     textAlign: 'center',
   },
   backBoxEmoji: {

@@ -16,10 +16,10 @@ export const filterMarkByTime: FilterMarkTime = (
   }
 
   let timePeriod = 0;
-  if (selectedFilterOptions === 'week') {
-    timePeriod = 7;
-  } else if (selectedFilterOptions === 'month') {
+  if (selectedFilterOptions === 'month') {
     timePeriod = 31;
+  } else if (selectedFilterOptions === 'year') {
+    timePeriod = 365;
   } else {
     return markList;
   }

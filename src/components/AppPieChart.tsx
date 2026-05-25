@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Pressable } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { SegmentedButtons } from 'react-native-paper';
 import { PieChart } from 'react-native-gifted-charts';
 import useMarkList from '../hooks/useMarkList.ts';
 import { theme } from '../constants/theme.ts';
@@ -7,9 +8,7 @@ import { AppHeaderText } from './AppHeaderText.tsx';
 import { filterMarkByTime } from '../utils/filterMarkByTime.ts';
 import { calculateChartData } from '../utils/calculateChartData.ts';
 
-// TODO: Стилизовать кнопки под segmented buttons. Сделать три кнопки -  месяц, год, все время. Стилизация кнопки, которая нажата
-
-export type TimeFilterOptions = 'week' | 'month' | 'all';
+export type TimeFilterOptions = 'all' | 'year' | 'month';
 
 type AppPieChartProps = { markOption: 'moodMark' | 'sleepMark' };
 
@@ -42,25 +41,49 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
 
   return (
     <View style={[styles.container, theme.shadowStyle]}>
-      <View style={styles.buttonsContainer}>
-        <Pressable
-          style={styles.button}
-          onPress={() => setSelectedFilterOptions('all')}
-        >
-          <AppHeaderText style={styles.buttonAppText} variant="bold">
-            All
-          </AppHeaderText>
-        </Pressable>
-
-        <Pressable
-          style={styles.button}
-          onPress={() => setSelectedFilterOptions('week')}
-        >
-          <AppHeaderText style={styles.buttonAppText} variant="bold">
-            Week
-          </AppHeaderText>
-        </Pressable>
-      </View>
+      <SegmentedButtons
+        value={selectedFilterOptions}
+        onValueChange={setSelectedFilterOptions}
+        style={[styles.button]}
+        buttons={[
+          {
+            value: 'all',
+            label: 'all',
+            labelStyle: styles.buttonAppText,
+            style: {
+              borderRadius: 12,
+              backgroundColor:
+                selectedFilterOptions === 'all'
+                  ? theme.colorOrange
+                  : theme.colorYellow,
+            },
+          },
+          {
+            value: 'year',
+            label: 'year',
+            labelStyle: styles.buttonAppText,
+            style: {
+              backgroundColor:
+                selectedFilterOptions === 'year'
+                  ? theme.colorOrange
+                  : theme.colorYellow,
+            },
+          },
+          {
+            value: 'month',
+            label: 'month',
+            labelStyle: styles.buttonAppText,
+            // Gemini, Сработало указание borderRadius в стиле кнопки
+            style: {
+              borderRadius: 12,
+              backgroundColor:
+                selectedFilterOptions === 'month'
+                  ? theme.colorOrange
+                  : theme.colorYellow,
+            },
+          },
+        ]}
+      />
       <View style={styles.pie}>
         <PieChart data={chartData} radius={120} />
       </View>
@@ -78,26 +101,21 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'space-around',
   },
-  buttonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 10,
-    marginBottom: 20,
-  },
   pie: {
     alignItems: 'center',
     marginBottom: 20,
   },
   button: {
-    backgroundColor: theme.colorOrange,
-    width: 150,
+    marginTop: 10,
+    marginBottom: 20,
+    width: '90%',
     borderRadius: 12,
     alignSelf: 'center',
-    padding: 10,
   },
   buttonAppText: {
+    fontFamily: theme.fontNextArtRegular,
     fontSize: 15,
-    color: theme.colorWhite,
+    color: theme.colorBrown,
     textAlign: 'center',
   },
   legendContainer: {
