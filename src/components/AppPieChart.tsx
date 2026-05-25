@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
-
 import useMarkList from '../hooks/useMarkList.ts';
 import { theme } from '../constants/theme.ts';
 import { AppHeaderText } from './AppHeaderText.tsx';
