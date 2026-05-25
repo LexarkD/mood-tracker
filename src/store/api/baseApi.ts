@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-// TODO: убрать baseApi, так как функционал, используюший backend, добавляться не будет
+// NOTE: Пока что оставлю Api RTKQuery, в будущем будет фича с статистикой погодной зависимости
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: fetchBaseQuery({

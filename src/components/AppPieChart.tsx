@@ -5,8 +5,8 @@ import { PieChart } from 'react-native-gifted-charts';
 import useMarkList from '../hooks/useMarkList.ts';
 import { theme } from '../constants/theme.ts';
 import { AppHeaderText } from './AppHeaderText.tsx';
-import { filterMarkTime } from '../utils/filterMarkTime.ts';
-import { filterMarkOption } from '../utils/filterMarkOption.ts';
+import { filterMarkByTime } from '../utils/filterMarkByTime.ts';
+import { calculateChartData } from '../utils/calculateChartData.ts';
 
 // TODO: Стилизовать кнопки под segmented buttons. Сделать три кнопки -  месяц, год, все время. Стилизация кнопки, которая нажата
 
@@ -20,12 +20,10 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
     useState<TimeFilterOptions>('all');
 
   // NOTE: получаю отфильтрованный массив эмоций, соответственно значению временного периода
-  const filteredMarks = filterMarkTime(selectedFilterOptions, markList);
+  const filteredMarks = filterMarkByTime(selectedFilterOptions, markList);
 
-  // TEST !!!!!
   // NOTE: получаю собраный объект для pieChart и chartLegend.
-  const chartData = filterMarkOption(filteredMarks, markOption);
-  console.log(JSON.stringify(chartData, null, 2));
+  const chartData = calculateChartData(filteredMarks, markOption);
 
   // NOTE: Функция отрисовывает chartLegend. По сути мапит chartData.
   const renderLegend = () => {

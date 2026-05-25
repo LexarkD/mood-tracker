@@ -6,7 +6,7 @@ type FilterMarkTime = (
   markList: MarkEntryWithTimestamp[],
 ) => MarkEntryWithTimestamp[];
 
-export const filterMarkTime: FilterMarkTime = (
+export const filterMarkByTime: FilterMarkTime = (
   selectedFilterOptions,
   markList,
 ) => {
