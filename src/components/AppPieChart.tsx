@@ -8,6 +8,8 @@ import { AppHeaderText } from './AppHeaderText.tsx';
 import { filterMarkByTime } from '../utils/filterMarkByTime.ts';
 import { calculateChartData } from '../utils/calculateChartData.ts';
 
+// TODO: Данные цвета SegmentedButtons и текста вместе выглядят грязно - надо думать над другой цветовой палитрой интерфейса
+
 export type TimeFilterOptions = 'all' | 'year' | 'month';
 
 type AppPieChartProps = { markOption: 'moodMark' | 'sleepMark' };

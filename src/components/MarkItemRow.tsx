@@ -33,8 +33,7 @@ export const MarkItemRow: React.FC<MarkItemProps> = ({ mark, isEven }) => {
   const { onDeleteMarkEntry } = useMarkList();
   const [expanded, setExpanded] = useState(false);
 
-  // NOTE: Удаление отметки свайпом.
-  // TODO: Удаление отметки не должно попасть в релизную версию приложения. Так как позволяет исправлять(манипулировать) историю, следовательно - статистику.
+  // NOTE: Удаление отметки свайпом. Не должно попасть в релизную версию приложения. Так как позволяет исправлять(манипулировать) историю, следовательно - статистику.
   const removeWithDelay = () => {
     setTimeout(() => {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
