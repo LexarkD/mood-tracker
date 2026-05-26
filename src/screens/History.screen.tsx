@@ -21,6 +21,10 @@ export const History: React.FC = () => {
   );
 
   // TODO: Добавить кнопку "burger button" сверху справа. Положить туда "Clear history"
+  //   Настройка кнопки в заголовке для вызова бургер меню
+  // https://reactnavigation.org/docs/header-buttons/
+  // Реализация бургер- меню
+  // https://github.com/gorhom/react-native-bottom-sheet
   return (
     <SafeAreaView edges={['top', 'right', 'left']} style={styles.container}>
       <View style={styles.serviceContainer}>
