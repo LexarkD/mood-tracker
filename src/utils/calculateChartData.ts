@@ -16,7 +16,7 @@ export type ChartItem = {
   percent: number;
 };
 
-// TODO: этот вспомогательный объект нужен по сути из-за нейминга. Потому что сущность moodOptions позже становится moodMark в стейте. Возможно стоит остановится на одном имене.
+// TODO(refactor): этот вспомогательный объект нужен по сути из-за нейминга. Потому что сущность moodOptions позже становится moodMark в стейте. Возможно стоит остановится на одном имене.
 const OPTIONS_BY_KEY = {
   moodMark: moodOptions,
   sleepMark: sleepOptions,
