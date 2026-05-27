@@ -27,6 +27,7 @@ type MarkItemProps = {
   isEven: boolean;
 };
 
+// NOTE: Анимированыый компонент для аккордеона
 const AnimatedTouch = Animated.createAnimatedComponent(TouchableOpacity);
 
 export const MarkItemRow: React.FC<MarkItemProps> = ({ mark, isEven }) => {
@@ -59,10 +60,12 @@ export const MarkItemRow: React.FC<MarkItemProps> = ({ mark, isEven }) => {
       }
     });
 
+  // NOTE: Анимация улетания элемента за границы экрана при удалении
   const deleteAnimationStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: offset.value }],
   }));
 
+  // NOTE: Анимация переворачивания стрелки при открытии аккордеона
   const arrowAnimationStyle = useAnimatedStyle(() => {
     const rotation = withTiming(expanded ? '180deg' : '0deg', {
       duration: 250,
