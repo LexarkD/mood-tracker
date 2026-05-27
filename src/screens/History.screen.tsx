@@ -20,7 +20,7 @@ export const History: React.FC = () => {
     }, []),
   );
 
-  // TODO: Добавить кнопку "burger button" сверху справа. Положить туда "Clear history"
+  // TODO(feat): Добавить кнопку "burger button" сверху справа. Положить туда "Clear history"
   //   Настройка кнопки в заголовке для вызова бургер меню
   // https://reactnavigation.org/docs/header-buttons/
   // Реализация бургер- меню
