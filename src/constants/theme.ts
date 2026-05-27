@@ -33,6 +33,7 @@ export const theme = {
   colorYellow: '#FEC868',
   сolorPaleYellow: '#e4ebd0',
   colorOrange: '#FDA769',
+  colorBlack: '#000',
   colorBrown: '#473C33',
   colorWhite: '#fff',
   colorWhiteHeat: '#fbf7ef',

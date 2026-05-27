@@ -43,7 +43,4 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colorGreen,
   },
-  serviceText: {
-    color: theme.colorBrown,
-  },
 });
