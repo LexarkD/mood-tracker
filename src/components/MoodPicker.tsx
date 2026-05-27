@@ -25,12 +25,11 @@ import { AppText } from './AppText.tsx';
 import { AppHeaderText } from './AppHeaderText.tsx';
 import { AppEmoji } from './AppEmoji.tsx';
 import { FocusableEmojiButton } from './FocusableEmojiButton.tsx';
-
+// TODO(feat): кнопки не отзывчивые. Заменить на TouchableOpacity
 const AnimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
 export const MoodPicker: React.FC = () => {
-  const { onAddMockData, onClearMarkList, onAddMarkEntry, markList } =
-    useMarkList();
+  const { onAddMarkEntry, markList } = useMarkList();
   // NOTE: хранят сделай выбор + поддержка анимации выбора
   const [selectedMoodMark, setSelectedMoodMark] = useState<MoodType>();
   const [selectedSleepMark, setSelectedSleepMark] = useState<SleepType>();
@@ -149,18 +148,6 @@ export const MoodPicker: React.FC = () => {
   // NOTE: Окно выбора опций.
   return (
     <View style={styles.pickerContainer}>
-      <View style={styles.serviceContainer}>
-        <Pressable hitSlop={16} onPress={onClearMarkList}>
-          <AppText style={styles.serviceText} variant="light">
-            Clear history
-          </AppText>
-        </Pressable>
-        <Pressable hitSlop={16} onPress={onAddMockData}>
-          <AppText style={styles.serviceText} variant="light">
-            Add Mock Data
-          </AppText>
-        </Pressable>
-      </View>
       <View>
         <AppHeaderText style={styles.header} variant="bold">
           {isEntryAllowed
@@ -225,6 +212,7 @@ const styles = StyleSheet.create({
   },
   optionsContainer: {
     backgroundColor: theme.colorWhite,
+    // TODO(style): оставить нижний внещний отступ. Боковые отступы задавать падингом контейнера
     margin: 10,
     borderRadius: 12,
     padding: 20,
@@ -293,6 +281,7 @@ const styles = StyleSheet.create({
 });
 
 // TODO(refactor): Вынести экран с финальным результатом отдельным компонентом.
+
 //FinalResultScreen.tsx
 // if (completedEntry) {
 //     return (

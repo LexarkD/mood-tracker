@@ -1,0 +1,92 @@
+import React from 'react';
+import { StyleSheet, View, TouchableOpacity, Alert } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import useMarkList from '../hooks/useMarkList.ts';
+import { theme } from '../constants/theme.ts';
+import { AppText } from '../components/AppText.tsx';
+import { AppHeaderText } from '../components/AppHeaderText.tsx';
+
+export const Settings: React.FC = () => {
+  const { onAddMockData, onClearMarkList } = useMarkList();
+
+  // NOTE: модальное окно с предупреждением и подтверждением при удалении.
+  const handleClearHistory = () => {
+    Alert.alert(
+      'Clear history',
+      'Are you sure you want to delete all saved data? This action cannot be undone.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Clear',
+          style: 'destructive',
+          onPress: onClearMarkList,
+        },
+      ],
+    );
+  };
+
+  return (
+    <SafeAreaView edges={['top', 'right', 'left']} style={styles.container}>
+      <View style={styles.settingsContainer}>
+        <AppHeaderText style={styles.settingHeader}>
+          History settings
+        </AppHeaderText>
+        <View style={[styles.settingBlock, theme.shadowStyle]}>
+          <TouchableOpacity
+            style={styles.settingRow}
+            onPress={handleClearHistory}
+            activeOpacity={0.7}
+          >
+            <AppText style={styles.settingText}>Clear history</AppText>
+          </TouchableOpacity>
+        </View>
+        <AppHeaderText style={styles.settingHeader}>DevTools</AppHeaderText>
+        <View style={[styles.settingBlock, theme.shadowStyle]}>
+          <TouchableOpacity
+            style={styles.settingRow}
+            onPress={onAddMockData}
+            activeOpacity={0.7}
+          >
+            <AppText style={styles.settingText}>Add mock data</AppText>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colorGreen,
+  },
+  settingsContainer: {
+    paddingHorizontal: 10,
+  },
+  settingHeader: {
+    color: 'theme.colorBrown',
+    fontSize: 15,
+    marginLeft: 16,
+    marginBottom: 8,
+  },
+  settingBlock: {
+    backgroundColor: theme.colorWhite,
+    borderRadius: 12,
+    marginBottom: 24,
+  },
+  settingRow: {
+    minHeight: 56,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+  },
+  settingText: {
+    color: theme.colorBrown,
+    fontSize: 16,
+  },
+});

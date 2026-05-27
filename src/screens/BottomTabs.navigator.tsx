@@ -3,10 +3,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home } from './Home.screen.tsx';
 import { History } from './History.screen.tsx';
 import { Analytics } from './Analytics.screen.tsx';
+import { Settings } from './Settings.screen.tsx';
 import {
   HomeIcon,
   HistoryIcon,
   AnalyticsIcon,
+  SettingsIcon,
   IconProps,
 } from '../components/TabBarIcons.tsx';
 import { theme } from '../constants/theme.ts';
@@ -20,6 +22,8 @@ const createTabBarIcon = (routeName: string) => {
       return <HistoryIcon color={color} size={size} />;
     if (routeName === 'Analytics')
       return <AnalyticsIcon color={color} size={size} />;
+    if (routeName === 'Settings')
+      return <SettingsIcon color={color} size={size} />;
     return null;
   };
 };
@@ -52,6 +56,11 @@ export const BottomTabsNavigator: React.FC = () => {
         name="Analytics"
         component={Analytics}
         options={{ title: 'Fancy Charts' }}
+      />
+      <BottomTabs.Screen
+        name="Settings"
+        component={Settings}
+        options={{ title: '' }}
       />
     </BottomTabs.Navigator>
   );
