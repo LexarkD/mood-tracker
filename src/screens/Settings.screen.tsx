@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, View, Pressable, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import useMarkList from '../hooks/useMarkList.ts';
 import { theme } from '../constants/theme.ts';
@@ -35,23 +35,27 @@ export const Settings: React.FC = () => {
           History settings
         </AppHeaderText>
         <View style={[styles.settingBlock, theme.shadowStyle]}>
-          <TouchableOpacity
-            style={styles.settingRow}
+          <Pressable
+            style={({ pressed }) => [
+              styles.settingRow,
+              { opacity: pressed ? 0.7 : 1 },
+            ]}
             onPress={handleClearHistory}
-            activeOpacity={0.7}
           >
             <AppText style={styles.settingText}>Clear history</AppText>
-          </TouchableOpacity>
+          </Pressable>
         </View>
         <AppHeaderText style={styles.settingHeader}>DevTools</AppHeaderText>
         <View style={[styles.settingBlock, theme.shadowStyle]}>
-          <TouchableOpacity
-            style={styles.settingRow}
+          <Pressable
+            style={({ pressed }) => [
+              styles.settingRow,
+              { opacity: pressed ? 0.7 : 1 },
+            ]}
             onPress={onAddMockData}
-            activeOpacity={0.7}
           >
             <AppText style={styles.settingText}>Add mock data</AppText>
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>

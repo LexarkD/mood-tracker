@@ -8,7 +8,6 @@ import { AppHeaderText } from './AppHeaderText.tsx';
 import { filterMarkByTime } from '../utils/filterMarkByTime.ts';
 import { calculateChartData } from '../utils/calculateChartData.ts';
 
-// TODO(style): Данные цвета SegmentedButtons и текста вместе выглядят грязно - надо думать над другой цветовой палитрой интерфейса
 // TODO(style): Сделать стилизацию консистентной
 export type TimeFilterOptions = 'all' | 'year' | 'month';
 
@@ -46,14 +45,23 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
       <SegmentedButtons
         value={selectedFilterOptions}
         onValueChange={setSelectedFilterOptions}
-        style={[styles.button]}
+        style={styles.button}
+        // NOTE: theme задает новые скругления и убирает дефолтную черную границу
+        theme={{
+          roundness: 3,
+          colors: {
+            outline: 'transparent',
+          },
+        }}
         buttons={[
           {
             value: 'all',
             label: 'all',
             labelStyle: styles.buttonAppText,
             style: {
-              borderRadius: 12,
+              // NOTE: задаю кастомный разделитель и задаю цвет при нажатии. Остальные кнопки по аналогии.
+              borderRightWidth: 1,
+              borderRightColor: theme.colorWhite,
               backgroundColor:
                 selectedFilterOptions === 'all'
                   ? theme.colorOrange
@@ -65,6 +73,8 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
             label: 'year',
             labelStyle: styles.buttonAppText,
             style: {
+              borderRightWidth: 1,
+              borderRightColor: theme.colorWhite,
               backgroundColor:
                 selectedFilterOptions === 'year'
                   ? theme.colorOrange
@@ -75,9 +85,7 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
             value: 'month',
             label: 'month',
             labelStyle: styles.buttonAppText,
-            // Gemini, Сработало указание borderRadius в стиле кнопки
             style: {
-              borderRadius: 12,
               backgroundColor:
                 selectedFilterOptions === 'month'
                   ? theme.colorOrange
@@ -117,7 +125,7 @@ const styles = StyleSheet.create({
   buttonAppText: {
     fontFamily: theme.fontNextArtRegular,
     fontSize: 15,
-    color: theme.colorBrown,
+    color: theme.colorBlack,
     textAlign: 'center',
   },
   legendContainer: {

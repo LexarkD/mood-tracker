@@ -10,6 +10,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import Reanimated, {
   useAnimatedStyle,
   withTiming,
+  useSharedValue,
 } from 'react-native-reanimated';
 import useMarkList from '../hooks/useMarkList.ts';
 import {
@@ -25,7 +26,7 @@ import { AppText } from './AppText.tsx';
 import { AppHeaderText } from './AppHeaderText.tsx';
 import { AppEmoji } from './AppEmoji.tsx';
 import { FocusableEmojiButton } from './FocusableEmojiButton.tsx';
-// TODO(feat): кнопки не отзывчивые. Заменить на TouchableOpacity
+
 const AnimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
 export const MoodPicker: React.FC = () => {
@@ -43,6 +44,8 @@ export const MoodPicker: React.FC = () => {
 
   // NOTE: allMarksPicked - булевое значение, отвечает за доступность кнопки "CHOOSE".
   const allMarksPicked = Boolean(selectedMoodMark && selectedSleepMark);
+
+  const isPressed = useSharedValue(false);
 
   // NOTE: Тут была решена интересная проблема сценария поведения.
   // NOTE: Получаю новое время, даже если приложение не было закрыто, но пользователь перешел на другую вкладку или сворачивал приложение.
@@ -93,16 +96,17 @@ export const MoodPicker: React.FC = () => {
   };
 
   // NOTE: Анимация кнопки сработает только если эмоции выбраны и запись разрешена
-  const buttonAnimatedStyle = useAnimatedStyle(
-    () => ({
-      opacity:
-        allMarksPicked && isEntryAllowed ? withTiming(1) : withTiming(0.5),
+  const buttonAnimatedStyle = useAnimatedStyle(() => {
+    const targetOpacity =
+      //NOTE: opacity: выбор не сделан - 0,5; выбор сделан и кнопка зажата - 0,7; выбор сделан и кнопка не зажата - 1.
+      !allMarksPicked || !isEntryAllowed ? 0.5 : isPressed.value ? 0.7 : 1;
+    return {
+      opacity: withTiming(targetOpacity, { duration: 80 }),
       transform: [
         { scale: allMarksPicked && isEntryAllowed ? withTiming(1) : 0.8 },
       ],
-    }),
-    [allMarksPicked, isEntryAllowed],
-  );
+    };
+  }, [allMarksPicked, isEntryAllowed]);
   //NOTE: используется pointerEventsStatus, что б разрешить или запретить события касаний для emoji, взависимостми от isEntryAllowed
   const pointerEventsStatus = isEntryAllowed ? 'auto' : 'none';
 
@@ -137,7 +141,13 @@ export const MoodPicker: React.FC = () => {
             </AppText>
           </View>
         </View>
-        <Pressable style={styles.button} onPress={handleBack}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.button,
+            { opacity: pressed ? 0.7 : 1 },
+          ]}
+          onPress={handleBack}
+        >
           <AppText style={styles.buttonText} variant="bold">
             BACK
           </AppText>
@@ -196,6 +206,13 @@ export const MoodPicker: React.FC = () => {
       <AnimatedPressable
         style={[styles.button, buttonAnimatedStyle]}
         onPress={handleSelect}
+        onPressIn={() => {
+          // NOTE: Отслеживаю начало и конец нажатия.
+          isPressed.value = true;
+        }}
+        onPressOut={() => {
+          isPressed.value = false;
+        }}
         disabled={!allMarksPicked || !isEntryAllowed}
       >
         <AppText style={styles.buttonText} variant="bold">
@@ -212,7 +229,6 @@ const styles = StyleSheet.create({
   },
   optionsContainer: {
     backgroundColor: theme.colorWhite,
-    // TODO(style): оставить нижний внещний отступ. Боковые отступы задавать падингом контейнера
     margin: 10,
     borderRadius: 12,
     padding: 20,
@@ -264,7 +280,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   buttonText: {
-    color: theme.colorBrown,
+    color: theme.colorBlack,
     textAlign: 'center',
   },
   backBoxEmoji: {
@@ -272,16 +288,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 25,
   },
-  serviceContainer: {
-    flexDirection: 'row',
-  },
-  serviceText: {
-    color: theme.colorBrown,
-  },
 });
 
+// TODO(bagfix): исправить визуальный баг на андроиде. Кнопка back заходит на окно с финальным результатом
+// TODO(refactor): вынести отдельным компонентом анимированную кнопку.
 // TODO(refactor): Вынести экран с финальным результатом отдельным компонентом.
-
 //FinalResultScreen.tsx
 // if (completedEntry) {
 //     return (

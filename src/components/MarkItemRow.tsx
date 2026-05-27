@@ -114,8 +114,8 @@ export const MarkItemRow: React.FC<MarkItemProps> = ({ mark, isEven }) => {
         </AnimatedTouch>
         {expanded && (
           <Animated.View
-            entering={FadeIn.duration(200)}
-            exiting={FadeOut.duration(200)}
+            entering={FadeIn.duration(700)}
+            exiting={FadeOut.duration(150)}
             style={styles.contentContainer}
           >
             <View style={styles.emojiAndDescription}>
