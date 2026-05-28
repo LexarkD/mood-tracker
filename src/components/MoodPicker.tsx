@@ -1,17 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import {
-  View,
-  StyleSheet,
-  Pressable,
-  AppState,
-  AppStateStatus,
-} from 'react-native';
+import { View, StyleSheet, AppState, AppStateStatus } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import Reanimated, {
-  useAnimatedStyle,
-  withTiming,
-  useSharedValue,
-} from 'react-native-reanimated';
 import useMarkList from '../hooks/useMarkList.ts';
 import {
   moodOptions,
@@ -24,10 +13,9 @@ import { checkingTimeout } from '../utils/checkingTimeout.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
 import { AppHeaderText } from './AppHeaderText.tsx';
-import { AppEmoji } from './AppEmoji.tsx';
 import { FocusableEmojiButton } from './FocusableEmojiButton.tsx';
-
-const AnimatedPressable = Reanimated.createAnimatedComponent(Pressable);
+import { FinalResultScreen } from './FinalResultScreen.tsx';
+import { AnimatedSubmitButton } from './AnimatedSubmitButton.tsx';
 
 export const MoodPicker: React.FC = () => {
   const { onAddMarkEntry, markList } = useMarkList();
@@ -35,19 +23,16 @@ export const MoodPicker: React.FC = () => {
   const [selectedMoodMark, setSelectedMoodMark] = useState<MoodType>();
   const [selectedSleepMark, setSelectedSleepMark] = useState<SleepType>();
 
-  // NOTE: completedEntry - отвечает за отображение окна с итоговой записью
+  // NOTE: completedEntry - отвечает за отображение FinalResultScreen
   const [completedEntry, setCompletedEntry] = useState<MarkEntryType | null>(
     null,
   );
-  // NOTE: Нужен для обновления времени и адекватной проверке isEntryAllowed при разных сценариях поведения прользователя
+  // NOTE: Нужен для обновления текущего времени и адекватной проверке isTimeoutOver при разных сценариях поведения прользователя
   const [currentTime, setCurrentTime] = useState(Date.now());
 
-  // NOTE: allMarksPicked - булевое значение, отвечает за доступность кнопки "CHOOSE".
-  const allMarksPicked = Boolean(selectedMoodMark && selectedSleepMark);
+  // NOTE: кнопка AnimatedSubmitButton может быть доступна, если все значения выбраны
+  const isAllMarksPicked = Boolean(selectedMoodMark && selectedSleepMark);
 
-  const isPressed = useSharedValue(false);
-
-  // NOTE: Тут была решена интересная проблема сценария поведения.
   // NOTE: Получаю новое время, даже если приложение не было закрыто, но пользователь перешел на другую вкладку или сворачивал приложение.
   useFocusEffect(
     useCallback(() => {
@@ -68,8 +53,8 @@ export const MoodPicker: React.FC = () => {
     }, []),
   );
 
-  // NOTE: isEntryAllowed - проверяет, можно ли делать новую запись.
-  const isEntryAllowed = useMemo(() => {
+  // NOTE: isTimeoutOver - проверяет, наступил ли следующий день и может ли быть доступен интерфейс.
+  const isTimeoutOver = useMemo(() => {
     const lastEntry = markList[0];
     // NOTE: Если еще ни одной записи не сделано, новая запись сразу разрешена.
     if (!lastEntry) return true;
@@ -79,7 +64,7 @@ export const MoodPicker: React.FC = () => {
 
   const handleSelect = () => {
     // NOTE: Если таймаут истек, значит запись разрешена
-    if (isEntryAllowed && selectedMoodMark && selectedSleepMark) {
+    if (isTimeoutOver && selectedMoodMark && selectedSleepMark) {
       const newEntry: MarkEntryType = {
         moodMark: selectedMoodMark,
         sleepMark: selectedSleepMark,
@@ -95,72 +80,26 @@ export const MoodPicker: React.FC = () => {
     setCompletedEntry(null);
   };
 
-  // NOTE: Анимация кнопки сработает только если эмоции выбраны и запись разрешена
-  const buttonAnimatedStyle = useAnimatedStyle(() => {
-    const targetOpacity =
-      //NOTE: opacity: выбор не сделан - 0,5; выбор сделан и кнопка зажата - 0,7; выбор сделан и кнопка не зажата - 1.
-      !allMarksPicked || !isEntryAllowed ? 0.5 : isPressed.value ? 0.7 : 1;
-    return {
-      opacity: withTiming(targetOpacity, { duration: 80 }),
-      transform: [
-        { scale: allMarksPicked && isEntryAllowed ? withTiming(1) : 0.8 },
-      ],
-    };
-  }, [allMarksPicked, isEntryAllowed]);
   //NOTE: используется pointerEventsStatus, что б разрешить или запретить события касаний для emoji, взависимостми от isEntryAllowed
-  const pointerEventsStatus = isEntryAllowed ? 'auto' : 'none';
+  const pointerEventsStatus = isTimeoutOver ? 'auto' : 'none';
 
   // NOTE: окно с итоговой записью и кнопкой возврата.
   if (completedEntry) {
     return (
-      <View style={[styles.finalResultContainer, theme.shadowStyle]}>
-        <View>
-          <AppHeaderText style={styles.headerFinalResult} variant="bold">
-            Thank you for sharing!
-          </AppHeaderText>
-        </View>
-        <View style={styles.finalResult}>
-          <View>
-            <AppEmoji
-              style={styles.backBoxEmoji}
-              description={completedEntry.moodMark}
-              size={theme.iconSize.large}
-            />
-            <AppText style={styles.descriptionText} variant="bold">
-              {completedEntry.moodMark}
-            </AppText>
-          </View>
-          <View>
-            <AppEmoji
-              style={styles.backBoxEmoji}
-              description={completedEntry.sleepMark}
-              size={theme.iconSize.large}
-            />
-            <AppText style={styles.descriptionText} variant="bold">
-              {completedEntry.sleepMark}
-            </AppText>
-          </View>
-        </View>
-        <Pressable
-          style={({ pressed }) => [
-            styles.button,
-            { opacity: pressed ? 0.7 : 1 },
-          ]}
-          onPress={handleBack}
-        >
-          <AppText style={styles.buttonText} variant="bold">
-            BACK
-          </AppText>
-        </Pressable>
-      </View>
+      <FinalResultScreen
+        moodMark={completedEntry.moodMark}
+        sleepMark={completedEntry.sleepMark}
+        onBack={handleBack}
+      />
     );
   }
+
   // NOTE: Окно выбора опций.
   return (
     <View style={styles.pickerContainer}>
       <View>
         <AppHeaderText style={styles.header} variant="bold">
-          {isEntryAllowed
+          {isTimeoutOver
             ? 'Take a deep breath. \nHow was your day?'
             : "You've done great today. \nSee you tomorrow!"}
         </AppHeaderText>
@@ -203,22 +142,11 @@ export const MoodPicker: React.FC = () => {
           ))}
         </View>
       </View>
-      <AnimatedPressable
-        style={[styles.button, buttonAnimatedStyle]}
-        onPress={handleSelect}
-        onPressIn={() => {
-          // NOTE: Отслеживаю начало и конец нажатия.
-          isPressed.value = true;
-        }}
-        onPressOut={() => {
-          isPressed.value = false;
-        }}
-        disabled={!allMarksPicked || !isEntryAllowed}
-      >
-        <AppText style={styles.buttonText} variant="bold">
-          CHOOSE
-        </AppText>
-      </AnimatedPressable>
+      <AnimatedSubmitButton
+        isAllMarksPicked={isAllMarksPicked}
+        isTimeoutOver={isTimeoutOver}
+        onSubmit={handleSelect}
+      />
     </View>
   );
 };
@@ -235,26 +163,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 
-  finalResultContainer: {
-    height: '30%',
-    backgroundColor: theme.colorWhite,
-    margin: 10,
-    borderRadius: 12,
-    padding: 20,
-    justifyContent: 'space-between',
-  },
-  finalResult: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    paddingBottom: 20,
-  },
-  headerFinalResult: {
-    color: theme.colorBrown,
-    fontSize: 20,
-    letterSpacing: 1,
-    textAlign: 'center',
-  },
   optionsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -271,82 +179,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
-  button: {
-    backgroundColor: theme.colorYellow,
-    width: 150,
-    borderRadius: 12,
-    marginTop: 20,
-    alignSelf: 'center',
-    padding: 10,
-  },
-  buttonText: {
-    color: theme.colorBlack,
-    textAlign: 'center',
-  },
-  backBoxEmoji: {
-    alignSelf: 'center',
-    marginHorizontal: 20,
-    marginTop: 25,
-  },
 });
-
-// TODO(bagfix): исправить визуальный баг на андроиде. Кнопка back заходит на окно с финальным результатом
-// TODO(refactor): вынести отдельным компонентом анимированную кнопку.
-// TODO(refactor): Вынести экран с финальным результатом отдельным компонентом.
-//FinalResultScreen.tsx
-// if (completedEntry) {
-//     return (
-//       <FinalResultScreen
-//         moodMark={completedEntry.moodMark}
-//         sleepMark={completedEntry.sleepMark}
-//         onBack={handleBack}
-//       />
-//     );
-//   }
-
-// type FinalResultScreenProps = {
-//   moodMark: MoodType;
-//   sleepMark: SleepType;
-//   onBack: () => void;
-// };
-
-// export const SuccessScreen: React.FC<FinalResultScreenProps> = ({
-//   moodMark,
-//   sleepMark,
-//   onBack,
-// }) => (
-//   <View style={[styles.finalResultContainer, theme.shadowStyle]}>
-//     <View>
-//       <AppHeaderText style={styles.headerFinalResult} variant="bold">
-//         Thank you for sharing!
-//       </AppHeaderText>
-//     </View>
-//     <View style={styles.finalResult}>
-//       <View>
-//         <AppEmoji
-//           style={styles.backBoxEmoji}
-//           description={completedEntry.moodMark}
-//           size={theme.iconSize.large}
-//         />
-//         <AppText style={styles.descriptionText} variant="bold">
-//           {completedEntry.moodMark}
-//         </AppText>
-//       </View>
-//       <View>
-//         <AppEmoji
-//           style={styles.backBoxEmoji}
-//           description={completedEntry.sleepMark}
-//           size={theme.iconSize.large}
-//         />
-//         <AppText style={styles.descriptionText} variant="bold">
-//           {completedEntry.sleepMark}
-//         </AppText>
-//       </View>
-//     </View>
-//     <Pressable style={styles.button} onPress={handleBack}>
-//       <AppText style={styles.buttonText} variant="bold">
-//         BACK
-//       </AppText>
-//     </Pressable>
-//   </View>
-// );
