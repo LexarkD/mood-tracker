@@ -24,8 +24,8 @@ import { checkingTimeout } from '../utils/checkingTimeout.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
 import { AppHeaderText } from './AppHeaderText.tsx';
-import { AppEmoji } from './AppEmoji.tsx';
 import { FocusableEmojiButton } from './FocusableEmojiButton.tsx';
+import { FinalResultScreen } from './FinalResultScreen.tsx';
 
 const AnimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
@@ -113,48 +113,14 @@ export const MoodPicker: React.FC = () => {
   // NOTE: окно с итоговой записью и кнопкой возврата.
   if (completedEntry) {
     return (
-      <View style={[styles.finalResultContainer, theme.shadowStyle]}>
-        <View>
-          <AppHeaderText style={styles.headerFinalResult} variant="bold">
-            Thank you for sharing!
-          </AppHeaderText>
-        </View>
-        <View style={styles.finalResult}>
-          <View>
-            <AppEmoji
-              style={styles.backBoxEmoji}
-              description={completedEntry.moodMark}
-              size={theme.iconSize.large}
-            />
-            <AppText style={styles.descriptionText} variant="bold">
-              {completedEntry.moodMark}
-            </AppText>
-          </View>
-          <View>
-            <AppEmoji
-              style={styles.backBoxEmoji}
-              description={completedEntry.sleepMark}
-              size={theme.iconSize.large}
-            />
-            <AppText style={styles.descriptionText} variant="bold">
-              {completedEntry.sleepMark}
-            </AppText>
-          </View>
-        </View>
-        <Pressable
-          style={({ pressed }) => [
-            styles.button,
-            { opacity: pressed ? 0.7 : 1 },
-          ]}
-          onPress={handleBack}
-        >
-          <AppText style={styles.buttonText} variant="bold">
-            BACK
-          </AppText>
-        </Pressable>
-      </View>
+      <FinalResultScreen
+        moodMark={completedEntry.moodMark}
+        sleepMark={completedEntry.sleepMark}
+        onBack={handleBack}
+      />
     );
   }
+
   // NOTE: Окно выбора опций.
   return (
     <View style={styles.pickerContainer}>
@@ -235,26 +201,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 
-  finalResultContainer: {
-    height: '30%',
-    backgroundColor: theme.colorWhite,
-    margin: 10,
-    borderRadius: 12,
-    padding: 20,
-    justifyContent: 'space-between',
-  },
-  finalResult: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    paddingBottom: 20,
-  },
-  headerFinalResult: {
-    color: theme.colorBrown,
-    fontSize: 20,
-    letterSpacing: 1,
-    textAlign: 'center',
-  },
   optionsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -283,70 +229,6 @@ const styles = StyleSheet.create({
     color: theme.colorBlack,
     textAlign: 'center',
   },
-  backBoxEmoji: {
-    alignSelf: 'center',
-    marginHorizontal: 20,
-    marginTop: 25,
-  },
 });
 
-// TODO(bagfix): исправить визуальный баг на андроиде. Кнопка back заходит на окно с финальным результатом
 // TODO(refactor): вынести отдельным компонентом анимированную кнопку.
-// TODO(refactor): Вынести экран с финальным результатом отдельным компонентом.
-//FinalResultScreen.tsx
-// if (completedEntry) {
-//     return (
-//       <FinalResultScreen
-//         moodMark={completedEntry.moodMark}
-//         sleepMark={completedEntry.sleepMark}
-//         onBack={handleBack}
-//       />
-//     );
-//   }
-
-// type FinalResultScreenProps = {
-//   moodMark: MoodType;
-//   sleepMark: SleepType;
-//   onBack: () => void;
-// };
-
-// export const SuccessScreen: React.FC<FinalResultScreenProps> = ({
-//   moodMark,
-//   sleepMark,
-//   onBack,
-// }) => (
-//   <View style={[styles.finalResultContainer, theme.shadowStyle]}>
-//     <View>
-//       <AppHeaderText style={styles.headerFinalResult} variant="bold">
-//         Thank you for sharing!
-//       </AppHeaderText>
-//     </View>
-//     <View style={styles.finalResult}>
-//       <View>
-//         <AppEmoji
-//           style={styles.backBoxEmoji}
-//           description={completedEntry.moodMark}
-//           size={theme.iconSize.large}
-//         />
-//         <AppText style={styles.descriptionText} variant="bold">
-//           {completedEntry.moodMark}
-//         </AppText>
-//       </View>
-//       <View>
-//         <AppEmoji
-//           style={styles.backBoxEmoji}
-//           description={completedEntry.sleepMark}
-//           size={theme.iconSize.large}
-//         />
-//         <AppText style={styles.descriptionText} variant="bold">
-//           {completedEntry.sleepMark}
-//         </AppText>
-//       </View>
-//     </View>
-//     <Pressable style={styles.button} onPress={handleBack}>
-//       <AppText style={styles.buttonText} variant="bold">
-//         BACK
-//       </AppText>
-//     </Pressable>
-//   </View>
-// );
