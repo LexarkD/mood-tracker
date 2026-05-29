@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { View, StyleSheet, AppState, AppStateStatus } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import useMarkList from '../hooks/useMarkList.ts';
 import {
@@ -19,7 +19,7 @@ import { AnimatedSubmitButton } from './AnimatedSubmitButton.tsx';
 
 export const MoodPicker: React.FC = () => {
   const { onAddMarkEntry, markList } = useMarkList();
-  // NOTE: хранят сделай выбор + поддержка анимации выбора
+  // NOTE: хранят выбор + поддержка анимации выбора
   const [selectedMoodMark, setSelectedMoodMark] = useState<MoodType>();
   const [selectedSleepMark, setSelectedSleepMark] = useState<SleepType>();
 
@@ -33,25 +33,43 @@ export const MoodPicker: React.FC = () => {
   // NOTE: кнопка AnimatedSubmitButton может быть доступна, если все значения выбраны
   const isAllMarksPicked = Boolean(selectedMoodMark && selectedSleepMark);
 
-  // NOTE: Получаю новое время, даже если приложение не было закрыто, но пользователь перешел на другую вкладку или сворачивал приложение.
+  // NOTE: Этот способ получения currentTime слишком замороченный, хотя и не вызывает лишних рендеров
+  // // NOTE: Получаю новое время, даже если приложение не было закрыто, но пользователь перешел на другую вкладку или сворачивал приложение.
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     setCurrentTime(Date.now());
+  //     // NOTE: Вешаю слушатель на состояние приложения, чтоб обновить время, если пользователь свернет приложение на этой вкладке. Получаю AppState -> active, когда приложение возвращается из фона.
+  //     const subscription = AppState.addEventListener(
+  //       'change',
+  //       (nextAppState: AppStateStatus) => {
+  //         if (nextAppState === 'active') {
+  //           setCurrentTime(Date.now());
+  //         }
+  //       },
+  //     );
+  //     // NOTE: Фукнция очистки удалит слушатель, если пользователь перешел на другую вкладку. В другом случае- OS убьет слушатель, когда убьет процесс, или когда пользователь совершит Hard Close.
+  //     return () => {
+  //       subscription.remove();
+  //     };
+  //   }, []),
+  // );
+
+  // NOTE: Это проще, но каждую минуту приложение будет перерисовывать экран
+  // NOTE: Запускаю интервал, что бы получать currentTime.
   useFocusEffect(
     useCallback(() => {
       setCurrentTime(Date.now());
-      // NOTE: Вешаю слушатель на состояние приложения, чтоб обновить время, если пользователь свернет приложение на этой вкладке. Получаю AppState -> active, когда приложение возвращается из фона.
-      const subscription = AppState.addEventListener(
-        'change',
-        (nextAppState: AppStateStatus) => {
-          if (nextAppState === 'active') {
-            setCurrentTime(Date.now());
-          }
-        },
-      );
-      // NOTE: Фукнция очистки удалит слушатель, если пользователь перешел на другую вкладку. В другом случае- OS убьет слушатель, когда убьет процесс, или когда пользователь совершит Hard Close.
-      return () => {
-        subscription.remove();
-      };
+      const intervalId = setInterval(() => {
+        setCurrentTime(Date.now());
+      }, 60000);
+
+      return () => clearInterval(intervalId);
     }, []),
   );
+
+  // Я могу не хранить в useState Date.now(). Тогда новый дейт не будет ререндерить экрна. useRef()?
+  // в useState можно положить isTimeoutOver. Ререндер, когда меняется isTimeoutOver это логично
+  // либо обновлять date по Pull-to-refresh
 
   // NOTE: isTimeoutOver - проверяет, наступил ли следующий день и может ли быть доступен интерфейс.
   const isTimeoutOver = useMemo(() => {
@@ -80,7 +98,10 @@ export const MoodPicker: React.FC = () => {
     setCompletedEntry(null);
   };
 
-  //NOTE: используется pointerEventsStatus, что б разрешить или запретить события касаний для emoji, взависимостми от isEntryAllowed
+  // NOTE: isDisabled(отключена = ture), если хотя бы одно из услловий не выполнено
+  const isDisabledButton = !isAllMarksPicked || !isTimeoutOver;
+
+  //NOTE: используется pointerEventsStatus, что бы разрешить или запретить события касаний для emoji, взависимости от isEntryAllowed
   const pointerEventsStatus = isTimeoutOver ? 'auto' : 'none';
 
   // NOTE: окно с итоговой записью и кнопкой возврата.
@@ -94,6 +115,7 @@ export const MoodPicker: React.FC = () => {
     );
   }
 
+  // TODO(bagfix): визуальный баг optionsRow сдвигается при анимации левой emoji
   // NOTE: Окно выбора опций.
   return (
     <View style={styles.pickerContainer}>
@@ -143,8 +165,8 @@ export const MoodPicker: React.FC = () => {
         </View>
       </View>
       <AnimatedSubmitButton
-        isAllMarksPicked={isAllMarksPicked}
-        isTimeoutOver={isTimeoutOver}
+        title="CHOOSE"
+        disabled={isDisabledButton}
         onSubmit={handleSelect}
       />
     </View>
