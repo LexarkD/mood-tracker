@@ -135,6 +135,7 @@ export const MarkItemRow: React.FC<MarkItemProps> = ({ mark, isEven }) => {
   );
 };
 
+// TODO(style): Выровнять элементы истории
 const styles = StyleSheet.create({
   emoji: {
     marginRight: 20,

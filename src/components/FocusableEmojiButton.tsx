@@ -9,7 +9,6 @@ import { theme } from '../constants/theme.ts';
 import { AppEmoji } from './AppEmoji.tsx';
 
 // NOTE: FocusableEmojiButton - является компонентом -оберткой для AppEmoji. Добавляет анимацию при нажатии на AppEmoji.
-
 type FocusableEmojiButton = {
   description: MoodType | SleepType;
   isSelectOption: boolean;
@@ -24,7 +23,9 @@ export const FocusableEmojiButton: React.FC<FocusableEmojiButton> = ({
 }) => {
   const emojiAnimatedStyle = useAnimatedStyle(
     () => ({
-      transform: [{ scale: isSelectOption ? withTiming(1.5) : withTiming(1) }],
+      transform: [
+        { scale: withTiming(isSelectOption ? 1.5 : 1, { duration: 250 }) },
+      ],
     }),
     [isSelectOption],
   );

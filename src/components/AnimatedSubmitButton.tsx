@@ -9,32 +9,28 @@ import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
 
 type AnimatedSubmitButtonProps = {
-  isAllMarksPicked: boolean;
-  isTimeoutOver: boolean;
+  title: string;
+  disabled: boolean;
   onSubmit: () => void;
 };
 
 const AnimatedPressable = Reanimated.createAnimatedComponent(Pressable);
 
 export const AnimatedSubmitButton: React.FC<AnimatedSubmitButtonProps> = ({
-  isAllMarksPicked,
-  isTimeoutOver,
+  title,
+  disabled,
   onSubmit,
 }) => {
   const isPressed = useSharedValue(false);
 
-  // NOTE: Анимация кнопки сработает только если эмоции выбраны и запись разрешена
   const buttonAnimatedStyle = useAnimatedStyle(() => {
-    const targetOpacity =
-      //NOTE: opacity: выбор не сделан - 0,5; выбор сделан и кнопка зажата - 0,7; выбор сделан и кнопка не зажата - 1.
-      !isAllMarksPicked || !isTimeoutOver ? 0.5 : isPressed.value ? 0.7 : 1;
+    //NOTE: opacity: выбор не сделан - 0,5; выбор сделан и кнопка зажата - 0,7; выбор сделан и кнопка не зажата - 1.
+    const targetOpacity = disabled ? 0.5 : isPressed.value ? 0.7 : 1;
     return {
       opacity: withTiming(targetOpacity, { duration: 80 }),
-      transform: [
-        { scale: isAllMarksPicked && isTimeoutOver ? withTiming(1) : 0.8 },
-      ],
+      transform: [{ scale: withTiming(disabled ? 0.8 : 1) }],
     };
-  }, [isAllMarksPicked, isTimeoutOver]);
+  }, [disabled]);
 
   return (
     <AnimatedPressable
@@ -47,10 +43,10 @@ export const AnimatedSubmitButton: React.FC<AnimatedSubmitButtonProps> = ({
       onPressOut={() => {
         isPressed.value = false;
       }}
-      disabled={!isAllMarksPicked || !isTimeoutOver}
+      disabled={disabled}
     >
       <AppText style={styles.buttonText} variant="bold">
-        CHOOSE
+        {title}
       </AppText>
     </AnimatedPressable>
   );
