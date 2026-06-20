@@ -101,11 +101,9 @@ export const MarkItemRow: React.FC<MarkItemProps> = memo(({ mark, isEven }) => {
               size={theme.iconSize.medium}
               description={mark.moodMark}
             />
-            <AppText style={styles.moodDescription} variant="bold">
-              {mark.moodMark}
-            </AppText>
+            <AppText variant="description">{mark.moodMark}</AppText>
           </View>
-          <AppText style={styles.itemDate}>
+          <AppText variant="date" style={styles.itemDate}>
             {format(new Date(mark.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
           </AppText>
           <Animated.Text style={[styles.arrowIcon, arrowAnimationStyle]}>
@@ -124,9 +122,7 @@ export const MarkItemRow: React.FC<MarkItemProps> = memo(({ mark, isEven }) => {
                 size={theme.iconSize.medium}
                 description={mark.sleepMark}
               />
-              <AppText style={styles.moodDescription} variant="bold">
-                {mark.sleepMark}
-              </AppText>
+              <AppText variant="description">{mark.sleepMark}</AppText>
             </View>
           </Animated.View>
         )}
@@ -142,7 +138,6 @@ const styles = StyleSheet.create({
   },
   itemDate: {
     textAlign: 'center',
-    color: theme.colorBrown,
   },
   itemContainer: {
     borderRadius: 12,
@@ -167,10 +162,6 @@ const styles = StyleSheet.create({
   },
   oddItemZebra: {
     backgroundColor: theme.colorWhiteHeat,
-  },
-  moodDescription: {
-    fontSize: 18,
-    color: theme.colorBrown,
   },
   emojiAndDescription: {
     flexDirection: 'row',

@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleProp, ViewStyle, View } from 'react-native';
 import {
-  AwesomeMoodEmoji,
+  GreatMoodEmoji,
   HappyMoodEmoji,
   NeutralMoodEmoji,
   SadMoodEmoji,
-  TerribleMoodEmoji,
+  AwfulMoodEmoji,
 } from './MoodEmoji.tsx';
 import {
   CheerfulSleepEmoji,
@@ -27,8 +27,8 @@ export const AppEmoji: React.FC<AppMoodEmojiProps> = ({
   style,
 }) => {
   switch (description) {
-    case 'awesome': {
-      return <AwesomeMoodEmoji style={style} size={size} />;
+    case 'great': {
+      return <GreatMoodEmoji style={style} size={size} />;
     }
     case 'happy': {
       return <HappyMoodEmoji style={style} size={size} />;
@@ -39,8 +39,8 @@ export const AppEmoji: React.FC<AppMoodEmojiProps> = ({
     case 'sad': {
       return <SadMoodEmoji style={style} size={size} />;
     }
-    case 'terrible': {
-      return <TerribleMoodEmoji style={style} size={size} />;
+    case 'awful': {
+      return <AwfulMoodEmoji style={style} size={size} />;
     }
     case 'cheerful': {
       return <CheerfulSleepEmoji style={style} size={size} />;

@@ -4,7 +4,7 @@ import {
   SleepType,
 } from '../store/slices/markListSlice';
 
-const moods: MoodType[] = ['awesome', 'happy', 'neutral', 'sad', 'terrible'];
+const moods: MoodType[] = ['great', 'happy', 'neutral', 'sad', 'awful'];
 const sleepQuality: SleepType[] = ['cheerful', 'norm', 'sleepy'];
 // NOTE: Создает случайную историю за отрезок времени
 const timePeriod = 434;

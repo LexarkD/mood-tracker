@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import type { MoodType, SleepType } from '../store/slices/markListSlice';
-import { AppHeaderText } from './AppHeaderText';
 import { AppText } from './AppText';
 import { theme } from '../constants/theme';
 import { AppEmoji } from './AppEmoji';
@@ -20,30 +19,18 @@ export const FinalResultScreen: React.FC<FinalResultScreenProps> = ({
   <View style={styles.screenContainer}>
     <View style={[styles.resultContainer, theme.shadowStyle]}>
       <View>
-        <AppHeaderText style={styles.header} variant="bold">
+        <AppText variant="h1" style={styles.header}>
           Thank you for sharing!
-        </AppHeaderText>
+        </AppText>
       </View>
       <View style={styles.resultRow}>
         <View style={styles.emojiContainer}>
-          <AppEmoji
-            // style={styles.emoji}
-            description={moodMark}
-            size={theme.iconSize.large}
-          />
-          <AppText style={styles.descriptionText} variant="bold">
-            {moodMark}
-          </AppText>
+          <AppEmoji description={moodMark} size={theme.iconSize.large} />
+          <AppText variant="description">{moodMark}</AppText>
         </View>
         <View style={styles.emojiContainer}>
-          <AppEmoji
-            // style={styles.emoji}
-            description={sleepMark}
-            size={theme.iconSize.large}
-          />
-          <AppText style={styles.descriptionText} variant="bold">
-            {sleepMark}
-          </AppText>
+          <AppEmoji description={sleepMark} size={theme.iconSize.large} />
+          <AppText variant="description">{sleepMark}</AppText>
         </View>
       </View>
     </View>
@@ -55,9 +42,7 @@ export const FinalResultScreen: React.FC<FinalResultScreenProps> = ({
       ]}
       onPress={onBack}
     >
-      <AppText style={styles.buttonText} variant="bold">
-        BACK
-      </AppText>
+      <AppText variant="button">BACK</AppText>
     </Pressable>
   </View>
 );
@@ -77,10 +62,6 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 8,
-    color: theme.colorBrown,
-    lineHeight: 24,
-    fontSize: 20,
-    letterSpacing: 1,
     textAlign: 'center',
   },
   resultRow: {
@@ -92,10 +73,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  descriptionText: {
-    color: theme.colorBrown,
-    fontSize: 16,
-  },
   button: {
     alignSelf: 'center',
     width: 150,
@@ -103,9 +80,5 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 12,
     backgroundColor: theme.colorYellow,
-  },
-  buttonText: {
-    color: theme.colorBlack,
-    textAlign: 'center',
   },
 });

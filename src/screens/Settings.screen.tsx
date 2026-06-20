@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import useMarkList from '../hooks/useMarkList.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from '../components/AppText.tsx';
-import { AppHeaderText } from '../components/AppHeaderText.tsx';
 
 export const Settings: React.FC = () => {
   const { onAddMockData, onClearMarkList } = useMarkList();
@@ -31,9 +30,9 @@ export const Settings: React.FC = () => {
   return (
     <SafeAreaView edges={['top', 'right', 'left']} style={styles.container}>
       <View style={styles.settingsContainer}>
-        <AppHeaderText style={styles.settingHeader}>
+        <AppText variant="h2" style={styles.header}>
           History settings
-        </AppHeaderText>
+        </AppText>
         <View style={[styles.settingBlock, theme.shadowStyle]}>
           <Pressable
             style={({ pressed }) => [
@@ -42,12 +41,14 @@ export const Settings: React.FC = () => {
             ]}
             onPress={handleClearHistory}
           >
-            <AppText style={styles.settingText}>Clear history</AppText>
+            <AppText variant="body">Clear history</AppText>
           </Pressable>
         </View>
       </View>
       <View style={styles.settingsContainer}>
-        <AppHeaderText style={styles.settingHeader}>DevTools</AppHeaderText>
+        <AppText variant="h2" style={styles.header}>
+          DevTools
+        </AppText>
         <View style={[styles.settingBlock, theme.shadowStyle]}>
           <Pressable
             style={({ pressed }) => [
@@ -56,7 +57,7 @@ export const Settings: React.FC = () => {
             ]}
             onPress={onAddMockData}
           >
-            <AppText style={styles.settingText}>Add mock data</AppText>
+            <AppText variant="body">Add mock data</AppText>
           </Pressable>
         </View>
       </View>
@@ -72,9 +73,7 @@ const styles = StyleSheet.create({
   settingsContainer: {
     marginHorizontal: 10,
   },
-  settingHeader: {
-    color: theme.colorBrown,
-    fontSize: 15,
+  header: {
     marginLeft: 16,
     marginBottom: 8,
   },
@@ -90,9 +89,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 12,
-  },
-  settingText: {
-    color: theme.colorBrown,
-    fontSize: 16,
   },
 });

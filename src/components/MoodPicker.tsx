@@ -12,7 +12,6 @@ import {
 import { checkingTimeout } from '../utils/checkingTimeout.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
-import { AppHeaderText } from './AppHeaderText.tsx';
 import { FocusableEmojiButton } from './FocusableEmojiButton.tsx';
 import { FinalResultScreen } from './FinalResultScreen.tsx';
 import { AnimatedSubmitButton } from './AnimatedSubmitButton.tsx';
@@ -95,16 +94,16 @@ export const MoodPicker: React.FC = () => {
   return (
     <View style={styles.pickerContainer}>
       <View>
-        <AppHeaderText style={styles.header} variant="bold">
+        <AppText variant="h1" style={styles.header}>
           {isTimeoutOver
             ? 'Take a deep breath. \nHow was your day?'
             : "You've done great today. \nSee you tomorrow!"}
-        </AppHeaderText>
+        </AppText>
       </View>
       <View style={[styles.optionsContainer, theme.shadowStyle]}>
-        <AppHeaderText style={styles.header} variant="bold">
+        <AppText variant="h1" style={styles.header}>
           How are you feeling today?
-        </AppHeaderText>
+        </AppText>
         <View style={styles.optionsRow} pointerEvents={pointerEventsStatus}>
           {moodOptions.map(mood => (
             <View style={styles.emojiContainer} key={mood}>
@@ -114,8 +113,7 @@ export const MoodPicker: React.FC = () => {
                 onPress={() => setSelectedMoodMark(mood)}
               />
               <AppText
-                style={styles.descriptionText}
-                variant="bold"
+                variant="description"
                 numberOfLines={1}
                 adjustsFontSizeToFit={true}
                 minimumFontScale={0.75}
@@ -127,9 +125,9 @@ export const MoodPicker: React.FC = () => {
         </View>
       </View>
       <View style={[styles.optionsContainer, theme.shadowStyle]}>
-        <AppHeaderText style={styles.header} variant="bold">
+        <AppText variant="h1" style={styles.header}>
           How did you sleep?
-        </AppHeaderText>
+        </AppText>
         <View style={styles.optionsRow} pointerEvents={pointerEventsStatus}>
           {sleepOptions.map(sleep => (
             <View style={styles.emojiContainer} key={sleep}>
@@ -139,8 +137,7 @@ export const MoodPicker: React.FC = () => {
                 onPress={() => setSelectedSleepMark(sleep)}
               />
               <AppText
-                style={styles.descriptionText}
-                variant="bold"
+                variant="description"
                 numberOfLines={1}
                 adjustsFontSizeToFit={true}
                 minimumFontScale={0.75}
@@ -168,10 +165,6 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 8,
-    color: theme.colorBrown,
-    lineHeight: 24,
-    fontSize: 20,
-    letterSpacing: 1,
     textAlign: 'center',
   },
   optionsContainer: {
@@ -187,11 +180,6 @@ const styles = StyleSheet.create({
   emojiContainer: {
     flex: 1,
     alignItems: 'center',
-  },
-  descriptionText: {
-    color: theme.colorBrown,
-    fontSize: 16,
-    textAlign: 'center',
   },
   submitButton: {
     marginTop: 16,

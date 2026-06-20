@@ -4,7 +4,7 @@ import { SegmentedButtons } from 'react-native-paper';
 import { PieChart } from 'react-native-gifted-charts';
 import useMarkList from '../hooks/useMarkList.ts';
 import { theme } from '../constants/theme.ts';
-import { AppHeaderText } from './AppHeaderText.tsx';
+import { AppText } from './AppText.tsx';
 import { filterMarkByTime } from '../utils/filterMarkByTime.ts';
 import { calculateChartData } from '../utils/calculateChartData.ts';
 
@@ -31,9 +31,9 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
         {chartData.map(item => (
           <View key={item.description} style={styles.legendItem}>
             <View style={[styles.legendDot, { backgroundColor: item.color }]} />
-            <AppHeaderText style={styles.legendText}>
+            <AppText variant="h2">
               {item.description}: {item.percent}%
-            </AppHeaderText>
+            </AppText>
           </View>
         ))}
       </View>
@@ -57,7 +57,7 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
           {
             value: 'all',
             label: 'ALL',
-            labelStyle: styles.buttonAppText,
+            labelStyle: theme.typography.button,
             style: {
               // NOTE: задаю кастомный разделитель и задаю цвет при нажатии. Остальные кнопки по аналогии.
               borderRightWidth: 1,
@@ -71,7 +71,7 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
           {
             value: 'year',
             label: 'YEAR',
-            labelStyle: styles.buttonAppText,
+            labelStyle: theme.typography.button,
             style: {
               borderRightWidth: 1,
               borderRightColor: theme.colorWhite,
@@ -84,7 +84,7 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
           {
             value: 'month',
             label: 'MONTH',
-            labelStyle: styles.buttonAppText,
+            labelStyle: theme.typography.button,
             style: {
               backgroundColor:
                 selectedFilterOptions === 'month'
@@ -122,12 +122,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignSelf: 'center',
   },
-  buttonAppText: {
-    fontFamily: theme.fontCygreRegular,
-    fontSize: 15,
-    color: theme.colorBlack,
-    textAlign: 'center',
-  },
   legendContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -147,8 +141,5 @@ const styles = StyleSheet.create({
     width: 15,
     borderRadius: 10,
     marginRight: 10,
-  },
-  legendText: {
-    color: theme.colorBrown,
   },
 });

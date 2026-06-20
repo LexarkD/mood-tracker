@@ -1,10 +1,10 @@
 // NOTE: единый цетовой интерфейс для emoji, charts, legends
 const COLOR_CONFIG_EMOJI = {
-  awesome: 'rgb(96, 178, 85)',
+  great: 'rgb(96, 178, 85)',
   happy: 'rgba(178,214,28,1)',
   neutral: 'rgba(239,221,7,1)',
   sad: 'rgb(245, 156, 47)',
-  terrible: 'rgb(240, 105, 1)',
+  awful: 'rgb(240, 105, 1)',
 
   cheerful: 'rgb(43, 147, 251)',
   norm: 'rgb(42, 114, 231)',
@@ -15,27 +15,19 @@ const COLOR_CONFIG_EMOJI = {
 export const theme = {
   COLOR_CONFIG_EMOJI,
   typography: {
-    h1_MoodP: {
+    h1: {
       fontFamily: 'NEXTART-Bold', //fontNextArtBold
       fontSize: 20,
       lineHeight: 24,
       letterSpacing: 1,
-      // textAlign: 'center',
       color: '#473C33', //colorBrown
     },
-    h2_setting: {
+    h2: {
       fontFamily: 'NEXTART', //fontNextArtRegular
-      color: '#473C33', //colorBrown
-      fontSize: 15,
-      // marginLeft: 16,
-      // marginBottom: 8,
-    },
-    legendText: {
-      fontFamily: 'NEXTART', //fontNextArtRegular
-      fontSize: 14,
+      fontSize: 16,
       color: '#473C33', //colorBrown
     },
-    settingText: {
+    body: {
       fontFamily: 'Cygre-Regular',
       color: '#473C33', //colorBrown
       fontSize: 16,
@@ -45,22 +37,18 @@ export const theme = {
       // textAlign: 'center',
       color: '#473C33', //colorBrown
     },
-    MarkItemR_moodDescription: {
+    description: {
       fontFamily: 'Cygre-Bold',
       fontSize: 18,
       color: '#473C33', //colorBrown
     },
-    MoodP_FinRes_descriptionText: {
+    button: {
       fontFamily: 'Cygre-Bold',
-      color: '#473C33', //colorBrown
       fontSize: 16,
+      color: '#473C33',
+      textAlign: 'center',
     },
-    FinRes_AnSabBut_button: {
-      fontFamily: 'Cygre-Bold',
-      color: '#000', //colorBlack,
-      // textAlign: 'center',
-    },
-  },
+  } as const,
   spacing: {
     xs: 4,
     s: 8,
@@ -88,7 +76,7 @@ export const theme = {
   colorYellow: '#FEC868',
   colorPaleYellow: '#e4ebd0',
   colorOrange: '#FDA769',
-  colorBlack: '#000',
+  colorBlack: '#000000c5',
   colorBrown: '#473C33',
   colorWhite: '#fff',
   colorWhiteHeat: '#fbf7ef',

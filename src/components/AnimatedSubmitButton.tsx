@@ -37,7 +37,7 @@ export const AnimatedSubmitButton: React.FC<AnimatedSubmitButtonProps> = ({
 
   return (
     <AnimatedPressable
-      style={[styles.button, buttonAnimatedStyle, style]}
+      style={[styles.button, theme.shadowStyle, buttonAnimatedStyle, style]}
       onPress={onSubmit}
       onPressIn={() => {
         // NOTE: Отслеживаю начало и конец нажатия.
@@ -48,9 +48,7 @@ export const AnimatedSubmitButton: React.FC<AnimatedSubmitButtonProps> = ({
       }}
       disabled={disabled}
     >
-      <AppText style={styles.buttonText} variant="bold">
-        {title}
-      </AppText>
+      <AppText variant="button">{title}</AppText>
     </AnimatedPressable>
   );
 };
@@ -62,9 +60,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignSelf: 'center',
     padding: 10,
-  },
-  buttonText: {
-    color: theme.colorBlack,
-    textAlign: 'center',
   },
 });
