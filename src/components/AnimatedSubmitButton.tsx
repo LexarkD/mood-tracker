@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Pressable } from 'react-native';
+import { StyleSheet, Pressable, StyleProp, ViewStyle } from 'react-native';
+
 import Reanimated, {
   useAnimatedStyle,
   withTiming,
@@ -12,6 +13,7 @@ type AnimatedSubmitButtonProps = {
   title: string;
   disabled: boolean;
   onSubmit: () => void;
+  style?: StyleProp<ViewStyle>;
 };
 
 const AnimatedPressable = Reanimated.createAnimatedComponent(Pressable);
@@ -20,6 +22,7 @@ export const AnimatedSubmitButton: React.FC<AnimatedSubmitButtonProps> = ({
   title,
   disabled,
   onSubmit,
+  style,
 }) => {
   const isPressed = useSharedValue(false);
 
@@ -34,7 +37,7 @@ export const AnimatedSubmitButton: React.FC<AnimatedSubmitButtonProps> = ({
 
   return (
     <AnimatedPressable
-      style={[styles.button, buttonAnimatedStyle]}
+      style={[styles.button, buttonAnimatedStyle, style]}
       onPress={onSubmit}
       onPressIn={() => {
         // NOTE: Отслеживаю начало и конец нажатия.
@@ -57,7 +60,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colorYellow,
     width: 150,
     borderRadius: 12,
-    marginTop: 20,
     alignSelf: 'center',
     padding: 10,
   },

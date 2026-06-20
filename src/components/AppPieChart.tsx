@@ -56,7 +56,7 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
         buttons={[
           {
             value: 'all',
-            label: 'all',
+            label: 'ALL',
             labelStyle: styles.buttonAppText,
             style: {
               // NOTE: задаю кастомный разделитель и задаю цвет при нажатии. Остальные кнопки по аналогии.
@@ -70,7 +70,7 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
           },
           {
             value: 'year',
-            label: 'year',
+            label: 'YEAR',
             labelStyle: styles.buttonAppText,
             style: {
               borderRightWidth: 1,
@@ -83,7 +83,7 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
           },
           {
             value: 'month',
-            label: 'month',
+            label: 'MONTH',
             labelStyle: styles.buttonAppText,
             style: {
               backgroundColor:
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   buttonAppText: {
-    fontFamily: theme.fontNextArtRegular,
+    fontFamily: theme.fontCygreRegular,
     fontSize: 15,
     color: theme.colorBlack,
     textAlign: 'center',

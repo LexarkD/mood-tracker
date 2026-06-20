@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import {
   View,
   StyleSheet,
@@ -30,7 +30,7 @@ type MarkItemProps = {
 // NOTE: Анимированыый компонент для аккордеона
 const AnimatedTouch = Animated.createAnimatedComponent(TouchableOpacity);
 
-export const MarkItemRow: React.FC<MarkItemProps> = ({ mark, isEven }) => {
+export const MarkItemRow: React.FC<MarkItemProps> = memo(({ mark, isEven }) => {
   const { onDeleteMarkEntry } = useMarkList();
   const [expanded, setExpanded] = useState(false);
 
@@ -133,7 +133,7 @@ export const MarkItemRow: React.FC<MarkItemProps> = ({ mark, isEven }) => {
       </Animated.View>
     </GestureDetector>
   );
-};
+});
 
 // TODO(style): Выровнять элементы истории
 const styles = StyleSheet.create({
@@ -146,7 +146,6 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     borderRadius: 12,
-    marginHorizontal: 10,
     marginBottom: 4,
   },
   headerContainer: {

@@ -45,6 +45,8 @@ export const Settings: React.FC = () => {
             <AppText style={styles.settingText}>Clear history</AppText>
           </Pressable>
         </View>
+      </View>
+      <View style={styles.settingsContainer}>
         <AppHeaderText style={styles.settingHeader}>DevTools</AppHeaderText>
         <View style={[styles.settingBlock, theme.shadowStyle]}>
           <Pressable
@@ -68,10 +70,10 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colorGreen,
   },
   settingsContainer: {
-    paddingHorizontal: 10,
+    marginHorizontal: 10,
   },
   settingHeader: {
-    color: 'theme.colorBrown',
+    color: theme.colorBrown,
     fontSize: 15,
     marginLeft: 16,
     marginBottom: 8,

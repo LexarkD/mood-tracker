@@ -10,9 +10,64 @@ const COLOR_CONFIG_EMOJI = {
   norm: 'rgb(42, 114, 231)',
   sleepy: 'rgb(76, 68, 192)',
 };
-
+//TODO: Оставить в theme свойства типографики (fontFamily, fontSize, lineHeight, letterSpacing, базовая расцветка).
+//Свойства позиционирования задать локально. Кроме button - это неизменный лейаут.
 export const theme = {
   COLOR_CONFIG_EMOJI,
+  typography: {
+    h1_MoodP: {
+      fontFamily: 'NEXTART-Bold', //fontNextArtBold
+      fontSize: 20,
+      lineHeight: 24,
+      letterSpacing: 1,
+      // textAlign: 'center',
+      color: '#473C33', //colorBrown
+    },
+    h2_setting: {
+      fontFamily: 'NEXTART', //fontNextArtRegular
+      color: '#473C33', //colorBrown
+      fontSize: 15,
+      // marginLeft: 16,
+      // marginBottom: 8,
+    },
+    legendText: {
+      fontFamily: 'NEXTART', //fontNextArtRegular
+      fontSize: 14,
+      color: '#473C33', //colorBrown
+    },
+    settingText: {
+      fontFamily: 'Cygre-Regular',
+      color: '#473C33', //colorBrown
+      fontSize: 16,
+    },
+    date: {
+      fontFamily: 'Cygre-Regular',
+      // textAlign: 'center',
+      color: '#473C33', //colorBrown
+    },
+    MarkItemR_moodDescription: {
+      fontFamily: 'Cygre-Bold',
+      fontSize: 18,
+      color: '#473C33', //colorBrown
+    },
+    MoodP_FinRes_descriptionText: {
+      fontFamily: 'Cygre-Bold',
+      color: '#473C33', //colorBrown
+      fontSize: 16,
+    },
+    FinRes_AnSabBut_button: {
+      fontFamily: 'Cygre-Bold',
+      color: '#000', //colorBlack,
+      // textAlign: 'center',
+    },
+  },
+  spacing: {
+    xs: 4,
+    s: 8,
+    m: 16,
+    l: 24,
+    xl: 32,
+  },
   iconSize: {
     small: 30,
     medium: 40,
@@ -31,7 +86,7 @@ export const theme = {
   colorGreen: '#ABC270',
   colorPaleGreen: '#fff3dd',
   colorYellow: '#FEC868',
-  сolorPaleYellow: '#e4ebd0',
+  colorPaleYellow: '#e4ebd0',
   colorOrange: '#FDA769',
   colorBlack: '#000',
   colorBrown: '#473C33',
@@ -39,9 +94,6 @@ export const theme = {
   colorWhiteHeat: '#fbf7ef',
   colorBlue: '#1D84B5',
 
-  fontFamilyBold: 'Kalam-Bold',
-  fontFamilyRegular: 'Kalam-Regular',
-  fontFamilyLight: 'Kalam-Light',
   fontCygreBold: 'Cygre-Bold',
   fontCygreRegular: 'Cygre-Regular',
   fontCygreLight: 'Cygre-Light',
@@ -49,3 +101,5 @@ export const theme = {
   fontNextArtRegular: 'NEXTART',
   fontNextArtLight: 'NEXTART-Light',
 };
+
+export type TypographyVariant = keyof typeof theme.typography;

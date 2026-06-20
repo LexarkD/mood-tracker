@@ -17,36 +17,42 @@ export const FinalResultScreen: React.FC<FinalResultScreenProps> = ({
   sleepMark,
   onBack,
 }) => (
-  <View style={[styles.finalResultContainer, theme.shadowStyle]}>
-    <View>
-      <AppHeaderText style={styles.headerFinalResult} variant="bold">
-        Thank you for sharing!
-      </AppHeaderText>
-    </View>
-    <View style={styles.finalResult}>
+  <View style={styles.screenContainer}>
+    <View style={[styles.resultContainer, theme.shadowStyle]}>
       <View>
-        <AppEmoji
-          style={styles.finalEmoji}
-          description={moodMark}
-          size={theme.iconSize.large}
-        />
-        <AppText style={styles.descriptionText} variant="bold">
-          {moodMark}
-        </AppText>
+        <AppHeaderText style={styles.header} variant="bold">
+          Thank you for sharing!
+        </AppHeaderText>
       </View>
-      <View>
-        <AppEmoji
-          style={styles.finalEmoji}
-          description={sleepMark}
-          size={theme.iconSize.large}
-        />
-        <AppText style={styles.descriptionText} variant="bold">
-          {sleepMark}
-        </AppText>
+      <View style={styles.resultRow}>
+        <View style={styles.emojiContainer}>
+          <AppEmoji
+            // style={styles.emoji}
+            description={moodMark}
+            size={theme.iconSize.large}
+          />
+          <AppText style={styles.descriptionText} variant="bold">
+            {moodMark}
+          </AppText>
+        </View>
+        <View style={styles.emojiContainer}>
+          <AppEmoji
+            // style={styles.emoji}
+            description={sleepMark}
+            size={theme.iconSize.large}
+          />
+          <AppText style={styles.descriptionText} variant="bold">
+            {sleepMark}
+          </AppText>
+        </View>
       </View>
     </View>
     <Pressable
-      style={({ pressed }) => [styles.button, { opacity: pressed ? 0.7 : 1 }]}
+      style={({ pressed }) => [
+        styles.button,
+        theme.shadowStyle,
+        { opacity: pressed ? 0.7 : 1 },
+      ]}
       onPress={onBack}
     >
       <AppText style={styles.buttonText} variant="bold">
@@ -57,47 +63,49 @@ export const FinalResultScreen: React.FC<FinalResultScreenProps> = ({
 );
 
 const styles = StyleSheet.create({
-  finalResultContainer: {
-    height: '30%',
-    backgroundColor: theme.colorWhite,
-    margin: 10,
-    borderRadius: 12,
-    padding: 20,
-    justifyContent: 'space-between',
-  },
-  finalResult: {
+  screenContainer: {
     flex: 1,
     justifyContent: 'center',
-    flexDirection: 'row',
-    paddingBottom: 20,
+    gap: 16,
   },
-  headerFinalResult: {
+  resultContainer: {
+    gap: 8,
+    paddingVertical: 16,
+    paddingHorizontal: 8,
+    backgroundColor: theme.colorWhite,
+    borderRadius: 12,
+  },
+  header: {
+    marginBottom: 8,
     color: theme.colorBrown,
+    lineHeight: 24,
     fontSize: 20,
     letterSpacing: 1,
     textAlign: 'center',
   },
-
+  resultRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 64,
+  },
+  emojiContainer: {
+    alignItems: 'center',
+    gap: 8,
+  },
   descriptionText: {
     color: theme.colorBrown,
-    fontSize: 15,
-    textAlign: 'center',
+    fontSize: 16,
   },
   button: {
-    backgroundColor: theme.colorYellow,
-    width: 150,
-    borderRadius: 12,
-    marginTop: 20,
     alignSelf: 'center',
+    width: 150,
+    marginTop: 16,
     padding: 10,
+    borderRadius: 12,
+    backgroundColor: theme.colorYellow,
   },
   buttonText: {
     color: theme.colorBlack,
     textAlign: 'center',
-  },
-  finalEmoji: {
-    alignSelf: 'center',
-    marginHorizontal: 20,
-    marginTop: 25,
   },
 });

@@ -51,9 +51,6 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Kalam-Bold.ttf</string>
-		<string>Kalam-Light.ttf</string>
-		<string>Kalam-Regular.ttf</string>
 		<string>NEXTART-Bold.otf</string>
 		<string>NEXTART-Light.otf</string>
 		<string>NEXTART.otf</string>

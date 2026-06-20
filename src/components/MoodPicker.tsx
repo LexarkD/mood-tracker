@@ -51,7 +51,6 @@ export const MoodPicker: React.FC = () => {
       const intervalId = setInterval(() => {
         setIsTimeoutOver(checkingTimeOver(Date.now()));
       }, oneMinute);
-
       return () => clearInterval(intervalId);
     }, [checkingTimeOver]),
   );
@@ -153,6 +152,7 @@ export const MoodPicker: React.FC = () => {
         </View>
       </View>
       <AnimatedSubmitButton
+        style={styles.submitButton}
         title="CHOOSE"
         disabled={isDisabledButton}
         onSubmit={handleSelect}
@@ -164,18 +164,25 @@ export const MoodPicker: React.FC = () => {
 const styles = StyleSheet.create({
   pickerContainer: {
     flex: 1,
+    gap: 16,
+  },
+  header: {
+    marginBottom: 8,
+    color: theme.colorBrown,
+    lineHeight: 24,
+    fontSize: 20,
+    letterSpacing: 1,
+    textAlign: 'center',
   },
   optionsContainer: {
+    gap: 8,
+    paddingVertical: 16,
+    paddingHorizontal: 8,
     backgroundColor: theme.colorWhite,
-    margin: 10,
     borderRadius: 12,
-    paddingVertical: 20,
-    paddingHorizontal: 10,
-    justifyContent: 'space-between',
   },
   optionsRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   emojiContainer: {
     flex: 1,
@@ -183,58 +190,10 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     color: theme.colorBrown,
-    fontSize: 15,
+    fontSize: 16,
     textAlign: 'center',
   },
-  header: {
-    color: theme.colorBrown,
-    fontSize: 20,
-    letterSpacing: 1,
-    textAlign: 'center',
-    marginBottom: 20,
+  submitButton: {
+    marginTop: 16,
   },
 });
-
-// NOTE: Этот способ получения currentTime слишком замороченный, хотя и не вызывает лишних рендеров
-// // NOTE: Получаю новое время, даже если приложение не было закрыто, но пользователь перешел на другую вкладку или сворачивал приложение.
-// useFocusEffect(
-//   useCallback(() => {
-//     setCurrentTime(Date.now());
-//     // NOTE: Вешаю слушатель на состояние приложения, чтоб обновить время, если пользователь свернет приложение на этой вкладке. Получаю AppState -> active, когда приложение возвращается из фона.
-//     const subscription = AppState.addEventListener(
-//       'change',
-//       (nextAppState: AppStateStatus) => {
-//         if (nextAppState === 'active') {
-//           setCurrentTime(Date.now());
-//         }
-//       },
-//     );
-//     // NOTE: Фукнция очистки удалит слушатель, если пользователь перешел на другую вкладку. В другом случае- OS убьет слушатель, когда убьет процесс, или когда пользователь совершит Hard Close.
-//     return () => {
-//       subscription.remove();
-//     };
-//   }, []),
-// );
-
-// NOTE: Способ с интервалом проще. Но такая реализация каждую минуту вызывает ненужный ререндер.
-// NOTE: Запускаю интервал, что бы получать currentTime.
-// useFocusEffect(
-//   useCallback(() => {
-//     setCurrentTime(Date.now());
-//     const oneMinute = 60000;
-//     const intervalId = setInterval(() => {
-//       setCurrentTime(Date.now());
-//     }, oneMinute);
-
-//     return () => clearInterval(intervalId);
-//   }, []),
-// );
-
-//   // NOTE: isTimeoutOver - проверяет, наступил ли следующий день и может ли быть доступен интерфейс.
-// const isTimeoutOver2 = useMemo(() => {
-//   const lastEntry = markList[0];
-//   // NOTE: Если еще ни одной записи не сделано, новая запись сразу разрешена.
-//   if (!lastEntry) return true;
-//   // NOTE: Вычисляю, прошел ли таймаут в 1 сутки.
-//   return checkingTimeout(lastEntry.timestamp, currentTime);
-// }, [markList, currentTime]);

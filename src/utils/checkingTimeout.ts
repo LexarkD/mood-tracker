@@ -8,6 +8,7 @@ export const checkingTimeout = (
 
   dateLastEntry.setHours(0, 0, 0, 0);
   dateNewEntry.setHours(0, 0, 0, 0);
-
-  return dateNewEntry.getTime() > dateLastEntry.getTime();
+  // FIXME: ВРЕМЕННЫЙ ХАК ДЛЯ ВЕРСТКИ!
+  // return dateNewEntry.getTime() > dateLastEntry.getTime();
+  return true;
 };
