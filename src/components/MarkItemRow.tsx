@@ -158,10 +158,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   evenItemZebra: {
-    backgroundColor: theme.colorWhite,
+    backgroundColor: theme.COLOR_CONFIG_UI.evenItemZebra,
   },
   oddItemZebra: {
-    backgroundColor: theme.colorWhiteHeat,
+    backgroundColor: theme.COLOR_CONFIG_UI.oddItemZebra,
   },
   emojiAndDescription: {
     flexDirection: 'row',
@@ -169,6 +169,6 @@ const styles = StyleSheet.create({
   },
   arrowIcon: {
     fontSize: 14,
-    color: theme.colorBrown,
+    color: theme.COLOR_CONFIG_UI.appText,
   },
 });

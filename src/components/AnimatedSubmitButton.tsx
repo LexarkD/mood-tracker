@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Pressable, StyleProp, ViewStyle } from 'react-native';
+import { Pressable, StyleProp, ViewStyle } from 'react-native';
 
 import Reanimated, {
   useAnimatedStyle,
@@ -37,7 +37,7 @@ export const AnimatedSubmitButton: React.FC<AnimatedSubmitButtonProps> = ({
 
   return (
     <AnimatedPressable
-      style={[styles.button, theme.shadowStyle, buttonAnimatedStyle, style]}
+      style={[theme.appButton, theme.shadowStyle, buttonAnimatedStyle, style]}
       onPress={onSubmit}
       onPressIn={() => {
         // NOTE: Отслеживаю начало и конец нажатия.
@@ -52,13 +52,3 @@ export const AnimatedSubmitButton: React.FC<AnimatedSubmitButtonProps> = ({
     </AnimatedPressable>
   );
 };
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: theme.colorYellow,
-    width: 150,
-    borderRadius: 12,
-    alignSelf: 'center',
-    padding: 10,
-  },
-});

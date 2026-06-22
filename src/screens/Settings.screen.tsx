@@ -68,7 +68,7 @@ export const Settings: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colorGreen,
+    backgroundColor: theme.COLOR_CONFIG_UI.screenBackground,
   },
   settingsContainer: {
     marginHorizontal: 10,
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   settingBlock: {
-    backgroundColor: theme.colorWhite,
+    backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
     borderRadius: 12,
     marginBottom: 24,
   },

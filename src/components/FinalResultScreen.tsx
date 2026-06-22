@@ -17,47 +17,52 @@ export const FinalResultScreen: React.FC<FinalResultScreenProps> = ({
   onBack,
 }) => (
   <View style={styles.screenContainer}>
-    <View style={[styles.resultContainer, theme.shadowStyle]}>
-      <View>
+    <View style={styles.contentContainer}>
+      <View style={[styles.resultContainer, theme.shadowStyle]}>
         <AppText variant="h1" style={styles.header}>
           Thank you for sharing!
         </AppText>
-      </View>
-      <View style={styles.resultRow}>
-        <View style={styles.emojiContainer}>
-          <AppEmoji description={moodMark} size={theme.iconSize.large} />
-          <AppText variant="description">{moodMark}</AppText>
-        </View>
-        <View style={styles.emojiContainer}>
-          <AppEmoji description={sleepMark} size={theme.iconSize.large} />
-          <AppText variant="description">{sleepMark}</AppText>
+        <View style={styles.resultRow}>
+          <View style={styles.emojiContainer}>
+            <AppEmoji description={moodMark} size={theme.iconSize.large} />
+            <AppText variant="description">{moodMark}</AppText>
+          </View>
+          <View style={styles.emojiContainer}>
+            <AppEmoji description={sleepMark} size={theme.iconSize.large} />
+            <AppText variant="description">{sleepMark}</AppText>
+          </View>
         </View>
       </View>
     </View>
-    <Pressable
-      style={({ pressed }) => [
-        styles.button,
-        theme.shadowStyle,
-        { opacity: pressed ? 0.7 : 1 },
-      ]}
-      onPress={onBack}
-    >
-      <AppText variant="button">BACK</AppText>
-    </Pressable>
+    <View style={styles.footerContainer}>
+      <Pressable
+        style={({ pressed }) => [
+          // styles.button,
+          theme.appButton,
+          theme.shadowStyle,
+          { opacity: pressed ? 0.7 : 1 },
+        ]}
+        onPress={onBack}
+      >
+        <AppText variant="button">BACK</AppText>
+      </Pressable>
+    </View>
   </View>
 );
 
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
+  },
+  contentContainer: {
+    flex: 1,
     justifyContent: 'center',
-    gap: 16,
   },
   resultContainer: {
     gap: 8,
     paddingVertical: 16,
     paddingHorizontal: 8,
-    backgroundColor: theme.colorWhite,
+    backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
     borderRadius: 12,
   },
   header: {
@@ -73,12 +78,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  button: {
-    alignSelf: 'center',
-    width: 150,
-    marginTop: 16,
-    padding: 10,
-    borderRadius: 12,
-    backgroundColor: theme.colorYellow,
+  footerContainer: {
+    alignItems: 'center',
+    paddingBottom: 32,
   },
 });

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { SegmentedButtons } from 'react-native-paper';
+import { Pressable, View, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
 import useMarkList from '../hooks/useMarkList.ts';
 import { theme } from '../constants/theme.ts';
@@ -42,58 +41,56 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
 
   return (
     <View style={[styles.container, theme.shadowStyle]}>
-      <SegmentedButtons
-        value={selectedFilterOptions}
-        onValueChange={setSelectedFilterOptions}
-        style={styles.button}
-        // NOTE: theme задает новые скругления и убирает дефолтную черную границу
-        theme={{
-          roundness: 3,
-          colors: {
-            outline: 'transparent',
-          },
-        }}
-        buttons={[
-          {
-            value: 'all',
-            label: 'ALL',
-            labelStyle: theme.typography.button,
-            style: {
-              // NOTE: задаю кастомный разделитель и задаю цвет при нажатии. Остальные кнопки по аналогии.
-              borderRightWidth: 1,
-              borderRightColor: theme.colorWhite,
+      <View style={[styles.segmentButtonsContainer, theme.shadowStyle]}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.button,
+            styles.buttonLeft,
+            {
               backgroundColor:
                 selectedFilterOptions === 'all'
-                  ? theme.colorOrange
-                  : theme.colorYellow,
+                  ? theme.COLOR_CONFIG_UI.buttonIsPressed
+                  : theme.COLOR_CONFIG_UI.button,
             },
-          },
-          {
-            value: 'year',
-            label: 'YEAR',
-            labelStyle: theme.typography.button,
-            style: {
-              borderRightWidth: 1,
-              borderRightColor: theme.colorWhite,
+            { opacity: pressed ? 0.7 : 1 },
+          ]}
+          onPress={() => setSelectedFilterOptions('all')}
+        >
+          <AppText variant="button">ALL</AppText>
+        </Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            styles.button,
+            {
               backgroundColor:
                 selectedFilterOptions === 'year'
-                  ? theme.colorOrange
-                  : theme.colorYellow,
+                  ? theme.COLOR_CONFIG_UI.buttonIsPressed
+                  : theme.COLOR_CONFIG_UI.button,
             },
-          },
-          {
-            value: 'month',
-            label: 'MONTH',
-            labelStyle: theme.typography.button,
-            style: {
+            { opacity: pressed ? 0.7 : 1 },
+          ]}
+          onPress={() => setSelectedFilterOptions('year')}
+        >
+          <AppText variant="button">YEAR</AppText>
+        </Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            styles.button,
+            styles.buttonRight,
+            {
               backgroundColor:
                 selectedFilterOptions === 'month'
-                  ? theme.colorOrange
-                  : theme.colorYellow,
+                  ? theme.COLOR_CONFIG_UI.buttonIsPressed
+                  : theme.COLOR_CONFIG_UI.button,
             },
-          },
-        ]}
-      />
+            { opacity: pressed ? 0.7 : 1 },
+          ]}
+          onPress={() => setSelectedFilterOptions('month')}
+        >
+          <AppText variant="button">MONTH</AppText>
+        </Pressable>
+      </View>
+
       <View style={styles.pie}>
         <PieChart data={chartData} radius={120} />
       </View>
@@ -104,23 +101,36 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
 
 const styles = StyleSheet.create({
   container: {
+    gap: 16,
     flex: 1,
-    backgroundColor: theme.colorWhite,
+    backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
     margin: 10,
     borderRadius: 12,
     padding: 10,
     justifyContent: 'space-around',
+  },
+  segmentButtonsContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: 2,
   },
   pie: {
     alignItems: 'center',
     marginBottom: 20,
   },
   button: {
-    marginTop: 10,
-    marginBottom: 20,
-    width: '90%',
-    borderRadius: 12,
-    alignSelf: 'center',
+    flex: 1,
+    minHeight: 48,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+  },
+  buttonLeft: {
+    borderTopLeftRadius: 12,
+    borderBottomLeftRadius: 12,
+  },
+  buttonRight: {
+    borderTopRightRadius: 12,
+    borderBottomRightRadius: 12,
   },
   legendContainer: {
     flexDirection: 'row',

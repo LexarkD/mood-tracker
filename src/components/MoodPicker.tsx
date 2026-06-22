@@ -93,73 +93,77 @@ export const MoodPicker: React.FC = () => {
   // NOTE: descriptionText адаптивно уменьшается на маленьких экранах.
   return (
     <View style={styles.pickerContainer}>
-      <View>
+      <View style={styles.contentContainer}>
         <AppText variant="h1" style={styles.header}>
           {isTimeoutOver
             ? 'Take a deep breath. \nHow was your day?'
             : "You've done great today. \nSee you tomorrow!"}
         </AppText>
-      </View>
-      <View style={[styles.optionsContainer, theme.shadowStyle]}>
-        <AppText variant="h1" style={styles.header}>
-          How are you feeling today?
-        </AppText>
-        <View style={styles.optionsRow} pointerEvents={pointerEventsStatus}>
-          {moodOptions.map(mood => (
-            <View style={styles.emojiContainer} key={mood}>
-              <FocusableEmojiButton
-                description={mood}
-                isSelectOption={selectedMoodMark === mood}
-                onPress={() => setSelectedMoodMark(mood)}
-              />
-              <AppText
-                variant="description"
-                numberOfLines={1}
-                adjustsFontSizeToFit={true}
-                minimumFontScale={0.75}
-              >
-                {selectedMoodMark === mood ? mood : ' '}
-              </AppText>
-            </View>
-          ))}
+        <View style={[styles.optionsContainer, theme.shadowStyle]}>
+          <AppText variant="h1" style={styles.header}>
+            How are you feeling today?
+          </AppText>
+          <View style={styles.optionsRow} pointerEvents={pointerEventsStatus}>
+            {moodOptions.map(mood => (
+              <View style={styles.emojiContainer} key={mood}>
+                <FocusableEmojiButton
+                  description={mood}
+                  isSelectOption={selectedMoodMark === mood}
+                  onPress={() => setSelectedMoodMark(mood)}
+                />
+                <AppText
+                  variant="description"
+                  numberOfLines={1}
+                  adjustsFontSizeToFit={true}
+                  minimumFontScale={0.75}
+                >
+                  {selectedMoodMark === mood ? mood : ' '}
+                </AppText>
+              </View>
+            ))}
+          </View>
+        </View>
+        <View style={[styles.optionsContainer, theme.shadowStyle]}>
+          <AppText variant="h1" style={styles.header}>
+            How did you sleep?
+          </AppText>
+          <View style={styles.optionsRow} pointerEvents={pointerEventsStatus}>
+            {sleepOptions.map(sleep => (
+              <View style={styles.emojiContainer} key={sleep}>
+                <FocusableEmojiButton
+                  description={sleep}
+                  isSelectOption={selectedSleepMark === sleep}
+                  onPress={() => setSelectedSleepMark(sleep)}
+                />
+                <AppText
+                  variant="description"
+                  numberOfLines={1}
+                  adjustsFontSizeToFit={true}
+                  minimumFontScale={0.75}
+                >
+                  {selectedSleepMark === sleep ? sleep : ' '}
+                </AppText>
+              </View>
+            ))}
+          </View>
         </View>
       </View>
-      <View style={[styles.optionsContainer, theme.shadowStyle]}>
-        <AppText variant="h1" style={styles.header}>
-          How did you sleep?
-        </AppText>
-        <View style={styles.optionsRow} pointerEvents={pointerEventsStatus}>
-          {sleepOptions.map(sleep => (
-            <View style={styles.emojiContainer} key={sleep}>
-              <FocusableEmojiButton
-                description={sleep}
-                isSelectOption={selectedSleepMark === sleep}
-                onPress={() => setSelectedSleepMark(sleep)}
-              />
-              <AppText
-                variant="description"
-                numberOfLines={1}
-                adjustsFontSizeToFit={true}
-                minimumFontScale={0.75}
-              >
-                {selectedSleepMark === sleep ? sleep : ' '}
-              </AppText>
-            </View>
-          ))}
-        </View>
+      <View style={styles.footerContainer}>
+        <AnimatedSubmitButton
+          title="CHOOSE"
+          disabled={isDisabledButton}
+          onSubmit={handleSelect}
+        />
       </View>
-      <AnimatedSubmitButton
-        style={styles.submitButton}
-        title="CHOOSE"
-        disabled={isDisabledButton}
-        onSubmit={handleSelect}
-      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   pickerContainer: {
+    flex: 1,
+  },
+  contentContainer: {
     flex: 1,
     gap: 16,
   },
@@ -171,7 +175,7 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingVertical: 16,
     paddingHorizontal: 8,
-    backgroundColor: theme.colorWhite,
+    backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
     borderRadius: 12,
   },
   optionsRow: {
@@ -181,7 +185,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  submitButton: {
-    marginTop: 16,
+  footerContainer: {
+    alignItems: 'center',
+    paddingBottom: 32,
   },
 });

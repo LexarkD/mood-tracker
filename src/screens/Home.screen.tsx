@@ -18,6 +18,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 8,
     paddingHorizontal: 8,
-    backgroundColor: theme.colorGreen,
+    backgroundColor: theme.COLOR_CONFIG_UI.screenBackground,
   },
 });

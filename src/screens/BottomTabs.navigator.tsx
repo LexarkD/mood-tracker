@@ -34,9 +34,9 @@ export const BottomTabsNavigator: React.FC = () => {
   return (
     <BottomTabs.Navigator
       screenOptions={({ route }) => ({
-        tabBarStyle: { backgroundColor: theme.colorWhite },
-        tabBarActiveTintColor: theme.colorBrown,
-        tabBarInactiveTintColor: theme.colorGrey,
+        tabBarStyle: { backgroundColor: theme.COLOR_CONFIG_UI.cardBackground },
+        tabBarActiveTintColor: theme.COLOR_CONFIG_UI.tabBarActive,
+        tabBarInactiveTintColor: theme.COLOR_CONFIG_UI.tabBarInactive,
         tabBarShowLabel: false,
         headerShown: false,
         tabBarIcon: createTabBarIcon(route.name),

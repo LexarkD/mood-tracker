@@ -41,7 +41,7 @@ export const History: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colorGreen,
+    backgroundColor: theme.COLOR_CONFIG_UI.screenBackground,
     padding: 10,
   },
 });

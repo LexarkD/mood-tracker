@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: theme.colorGreen,
+    backgroundColor: theme.COLOR_CONFIG_UI.screenBackground,
   },
 });
