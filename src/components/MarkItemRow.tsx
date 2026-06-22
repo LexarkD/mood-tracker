@@ -34,7 +34,7 @@ export const MarkItemRow: React.FC<MarkItemProps> = memo(({ mark, isEven }) => {
   const { onDeleteMarkEntry } = useMarkList();
   const [expanded, setExpanded] = useState(false);
 
-  // NOTE: Удаление отметки свайпом. Не должно попасть в релизную версию приложения. Так как позволяет исправлять(манипулировать) историю, следовательно - статистику.
+  // FIXME: Удаление отметки свайпом. Не должно попасть в релизную версию приложения. Так как позволяет исправлять(манипулировать) историю, следовательно - статистику.
   const removeWithDelay = () => {
     setTimeout(() => {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -95,20 +95,33 @@ export const MarkItemRow: React.FC<MarkItemProps> = memo(({ mark, isEven }) => {
           onPress={toggleExpand}
           activeOpacity={0.7}
         >
-          <View style={styles.emojiAndDescription}>
+          <View style={styles.emojiContainer}>
             <AppEmoji
-              style={styles.emoji}
               size={theme.iconSize.medium}
               description={mark.moodMark}
             />
-            <AppText variant="description">{mark.moodMark}</AppText>
           </View>
-          <AppText variant="date" style={styles.itemDate}>
-            {format(new Date(mark.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
-          </AppText>
-          <Animated.Text style={[styles.arrowIcon, arrowAnimationStyle]}>
-            ▼
-          </Animated.Text>
+          <View style={styles.descriptionContainer}>
+            <AppText
+              variant="description"
+              numberOfLines={1}
+              adjustsFontSizeToFit={true}
+              minimumFontScale={0.75}
+            >
+              {mark.moodMark}
+            </AppText>
+          </View>
+
+          <View style={styles.dateContainer}>
+            <AppText variant="date">
+              {format(new Date(mark.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
+            </AppText>
+          </View>
+          <View style={styles.arrowContainer}>
+            <Animated.Text style={[styles.arrowIcon, arrowAnimationStyle]}>
+              ▼
+            </Animated.Text>
+          </View>
         </AnimatedTouch>
         {expanded && (
           <Animated.View
@@ -116,13 +129,21 @@ export const MarkItemRow: React.FC<MarkItemProps> = memo(({ mark, isEven }) => {
             exiting={FadeOut.duration(150)}
             style={styles.contentContainer}
           >
-            <View style={styles.emojiAndDescription}>
+            <View style={styles.emojiContainer}>
               <AppEmoji
-                style={styles.emoji}
                 size={theme.iconSize.medium}
                 description={mark.sleepMark}
               />
-              <AppText variant="description">{mark.sleepMark}</AppText>
+            </View>
+            <View style={styles.descriptionContainer}>
+              <AppText
+                variant="description"
+                numberOfLines={1}
+                adjustsFontSizeToFit={true}
+                minimumFontScale={0.75}
+              >
+                {mark.sleepMark}
+              </AppText>
             </View>
           </Animated.View>
         )}
@@ -131,41 +152,51 @@ export const MarkItemRow: React.FC<MarkItemProps> = memo(({ mark, isEven }) => {
   );
 });
 
-// TODO(style): Выровнять элементы истории
 const styles = StyleSheet.create({
-  emoji: {
-    marginRight: 20,
-  },
-  itemDate: {
-    textAlign: 'center',
-  },
   itemContainer: {
+    marginHorizontal: theme.spacing.s,
+    marginBottom: theme.spacing.xs,
+    paddingVertical: theme.spacing.xs,
+    paddingHorizontal: theme.spacing.m,
     borderRadius: 12,
-    marginBottom: 4,
   },
   headerContainer: {
-    minHeight: 60,
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 30,
+    gap: theme.spacing.m,
+    minHeight: 56,
   },
   contentContainer: {
-    minHeight: 60,
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 30,
+    gap: theme.spacing.m,
+    minHeight: 56,
   },
+  emojiContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 40,
+  },
+  descriptionContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  dateContainer: {
+    flex: 2.5,
+    alignItems: 'flex-start',
+  },
+  arrowContainer: {
+    width: 16,
+    alignItems: 'flex-end',
+  },
+
   evenItemZebra: {
     backgroundColor: theme.COLOR_CONFIG_UI.evenItemZebra,
   },
   oddItemZebra: {
     backgroundColor: theme.COLOR_CONFIG_UI.oddItemZebra,
-  },
-  emojiAndDescription: {
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   arrowIcon: {
     fontSize: 14,

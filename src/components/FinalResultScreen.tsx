@@ -37,7 +37,6 @@ export const FinalResultScreen: React.FC<FinalResultScreenProps> = ({
     <View style={styles.footerContainer}>
       <Pressable
         style={({ pressed }) => [
-          // styles.button,
           theme.appButton,
           theme.shadowStyle,
           { opacity: pressed ? 0.7 : 1 },
@@ -59,27 +58,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   resultContainer: {
-    gap: 8,
-    paddingVertical: 16,
-    paddingHorizontal: 8,
+    gap: theme.spacing.s,
+    minHeight: 160,
+    paddingVertical: theme.spacing.m,
+    paddingHorizontal: theme.spacing.s,
     backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
     borderRadius: 12,
   },
   header: {
-    marginBottom: 8,
+    marginBottom: theme.spacing.s,
     textAlign: 'center',
   },
   resultRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 64,
+    gap: 56,
   },
   emojiContainer: {
     alignItems: 'center',
-    gap: 8,
+    gap: theme.spacing.s,
   },
   footerContainer: {
     alignItems: 'center',
-    paddingBottom: 32,
+    paddingBottom: theme.spacing.xl,
   },
 });

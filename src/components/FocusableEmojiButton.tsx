@@ -33,6 +33,7 @@ export const FocusableEmojiButton: React.FC<FocusableEmojiButton> = ({
   return (
     <ReanimatedPressable
       onPress={onPress}
+      hitSlop={15}
       style={[styles.emoji, emojiAnimatedStyle]}
     >
       <AppEmoji size={theme.iconSize.small} description={description} />
@@ -42,8 +43,6 @@ export const FocusableEmojiButton: React.FC<FocusableEmojiButton> = ({
 
 const styles = StyleSheet.create({
   emoji: {
-    width: 60,
-    height: 60,
     justifyContent: 'center',
     alignItems: 'center',
   },

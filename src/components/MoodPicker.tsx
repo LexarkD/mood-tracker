@@ -165,28 +165,32 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    gap: 16,
+    gap: theme.spacing.m,
   },
   header: {
-    marginBottom: 8,
+    marginBottom: theme.spacing.s,
     textAlign: 'center',
   },
   optionsContainer: {
-    gap: 8,
-    paddingVertical: 16,
-    paddingHorizontal: 8,
+    gap: theme.spacing.s,
+    minHeight: 160,
+    paddingVertical: theme.spacing.m,
+    paddingHorizontal: theme.spacing.s,
     backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
     borderRadius: 12,
   },
   optionsRow: {
+    flex: 1,
     flexDirection: 'row',
   },
   emojiContainer: {
     flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
+    gap: theme.spacing.m,
   },
   footerContainer: {
     alignItems: 'center',
-    paddingBottom: 32,
+    paddingBottom: theme.spacing.xl,
   },
 });
