@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { SegmentedButtons } from 'react-native-paper';
+import { Pressable, View, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
 import useMarkList from '../hooks/useMarkList.ts';
 import { theme } from '../constants/theme.ts';
-import { AppHeaderText } from './AppHeaderText.tsx';
+import { AppText } from './AppText.tsx';
 import { filterMarkByTime } from '../utils/filterMarkByTime.ts';
 import { calculateChartData } from '../utils/calculateChartData.ts';
 
@@ -29,11 +28,11 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
     return (
       <View style={styles.legendContainer}>
         {chartData.map(item => (
-          <View key={item.description} style={styles.legendItem}>
+          <View style={styles.legendItem} key={item.description}>
             <View style={[styles.legendDot, { backgroundColor: item.color }]} />
-            <AppHeaderText style={styles.legendText}>
+            <AppText variant="h2">
               {item.description}: {item.percent}%
-            </AppHeaderText>
+            </AppText>
           </View>
         ))}
       </View>
@@ -42,59 +41,57 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
 
   return (
     <View style={[styles.container, theme.shadowStyle]}>
-      <SegmentedButtons
-        value={selectedFilterOptions}
-        onValueChange={setSelectedFilterOptions}
-        style={styles.button}
-        // NOTE: theme задает новые скругления и убирает дефолтную черную границу
-        theme={{
-          roundness: 3,
-          colors: {
-            outline: 'transparent',
-          },
-        }}
-        buttons={[
-          {
-            value: 'all',
-            label: 'all',
-            labelStyle: styles.buttonAppText,
-            style: {
-              // NOTE: задаю кастомный разделитель и задаю цвет при нажатии. Остальные кнопки по аналогии.
-              borderRightWidth: 1,
-              borderRightColor: theme.colorWhite,
+      <View style={[styles.segmentButtonsContainer, theme.shadowStyle]}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.button,
+            styles.buttonLeft,
+            {
               backgroundColor:
                 selectedFilterOptions === 'all'
-                  ? theme.colorOrange
-                  : theme.colorYellow,
+                  ? theme.COLOR_CONFIG_UI.buttonIsPressed
+                  : theme.COLOR_CONFIG_UI.button,
             },
-          },
-          {
-            value: 'year',
-            label: 'year',
-            labelStyle: styles.buttonAppText,
-            style: {
-              borderRightWidth: 1,
-              borderRightColor: theme.colorWhite,
+            { opacity: pressed ? 0.7 : 1 },
+          ]}
+          onPress={() => setSelectedFilterOptions('all')}
+        >
+          <AppText variant="button">ALL</AppText>
+        </Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            styles.button,
+            {
               backgroundColor:
                 selectedFilterOptions === 'year'
-                  ? theme.colorOrange
-                  : theme.colorYellow,
+                  ? theme.COLOR_CONFIG_UI.buttonIsPressed
+                  : theme.COLOR_CONFIG_UI.button,
             },
-          },
-          {
-            value: 'month',
-            label: 'month',
-            labelStyle: styles.buttonAppText,
-            style: {
+            { opacity: pressed ? 0.7 : 1 },
+          ]}
+          onPress={() => setSelectedFilterOptions('year')}
+        >
+          <AppText variant="button">YEAR</AppText>
+        </Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            styles.button,
+            styles.buttonRight,
+            {
               backgroundColor:
                 selectedFilterOptions === 'month'
-                  ? theme.colorOrange
-                  : theme.colorYellow,
+                  ? theme.COLOR_CONFIG_UI.buttonIsPressed
+                  : theme.COLOR_CONFIG_UI.button,
             },
-          },
-        ]}
-      />
-      <View style={styles.pie}>
+            { opacity: pressed ? 0.7 : 1 },
+          ]}
+          onPress={() => setSelectedFilterOptions('month')}
+        >
+          <AppText variant="button">MONTH</AppText>
+        </Pressable>
+      </View>
+
+      <View style={styles.chartContainer}>
         <PieChart data={chartData} radius={120} />
       </View>
       <View>{renderLegend()}</View>
@@ -105,50 +102,55 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colorWhite,
-    margin: 10,
+    gap: theme.spacing.m,
+    marginHorizontal: theme.spacing.s,
+    padding: theme.spacing.m,
     borderRadius: 12,
-    padding: 10,
-    justifyContent: 'space-around',
+    backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
   },
-  pie: {
-    alignItems: 'center',
-    marginBottom: 20,
+  segmentButtonsContainer: {
+    flexDirection: 'row',
+    gap: 2,
+    marginBottom: theme.spacing.s,
   },
   button: {
-    marginTop: 10,
-    marginBottom: 20,
-    width: '90%',
-    borderRadius: 12,
-    alignSelf: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: 48,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
   },
-  buttonAppText: {
-    fontFamily: theme.fontNextArtRegular,
-    fontSize: 15,
-    color: theme.colorBlack,
-    textAlign: 'center',
+
+  buttonLeft: {
+    borderTopLeftRadius: 12,
+    borderBottomLeftRadius: 12,
   },
+  buttonRight: {
+    borderTopRightRadius: 12,
+    borderBottomRightRadius: 12,
+  },
+  chartContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   legendContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    paddingHorizontal: 10,
+    gap: theme.spacing.s,
+    paddingHorizontal: theme.spacing.s,
   },
   legendItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
-    width: '40%',
-    flexGrow: 1,
-    marginHorizontal: 10,
+    gap: theme.spacing.s,
+    flexBasis: '46%',
   },
   legendDot: {
-    height: 15,
-    width: 15,
-    borderRadius: 10,
-    marginRight: 10,
-  },
-  legendText: {
-    color: theme.colorBrown,
+    height: 16,
+    width: 16,
+    borderRadius: 8,
   },
 });

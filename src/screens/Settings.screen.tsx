@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import useMarkList from '../hooks/useMarkList.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from '../components/AppText.tsx';
-import { AppHeaderText } from '../components/AppHeaderText.tsx';
 
 export const Settings: React.FC = () => {
   const { onAddMockData, onClearMarkList } = useMarkList();
@@ -29,32 +28,36 @@ export const Settings: React.FC = () => {
   };
 
   return (
-    <SafeAreaView edges={['top', 'right', 'left']} style={styles.container}>
+    <SafeAreaView edges={['top', 'right', 'left']} style={styles.screen}>
       <View style={styles.settingsContainer}>
-        <AppHeaderText style={styles.settingHeader}>
+        <AppText variant="h2" style={styles.header}>
           History settings
-        </AppHeaderText>
-        <View style={[styles.settingBlock, theme.shadowStyle]}>
+        </AppText>
+        <View style={theme.shadowStyle}>
           <Pressable
             style={({ pressed }) => [
-              styles.settingRow,
+              styles.settingButton,
               { opacity: pressed ? 0.7 : 1 },
             ]}
             onPress={handleClearHistory}
           >
-            <AppText style={styles.settingText}>Clear history</AppText>
+            <AppText variant="body">Clear history</AppText>
           </Pressable>
         </View>
-        <AppHeaderText style={styles.settingHeader}>DevTools</AppHeaderText>
-        <View style={[styles.settingBlock, theme.shadowStyle]}>
+      </View>
+      <View style={styles.settingsContainer}>
+        <AppText variant="h2" style={styles.header}>
+          DevTools
+        </AppText>
+        <View style={theme.shadowStyle}>
           <Pressable
             style={({ pressed }) => [
-              styles.settingRow,
+              styles.settingButton,
               { opacity: pressed ? 0.7 : 1 },
             ]}
             onPress={onAddMockData}
           >
-            <AppText style={styles.settingText}>Add mock data</AppText>
+            <AppText variant="body">Add mock data</AppText>
           </Pressable>
         </View>
       </View>
@@ -63,34 +66,26 @@ export const Settings: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-    backgroundColor: theme.colorGreen,
+    gap: theme.spacing.l,
+    paddingTop: theme.spacing.s,
+    paddingHorizontal: theme.spacing.s,
+    backgroundColor: theme.COLOR_CONFIG_UI.screenBackground,
   },
   settingsContainer: {
-    paddingHorizontal: 10,
+    gap: theme.spacing.s,
   },
-  settingHeader: {
-    color: 'theme.colorBrown',
-    fontSize: 15,
-    marginLeft: 16,
-    marginBottom: 8,
+  header: {
+    marginLeft: theme.spacing.m,
   },
-  settingBlock: {
-    backgroundColor: theme.colorWhite,
-    borderRadius: 12,
-    marginBottom: 24,
-  },
-  settingRow: {
+  settingButton: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
     minHeight: 56,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
     paddingVertical: 12,
-  },
-  settingText: {
-    color: theme.colorBrown,
-    fontSize: 16,
+    borderRadius: 12,
+    backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
   },
 });

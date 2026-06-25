@@ -3,11 +3,11 @@ import type { RootState } from '../store.ts';
 
 // NOTE: moodOptions является единой входной точкой для для вариантов настроения и его типизации.
 export const moodOptions = [
-  'awesome',
+  'great',
   'happy',
   'neutral',
   'sad',
-  'terrible',
+  'awful',
 ] as const;
 export type MoodType = (typeof moodOptions)[number];
 

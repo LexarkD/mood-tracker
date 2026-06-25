@@ -8,6 +8,7 @@ export const checkingTimeout = (
 
   dateLastEntry.setHours(0, 0, 0, 0);
   dateNewEntry.setHours(0, 0, 0, 0);
-
   return dateNewEntry.getTime() > dateLastEntry.getTime();
+  // NOTE: ХАК ДЛЯ ВЕРСТКИ!
+  // return true;
 };

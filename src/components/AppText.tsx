@@ -1,32 +1,21 @@
 import React from 'react';
 import { Text, TextProps } from 'react-native';
-import { theme } from '../constants/theme';
+import { theme, TypographyVariant } from '../constants/theme';
 
 type AppTextProps = TextProps & {
-  variant?: 'regular' | 'bold' | 'light';
+  variant: TypographyVariant;
   children: React.ReactNode;
 };
 
 export const AppText: React.FC<AppTextProps> = ({
-  variant = 'regular',
+  variant,
   style,
   children,
   ...props
 }) => {
-  const getFontFamily = (): string => {
-    switch (variant) {
-      case 'bold':
-        return theme.fontCygreBold;
-      case 'light':
-        return theme.fontCygreLight;
-      case 'regular':
-      default:
-        return theme.fontCygreRegular;
-    }
-  };
-
+  const fontStyle = theme.typography[variant];
   return (
-    <Text style={[{ fontFamily: getFontFamily() }, style]} {...props}>
+    <Text style={[fontStyle, style]} {...props}>
       {children}
     </Text>
   );

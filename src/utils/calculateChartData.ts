@@ -67,7 +67,7 @@ export const calculateChartData = <K extends KeyOption>(
 //   {
 //     "value": 1,
 //     "color": "rgb(96, 178, 85)",
-//     "description": "awesome",
+//     "description": "great",
 //     "percent": 9
 //   },
 //   {
@@ -91,7 +91,7 @@ export const calculateChartData = <K extends KeyOption>(
 //   {
 //     "value": 0,
 //     "color": "rgb(240, 105, 1)",
-//     "description": "terrible",
+//     "description": "awful",
 //     "percent": 0
 //   }
 // ]

@@ -19,9 +19,9 @@ export const History: React.FC = () => {
       return () => {};
     }, []),
   );
-
+  //TODO(refactor): Нужно добавить оптимизацию в список, так как внутри каждого MarkItemRow тяжелый gesture handler
   return (
-    <SafeAreaView edges={['top', 'right', 'left']} style={styles.container}>
+    <SafeAreaView edges={['top', 'right', 'left']} style={styles.screen}>
       <FlatList
         ref={flatListRef}
         data={markList}
@@ -39,8 +39,9 @@ export const History: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-    backgroundColor: theme.colorGreen,
+    paddingTop: 8,
+    backgroundColor: theme.COLOR_CONFIG_UI.screenBackground,
   },
 });

@@ -12,7 +12,6 @@ import {
 import { checkingTimeout } from '../utils/checkingTimeout.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
-import { AppHeaderText } from './AppHeaderText.tsx';
 import { FocusableEmojiButton } from './FocusableEmojiButton.tsx';
 import { FinalResultScreen } from './FinalResultScreen.tsx';
 import { AnimatedSubmitButton } from './AnimatedSubmitButton.tsx';
@@ -51,7 +50,6 @@ export const MoodPicker: React.FC = () => {
       const intervalId = setInterval(() => {
         setIsTimeoutOver(checkingTimeOver(Date.now()));
       }, oneMinute);
-
       return () => clearInterval(intervalId);
     }, [checkingTimeOver]),
   );
@@ -95,68 +93,68 @@ export const MoodPicker: React.FC = () => {
   // NOTE: descriptionText адаптивно уменьшается на маленьких экранах.
   return (
     <View style={styles.pickerContainer}>
-      <View>
-        <AppHeaderText style={styles.header} variant="bold">
+      <View style={styles.contentContainer}>
+        <AppText variant="h1" style={styles.header}>
           {isTimeoutOver
             ? 'Take a deep breath. \nHow was your day?'
             : "You've done great today. \nSee you tomorrow!"}
-        </AppHeaderText>
-      </View>
-      <View style={[styles.optionsContainer, theme.shadowStyle]}>
-        <AppHeaderText style={styles.header} variant="bold">
-          How are you feeling today?
-        </AppHeaderText>
-        <View style={styles.optionsRow} pointerEvents={pointerEventsStatus}>
-          {moodOptions.map(mood => (
-            <View style={styles.emojiContainer} key={mood}>
-              <FocusableEmojiButton
-                description={mood}
-                isSelectOption={selectedMoodMark === mood}
-                onPress={() => setSelectedMoodMark(mood)}
-              />
-              <AppText
-                style={styles.descriptionText}
-                variant="bold"
-                numberOfLines={1}
-                adjustsFontSizeToFit={true}
-                minimumFontScale={0.75}
-              >
-                {selectedMoodMark === mood ? mood : ' '}
-              </AppText>
-            </View>
-          ))}
+        </AppText>
+        <View style={[styles.optionsContainer, theme.shadowStyle]}>
+          <AppText variant="h1" style={styles.header}>
+            How are you feeling today?
+          </AppText>
+          <View style={styles.optionsRow} pointerEvents={pointerEventsStatus}>
+            {moodOptions.map(mood => (
+              <View style={styles.emojiContainer} key={mood}>
+                <FocusableEmojiButton
+                  description={mood}
+                  isSelectOption={selectedMoodMark === mood}
+                  onPress={() => setSelectedMoodMark(mood)}
+                />
+                <AppText
+                  variant="description"
+                  numberOfLines={1}
+                  adjustsFontSizeToFit={true}
+                  minimumFontScale={0.75}
+                >
+                  {selectedMoodMark === mood ? mood : ' '}
+                </AppText>
+              </View>
+            ))}
+          </View>
+        </View>
+        <View style={[styles.optionsContainer, theme.shadowStyle]}>
+          <AppText variant="h1" style={styles.header}>
+            How did you sleep?
+          </AppText>
+          <View style={styles.optionsRow} pointerEvents={pointerEventsStatus}>
+            {sleepOptions.map(sleep => (
+              <View style={styles.emojiContainer} key={sleep}>
+                <FocusableEmojiButton
+                  description={sleep}
+                  isSelectOption={selectedSleepMark === sleep}
+                  onPress={() => setSelectedSleepMark(sleep)}
+                />
+                <AppText
+                  variant="description"
+                  numberOfLines={1}
+                  adjustsFontSizeToFit={true}
+                  minimumFontScale={0.75}
+                >
+                  {selectedSleepMark === sleep ? sleep : ' '}
+                </AppText>
+              </View>
+            ))}
+          </View>
         </View>
       </View>
-      <View style={[styles.optionsContainer, theme.shadowStyle]}>
-        <AppHeaderText style={styles.header} variant="bold">
-          How did you sleep?
-        </AppHeaderText>
-        <View style={styles.optionsRow} pointerEvents={pointerEventsStatus}>
-          {sleepOptions.map(sleep => (
-            <View style={styles.emojiContainer} key={sleep}>
-              <FocusableEmojiButton
-                description={sleep}
-                isSelectOption={selectedSleepMark === sleep}
-                onPress={() => setSelectedSleepMark(sleep)}
-              />
-              <AppText
-                style={styles.descriptionText}
-                variant="bold"
-                numberOfLines={1}
-                adjustsFontSizeToFit={true}
-                minimumFontScale={0.75}
-              >
-                {selectedSleepMark === sleep ? sleep : ' '}
-              </AppText>
-            </View>
-          ))}
-        </View>
+      <View style={styles.footerContainer}>
+        <AnimatedSubmitButton
+          title="CHOOSE"
+          disabled={isDisabledButton}
+          onSubmit={handleSelect}
+        />
       </View>
-      <AnimatedSubmitButton
-        title="CHOOSE"
-        disabled={isDisabledButton}
-        onSubmit={handleSelect}
-      />
     </View>
   );
 };
@@ -165,76 +163,34 @@ const styles = StyleSheet.create({
   pickerContainer: {
     flex: 1,
   },
+  contentContainer: {
+    flex: 1,
+    gap: theme.spacing.m,
+  },
+  header: {
+    marginBottom: theme.spacing.s,
+    textAlign: 'center',
+  },
   optionsContainer: {
-    backgroundColor: theme.colorWhite,
-    margin: 10,
+    gap: theme.spacing.s,
+    minHeight: 160,
+    paddingVertical: theme.spacing.m,
+    paddingHorizontal: theme.spacing.s,
+    backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
     borderRadius: 12,
-    paddingVertical: 20,
-    paddingHorizontal: 10,
-    justifyContent: 'space-between',
   },
   optionsRow: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   emojiContainer: {
     flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
+    gap: theme.spacing.m,
   },
-  descriptionText: {
-    color: theme.colorBrown,
-    fontSize: 15,
-    textAlign: 'center',
-  },
-  header: {
-    color: theme.colorBrown,
-    fontSize: 20,
-    letterSpacing: 1,
-    textAlign: 'center',
-    marginBottom: 20,
+  footerContainer: {
+    alignItems: 'center',
+    paddingBottom: theme.spacing.xl,
   },
 });
-
-// NOTE: Этот способ получения currentTime слишком замороченный, хотя и не вызывает лишних рендеров
-// // NOTE: Получаю новое время, даже если приложение не было закрыто, но пользователь перешел на другую вкладку или сворачивал приложение.
-// useFocusEffect(
-//   useCallback(() => {
-//     setCurrentTime(Date.now());
-//     // NOTE: Вешаю слушатель на состояние приложения, чтоб обновить время, если пользователь свернет приложение на этой вкладке. Получаю AppState -> active, когда приложение возвращается из фона.
-//     const subscription = AppState.addEventListener(
-//       'change',
-//       (nextAppState: AppStateStatus) => {
-//         if (nextAppState === 'active') {
-//           setCurrentTime(Date.now());
-//         }
-//       },
-//     );
-//     // NOTE: Фукнция очистки удалит слушатель, если пользователь перешел на другую вкладку. В другом случае- OS убьет слушатель, когда убьет процесс, или когда пользователь совершит Hard Close.
-//     return () => {
-//       subscription.remove();
-//     };
-//   }, []),
-// );
-
-// NOTE: Способ с интервалом проще. Но такая реализация каждую минуту вызывает ненужный ререндер.
-// NOTE: Запускаю интервал, что бы получать currentTime.
-// useFocusEffect(
-//   useCallback(() => {
-//     setCurrentTime(Date.now());
-//     const oneMinute = 60000;
-//     const intervalId = setInterval(() => {
-//       setCurrentTime(Date.now());
-//     }, oneMinute);
-
-//     return () => clearInterval(intervalId);
-//   }, []),
-// );
-
-//   // NOTE: isTimeoutOver - проверяет, наступил ли следующий день и может ли быть доступен интерфейс.
-// const isTimeoutOver2 = useMemo(() => {
-//   const lastEntry = markList[0];
-//   // NOTE: Если еще ни одной записи не сделано, новая запись сразу разрешена.
-//   if (!lastEntry) return true;
-//   // NOTE: Вычисляю, прошел ли таймаут в 1 сутки.
-//   return checkingTimeout(lastEntry.timestamp, currentTime);
-// }, [markList, currentTime]);
