@@ -28,7 +28,7 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
     return (
       <View style={styles.legendContainer}>
         {chartData.map(item => (
-          <View key={item.description} style={styles.legendItem}>
+          <View style={styles.legendItem} key={item.description}>
             <View style={[styles.legendDot, { backgroundColor: item.color }]} />
             <AppText variant="h2">
               {item.description}: {item.percent}%
@@ -91,7 +91,7 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
         </Pressable>
       </View>
 
-      <View style={styles.pie}>
+      <View style={styles.chartContainer}>
         <PieChart data={chartData} radius={120} />
       </View>
       <View>{renderLegend()}</View>
@@ -101,29 +101,27 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
 
 const styles = StyleSheet.create({
   container: {
-    gap: 16,
     flex: 1,
-    backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
-    margin: 10,
+    gap: theme.spacing.m,
+    marginHorizontal: theme.spacing.s,
+    padding: theme.spacing.m,
     borderRadius: 12,
-    padding: 10,
-    justifyContent: 'space-around',
+    backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
   },
   segmentButtonsContainer: {
-    flex: 1,
     flexDirection: 'row',
     gap: 2,
-  },
-  pie: {
-    alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: theme.spacing.s,
   },
   button: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     minHeight: 48,
-    paddingHorizontal: 24,
     paddingVertical: 12,
+    paddingHorizontal: 8,
   },
+
   buttonLeft: {
     borderTopLeftRadius: 12,
     borderBottomLeftRadius: 12,
@@ -132,24 +130,27 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 12,
     borderBottomRightRadius: 12,
   },
+  chartContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   legendContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    paddingHorizontal: 10,
+    gap: theme.spacing.s,
+    paddingHorizontal: theme.spacing.s,
   },
   legendItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
-    width: '40%',
-    flexGrow: 1,
-    marginHorizontal: 10,
+    gap: theme.spacing.s,
+    flexBasis: '46%',
   },
   legendDot: {
-    height: 15,
-    width: 15,
-    borderRadius: 10,
-    marginRight: 10,
+    height: 16,
+    width: 16,
+    borderRadius: 8,
   },
 });

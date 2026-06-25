@@ -6,14 +6,14 @@ import { theme } from '../constants/theme.ts';
 
 export const Home: React.FC = () => {
   return (
-    <SafeAreaView edges={['top', 'right', 'left']} style={styles.container}>
+    <SafeAreaView edges={['top', 'right', 'left']} style={styles.screen}>
       <MoodPicker />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
     paddingTop: theme.spacing.s,
     paddingHorizontal: theme.spacing.s,

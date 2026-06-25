@@ -28,15 +28,15 @@ export const Settings: React.FC = () => {
   };
 
   return (
-    <SafeAreaView edges={['top', 'right', 'left']} style={styles.container}>
+    <SafeAreaView edges={['top', 'right', 'left']} style={styles.screen}>
       <View style={styles.settingsContainer}>
         <AppText variant="h2" style={styles.header}>
           History settings
         </AppText>
-        <View style={[styles.settingBlock, theme.shadowStyle]}>
+        <View style={theme.shadowStyle}>
           <Pressable
             style={({ pressed }) => [
-              styles.settingRow,
+              styles.settingButton,
               { opacity: pressed ? 0.7 : 1 },
             ]}
             onPress={handleClearHistory}
@@ -49,10 +49,10 @@ export const Settings: React.FC = () => {
         <AppText variant="h2" style={styles.header}>
           DevTools
         </AppText>
-        <View style={[styles.settingBlock, theme.shadowStyle]}>
+        <View style={theme.shadowStyle}>
           <Pressable
             style={({ pressed }) => [
-              styles.settingRow,
+              styles.settingButton,
               { opacity: pressed ? 0.7 : 1 },
             ]}
             onPress={onAddMockData}
@@ -66,28 +66,26 @@ export const Settings: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
+    gap: theme.spacing.l,
+    paddingTop: theme.spacing.s,
+    paddingHorizontal: theme.spacing.s,
     backgroundColor: theme.COLOR_CONFIG_UI.screenBackground,
   },
   settingsContainer: {
-    marginHorizontal: 10,
+    gap: theme.spacing.s,
   },
   header: {
-    marginLeft: 16,
-    marginBottom: 8,
+    marginLeft: theme.spacing.m,
   },
-  settingBlock: {
-    backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
-    borderRadius: 12,
-    marginBottom: 24,
-  },
-  settingRow: {
+  settingButton: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
     minHeight: 56,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
     paddingVertical: 12,
+    borderRadius: 12,
+    backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
   },
 });
