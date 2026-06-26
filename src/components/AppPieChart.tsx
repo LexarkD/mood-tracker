@@ -7,7 +7,6 @@ import { AppText } from './AppText.tsx';
 import { filterMarkByTime } from '../utils/filterMarkByTime.ts';
 import { calculateChartData } from '../utils/calculateChartData.ts';
 
-// TODO(style): Сделать стилизацию консистентной
 export type TimeFilterOptions = 'all' | 'year' | 'month';
 
 type AppPieChartProps = { markOption: 'moodMark' | 'sleepMark' };

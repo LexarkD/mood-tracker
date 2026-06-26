@@ -12,6 +12,7 @@ import type {
 } from '../store/slices/markListSlice.ts';
 import { useAppDispatch, useAppSelector } from './redux.hooks.ts';
 
+// NOTE: useMarkList - кастомный хук-обертка для markListSlice редюсеров
 const useMarkList = () => {
   const markList = useAppSelector(selectMarkList);
   const dispatch = useAppDispatch();
@@ -40,5 +41,3 @@ const useMarkList = () => {
 };
 
 export default useMarkList;
-
-// NOTE: useMarkList - кастомный хук-обертка для markListSlice редюсеров

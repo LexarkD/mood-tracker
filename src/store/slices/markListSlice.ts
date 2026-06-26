@@ -1,19 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store.ts';
 
-// NOTE: moodOptions является единой входной точкой для для вариантов настроения и его типизации.
-export const moodOptions = [
-  'great',
-  'happy',
-  'neutral',
-  'sad',
-  'awful',
-] as const;
-export type MoodType = (typeof moodOptions)[number];
+// NOTE: MARK_OPTIONS является единой входной точкой для вариантов настроения и сна.
+export const MARK_OPTIONS = {
+  moodMark: ['great', 'happy', 'neutral', 'sad', 'awful'],
+  sleepMark: ['cheerful', 'norm', 'sleepy'],
+} as const;
 
-// NOTE: sleepOptions является единой входной точкой для для вариантов качества сна и его типизации.
-export const sleepOptions = ['cheerful', 'norm', 'sleepy'] as const;
-export type SleepType = (typeof sleepOptions)[number];
+// NOTE: получаю union-типы
+export type MoodType = (typeof MARK_OPTIONS.moodMark)[number];
+export type SleepType = (typeof MARK_OPTIONS.sleepMark)[number];
 
 export type MarkEntryType = {
   moodMark: MoodType;

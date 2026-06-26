@@ -1,8 +1,7 @@
 import {
   MoodType,
   SleepType,
-  sleepOptions,
-  moodOptions,
+  MARK_OPTIONS,
 } from '../store/slices/markListSlice.ts';
 import type { MarkEntryWithTimestamp } from '../store/slices/markListSlice.ts';
 import { theme } from '../constants/theme.ts';
@@ -16,18 +15,12 @@ export type ChartItem = {
   percent: number;
 };
 
-// TODO(refactor): этот вспомогательный объект нужен по сути из-за нейминга. Потому что сущность moodOptions позже становится moodMark в стейте. Возможно стоит остановится на одном имене.
-const OPTIONS_BY_KEY = {
-  moodMark: moodOptions,
-  sleepMark: sleepOptions,
-};
-
 export const calculateChartData = <K extends KeyOption>(
   marks: MarkEntryWithTimestamp[],
-  keyOption: K,
+  keyMark: K,
 ): ChartItem[] => {
   // NOTE: Отделяет нужные отметки, взависимости от выбранного ключа KeyOption
-  const extractedMarkValues = marks.map(mark => mark[keyOption]);
+  const extractedMarkValues = marks.map(mark => mark[keyMark]);
 
   // NOTE: Считает количество отметок для выбранной опции
   const countMarks = extractedMarkValues.reduce<Record<string, number>>(
@@ -46,15 +39,15 @@ export const calculateChartData = <K extends KeyOption>(
   };
 
   // NOTE: Динамически собирает объект для статистики, взависимости от того, какая опция выбрана
-  const currentOptions = OPTIONS_BY_KEY[keyOption];
+  const currentMarks = MARK_OPTIONS[keyMark];
 
-  const chartData: ChartItem[] = currentOptions.map(option => {
-    const value = countMarks[option] || 0;
+  const chartData: ChartItem[] = currentMarks.map(mark => {
+    const value = countMarks[mark] || 0;
 
     return {
       value,
-      color: theme.COLOR_CONFIG_EMOJI[option],
-      description: option,
+      color: theme.COLOR_CONFIG_EMOJI[mark],
+      description: mark,
       percent: calculateMarkPercent(value),
     };
   });

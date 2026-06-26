@@ -1,12 +1,11 @@
 import {
+  MARK_OPTIONS,
   MarkEntryWithTimestamp,
-  MoodType,
-  SleepType,
 } from '../store/slices/markListSlice';
 
-const moods: MoodType[] = ['great', 'happy', 'neutral', 'sad', 'awful'];
-const sleepQuality: SleepType[] = ['cheerful', 'norm', 'sleepy'];
 // NOTE: Создает случайную историю за отрезок времени
+const moods = MARK_OPTIONS.moodMark;
+const sleepQuality = MARK_OPTIONS.sleepMark;
 const timePeriod = 434;
 export const generateMockData = (): MarkEntryWithTimestamp[] => {
   return Array.from({ length: timePeriod }).map((_, index) => {

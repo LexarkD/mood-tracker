@@ -3,8 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import useMarkList from '../hooks/useMarkList.ts';
 import {
-  moodOptions,
-  sleepOptions,
+  MARK_OPTIONS,
   MoodType,
   SleepType,
   MarkEntryType,
@@ -104,7 +103,7 @@ export const MoodPicker: React.FC = () => {
             How are you feeling today?
           </AppText>
           <View style={styles.optionsRow} pointerEvents={pointerEventsStatus}>
-            {moodOptions.map(mood => (
+            {MARK_OPTIONS.moodMark.map(mood => (
               <View style={styles.emojiContainer} key={mood}>
                 <FocusableEmojiButton
                   description={mood}
@@ -128,7 +127,7 @@ export const MoodPicker: React.FC = () => {
             How did you sleep?
           </AppText>
           <View style={styles.optionsRow} pointerEvents={pointerEventsStatus}>
-            {sleepOptions.map(sleep => (
+            {MARK_OPTIONS.sleepMark.map(sleep => (
               <View style={styles.emojiContainer} key={sleep}>
                 <FocusableEmojiButton
                   description={sleep}
