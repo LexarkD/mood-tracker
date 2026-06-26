@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { generateMockData } from '../utils/generateMockData.ts';
 import {
   addMarkEntry,
@@ -17,20 +18,30 @@ const useMarkList = () => {
   const markList = useAppSelector(selectMarkList);
   const dispatch = useAppDispatch();
 
-  const onAddMarkEntry = (selectedMarks: MarkEntryType) => {
-    dispatch(addMarkEntry(selectedMarks));
-  };
-  const onDeleteMarkEntry = (timestamp: TimeStamp) => {
-    dispatch(removeMarkEntry(timestamp));
-  };
-  const onClearMarkList = () => {
+  const onAddMarkEntry = useCallback(
+    (selectedMarks: MarkEntryType) => {
+      dispatch(addMarkEntry(selectedMarks));
+    },
+    [dispatch],
+  );
+
+  const onDeleteMarkEntry = useCallback(
+    (timestamp: TimeStamp) => {
+      dispatch(removeMarkEntry(timestamp));
+    },
+    [dispatch],
+  );
+
+  const onClearMarkList = useCallback(() => {
     dispatch(clearMarkList());
-  };
+  }, [dispatch]);
+
   // NOTE: добавляет историю за 10 последниъх дней с случайными отметками.
-  const onAddMockData = () => {
+  const onAddMockData = useCallback(() => {
     const mockDataArray = generateMockData();
     dispatch(addMockData(mockDataArray));
-  };
+  }, [dispatch]);
+
   return {
     markList,
     onAddMarkEntry,
