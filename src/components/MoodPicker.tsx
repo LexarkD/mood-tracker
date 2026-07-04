@@ -11,9 +11,12 @@ import {
 import { checkingTimeout } from '../utils/checkingTimeout.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
-import { FocusableEmojiButton } from './FocusableEmojiButton.tsx';
+import { FocusableEmojiButtonMemo } from './FocusableEmojiButton.tsx';
 import { FinalResultScreen } from './FinalResultScreen.tsx';
 import { AnimatedSubmitButton } from './AnimatedSubmitButton.tsx';
+
+type TypeSelectMood = (description: MoodType) => void;
+type TypeSelectSleep = (description: SleepType) => void;
 
 export const MoodPicker: React.FC = () => {
   const { onAddMarkEntry, markList } = useMarkList();
@@ -25,7 +28,7 @@ export const MoodPicker: React.FC = () => {
   const [completedEntry, setCompletedEntry] = useState<MarkEntryType | null>(
     null,
   );
-  // NOTE: Хранит данные о том, прошел ли календарный день с момента последней зписи
+  // NOTE: Хранит данные о том, прошел ли календарный день с момента последней записи
   const [isTimeoutOver, setIsTimeoutOver] = useState<boolean>(false);
 
   // NOTE: кнопка AnimatedSubmitButton может быть доступна, если все значения выбраны
@@ -53,7 +56,7 @@ export const MoodPicker: React.FC = () => {
     }, [checkingTimeOver]),
   );
 
-  const handleSelect = () => {
+  const handleSelect = useCallback(() => {
     // NOTE: Если таймаут истек, значит запись разрешена
     if (isTimeoutOver && selectedMoodMark && selectedSleepMark) {
       const newEntry: MarkEntryType = {
@@ -63,13 +66,23 @@ export const MoodPicker: React.FC = () => {
       onAddMarkEntry(newEntry);
       setCompletedEntry(newEntry);
     }
-  };
+  }, [isTimeoutOver, selectedMoodMark, selectedSleepMark, onAddMarkEntry]);
 
   const handleBack = () => {
     setSelectedMoodMark(undefined);
     setSelectedSleepMark(undefined);
     setCompletedEntry(null);
   };
+
+  const handleSelectMoodMark = useCallback<TypeSelectMood>(
+    description => setSelectedMoodMark(description),
+    [],
+  );
+
+  const handleSelectSleepMark = useCallback<TypeSelectSleep>(
+    description => setSelectedSleepMark(description),
+    [],
+  );
 
   // NOTE: isDisabled(отключена = ture), если хотя бы одно из услловий не выполнено
   const isDisabledButton = !isAllMarksPicked || !isTimeoutOver;
@@ -105,10 +118,10 @@ export const MoodPicker: React.FC = () => {
           <View style={styles.optionsRow} pointerEvents={pointerEventsStatus}>
             {MARK_OPTIONS.moodMark.map(mood => (
               <View style={styles.emojiContainer} key={mood}>
-                <FocusableEmojiButton
+                <FocusableEmojiButtonMemo
                   description={mood}
                   isSelectOption={selectedMoodMark === mood}
-                  onPress={() => setSelectedMoodMark(mood)}
+                  onSelect={handleSelectMoodMark}
                 />
                 <AppText
                   variant="description"
@@ -129,10 +142,10 @@ export const MoodPicker: React.FC = () => {
           <View style={styles.optionsRow} pointerEvents={pointerEventsStatus}>
             {MARK_OPTIONS.sleepMark.map(sleep => (
               <View style={styles.emojiContainer} key={sleep}>
-                <FocusableEmojiButton
+                <FocusableEmojiButtonMemo
                   description={sleep}
                   isSelectOption={selectedSleepMark === sleep}
-                  onPress={() => setSelectedSleepMark(sleep)}
+                  onSelect={handleSelectSleepMark}
                 />
                 <AppText
                   variant="description"
