@@ -68,3 +68,8 @@ lodash
 ## Видео
 
 ![Home_screen](./README_assets/Home_screen.mp4)
+
+
+
+https://github.com/user-attachments/assets/ade635a6-0eaf-4445-92f7-a3a24c2fa7de
+
