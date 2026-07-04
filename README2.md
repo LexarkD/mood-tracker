@@ -58,18 +58,28 @@ react-native-vector-icons
 Сплашскрин
 react native bootsplash
 
-Дополнительные инструменты
+Графики
 react-native-gifted-charts
+
+Дополнительные инструменты
 date-fns
 lodash
 
 ## Паттерны кода
 
+[данные state](./src/store/slices/markListSlice.ts)
+
+Вынесение логики из компонентов
+
+UI декомпозиция
+
+Оптимизация
+Применение патернов react- /react native - оптимизации:
+мемоизация
+виртуализация
+
+вынос анимации в worklet
+
 ## Видео
 
-![Home_screen](./README_assets/Home_screen.mp4)
-
-
-
 https://github.com/user-attachments/assets/ade635a6-0eaf-4445-92f7-a3a24c2fa7de
-
