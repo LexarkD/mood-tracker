@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Pressable, View, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
-import useMarkList from '../hooks/useMarkList.ts';
-import { theme } from '../constants/theme.ts';
-import { AppText } from './AppText.tsx';
 import { filterMarkByTime } from '../utils/filterMarkByTime.ts';
+import { theme } from '../constants/theme.ts';
+import useMarkList from '../hooks/useMarkList.ts';
+import { AppText } from './AppText.tsx';
 import { calculateChartData } from '../utils/calculateChartData.ts';
 
 export type TimeFilterOptions = 'all' | 'year' | 'month';
@@ -17,10 +17,16 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
     useState<TimeFilterOptions>('all');
 
   // NOTE: получаю отфильтрованный массив эмоций, соответственно значению временного периода
-  const filteredMarks = filterMarkByTime(selectedFilterOptions, markList);
+  const filteredMarks = useMemo(
+    () => filterMarkByTime(selectedFilterOptions, markList),
+    [selectedFilterOptions, markList],
+  );
 
   // NOTE: получаю собраный объект для pieChart и chartLegend.
-  const chartData = calculateChartData(filteredMarks, markOption);
+  const chartData = useMemo(
+    () => calculateChartData(filteredMarks, markOption),
+    [filteredMarks, markOption],
+  );
 
   // NOTE: Функция отрисовывает chartLegend. По сути мапит chartData.
   const renderLegend = () => {

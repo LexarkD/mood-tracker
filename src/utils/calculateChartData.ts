@@ -6,8 +6,6 @@ import {
 import type { MarkEntryWithTimestamp } from '../store/slices/markListSlice.ts';
 import { theme } from '../constants/theme.ts';
 
-type KeyOption = 'moodMark' | 'sleepMark';
-
 export type ChartItem = {
   value: number;
   color: string;
@@ -15,10 +13,14 @@ export type ChartItem = {
   percent: number;
 };
 
-export const calculateChartData = <K extends KeyOption>(
+type ValidKeyType = 'moodMark' | 'sleepMark';
+
+type СalculateDataType = (
   marks: MarkEntryWithTimestamp[],
-  keyMark: K,
-): ChartItem[] => {
+  keyMark: ValidKeyType,
+) => ChartItem[];
+
+export const calculateChartData: СalculateDataType = (marks, keyMark) => {
   // NOTE: Отделяет нужные отметки, взависимости от выбранного ключа KeyOption
   const extractedMarkValues = marks.map(mark => mark[keyMark]);
 
@@ -41,7 +43,7 @@ export const calculateChartData = <K extends KeyOption>(
   // NOTE: Динамически собирает объект для статистики, взависимости от того, какая опция выбрана
   const currentMarks = MARK_OPTIONS[keyMark];
 
-  const chartData: ChartItem[] = currentMarks.map(mark => {
+  const chartData = currentMarks.map(mark => {
     const value = countMarks[mark] || 0;
 
     return {
