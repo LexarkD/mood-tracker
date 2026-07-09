@@ -37,7 +37,7 @@ export const AnimatedSubmitButton: React.FC<AnimatedSubmitButtonProps> = ({
 
   return (
     <AnimatedPressable
-      style={[theme.appButton, theme.shadowStyle, buttonAnimatedStyle, style]}
+      style={[theme.appButton, buttonAnimatedStyle, style]}
       onPress={onSubmit}
       onPressIn={() => {
         // NOTE: Отслеживаю начало и конец нажатия.

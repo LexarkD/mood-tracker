@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, ViewStyle, View } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 import {
   GreatMoodEmoji,
   HappyMoodEmoji,
@@ -52,7 +52,11 @@ export const AppEmoji: React.FC<AppMoodEmojiProps> = ({
       return <SleepySleepEmoji style={style} size={size} />;
     }
     default: {
-      return <View>Emoji not found</View>;
+      //NOTE: Исчерпывающая проверка на свичкейс. never говорит о том, что значение дл emojiChecker не должно быть присвоено,
+      // (потому что все варианты description должны были быть обработаны раньше)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const emojiChecker: never = description;
+      return null;
     }
   }
 };

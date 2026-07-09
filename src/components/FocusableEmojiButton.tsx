@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
 });
 
 //NOTE: memo ломает гибкое определение дженерика <T>. Поэтому я игнориую типы возвращаемые memo, использую приведение типов as и копирую сигнатуру typeof FocusableEmojiButton.
-//Игнорирую "кешированные"(не гибкие) типы, возвращаемые memo().
 //Паттерн: "memo(Inner) as typeof Inner"
 export const FocusableEmojiButtonMemo = memo(
   FocusableEmojiButton,

@@ -32,19 +32,22 @@ export const History: React.FC = () => {
     },
     [onDeleteMarkEntry],
   );
-
+  //TODO: сделать легкий ресерч по useAnimatedStile+FlatList
+  //Если ничего не найду, просто опишу проблему в комментарии и решение через тюнинг вертуализации
   return (
     <SafeAreaView edges={['top', 'right', 'left']} style={styles.screen}>
       <FlatList
         // NOTE: removeClippedSubviews={true} конфликтует с удалением отметки свайпом. Можно будет выставить {true} после отказа от удаления свайпом.
         removeClippedSubviews={false}
-        initialNumToRender={13}
+        //NOTE: Это решение мне не нравится- привязано к размеру экрана + использование "магических чисел"
+        //  initialNumToRender={13}
         maxToRenderPerBatch={5}
         windowSize={7}
         ref={flatListRef}
         data={markList}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        contentContainerStyle={styles.contsntStyle}
       />
     </SafeAreaView>
   );
@@ -55,5 +58,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 8,
     backgroundColor: theme.COLOR_CONFIG_UI.screenBackground,
+  },
+  contsntStyle: {
+    paddingHorizontal: theme.spacing.s,
+    gap: theme.spacing.xs,
   },
 });

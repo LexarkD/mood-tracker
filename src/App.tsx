@@ -30,3 +30,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+//TODO: SelfTracker новое имя
+//TODO: лишние зависимости
+//npm uninstall
+// "react-native-paper": "^5.15.2",
+// "react-native-linear-gradient": "^2.8.3",
+// "@react-native/new-app-screen": "0.81.4",

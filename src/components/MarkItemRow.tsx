@@ -1,5 +1,6 @@
 import React, { useState, memo, useCallback } from 'react';
 import {
+  // Text,
   View,
   StyleSheet,
   LayoutAnimation,
@@ -24,10 +25,11 @@ import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
 import { AppEmoji } from './AppEmoji.tsx';
 
+// TODO: MarkItemRow вобще не должен знать, что удаление идет по timestamp. Отсюда возвращать полностью mark?
 type MarkItemProps = {
   mark: MarkEntryWithTimestamp;
   isEven: boolean;
-  onDelete: (timestamp: TimeStamp) => void;
+  onDelete: (markTimestamp: TimeStamp) => void;
 };
 
 // NOTE: Анимированыый компонент для аккордеона
@@ -68,6 +70,7 @@ export const MarkItemRow: React.FC<MarkItemProps> = memo(
       transform: [{ translateX: offset.value }],
     }));
 
+    // TODO: Исправить проблему. По какой-то причине использование arrowAnimationStyle + FlatList сильно роняет UI fps.
     // NOTE: Анимация переворачивания стрелки при открытии аккордеона
     const arrowAnimationStyle = useAnimatedStyle(() => {
       const rotation = withTiming(expanded ? '180deg' : '0deg', {
@@ -88,7 +91,6 @@ export const MarkItemRow: React.FC<MarkItemProps> = memo(
           style={[
             deleteAnimationStyle,
             styles.itemContainer,
-            theme.shadowStyle,
             isEven ? styles.evenItemZebra : styles.oddItemZebra,
           ]}
           layout={LinearTransition}
@@ -124,6 +126,10 @@ export const MarkItemRow: React.FC<MarkItemProps> = memo(
               <Animated.Text style={[styles.arrowIcon, arrowAnimationStyle]}>
                 ▼
               </Animated.Text>
+              {/* <View
+              style={[styles.arrowContainer, expanded && styles.arrowExpanded]}
+            >
+              <Text style={styles.arrowIcon}>▼</Text> */}
             </View>
           </AnimatedTouch>
           {expanded && (
@@ -158,11 +164,10 @@ export const MarkItemRow: React.FC<MarkItemProps> = memo(
 
 const styles = StyleSheet.create({
   itemContainer: {
-    marginHorizontal: theme.spacing.s,
-    marginBottom: theme.spacing.xs,
     paddingVertical: theme.spacing.xs,
     paddingHorizontal: theme.spacing.m,
     borderRadius: 12,
+    ...theme.SHADOW,
   },
   headerContainer: {
     flex: 1,
@@ -195,7 +200,10 @@ const styles = StyleSheet.create({
     width: 16,
     alignItems: 'flex-end',
   },
-
+  //NOTE: Решение без использование reanimated
+  // arrowExpanded: {
+  //   transform: [{ rotateX: '180deg' }],
+  // },
   evenItemZebra: {
     backgroundColor: theme.COLOR_CONFIG_UI.evenItemZebra,
   },

@@ -18,7 +18,7 @@ export const FinalResultMark: React.FC<FinalResultMarkProps> = ({
 }) => (
   <View style={styles.componentContainer}>
     <View style={styles.contentContainer}>
-      <View style={[styles.resultContainer, theme.shadowStyle]}>
+      <View style={styles.resultContainer}>
         <AppText variant="h1" style={styles.header}>
           Thank you for sharing!
         </AppText>
@@ -38,7 +38,6 @@ export const FinalResultMark: React.FC<FinalResultMarkProps> = ({
       <Pressable
         style={({ pressed }) => [
           theme.appButton,
-          theme.shadowStyle,
           { opacity: pressed ? 0.7 : 1 },
         ]}
         onPress={onBack}
@@ -64,6 +63,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: theme.spacing.s,
     backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
     borderRadius: 12,
+    ...theme.SHADOW,
   },
   header: {
     marginBottom: theme.spacing.s,
