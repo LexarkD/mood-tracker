@@ -17,19 +17,15 @@ import Animated, {
   LinearTransition,
 } from 'react-native-reanimated';
 import { format } from 'date-fns/format';
-import type {
-  MarkEntryWithTimestamp,
-  TimeStamp,
-} from '../store/slices/markListSlice.ts';
+import type { MarkEntryWithTimestamp } from '../store/slices/markListSlice.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
 import { AppEmoji } from './AppEmoji.tsx';
 
-// TODO: MarkItemRow вобще не должен знать, что удаление идет по timestamp. Отсюда возвращать полностью mark?
 type MarkItemProps = {
   mark: MarkEntryWithTimestamp;
   isEven: boolean;
-  onDelete: (markTimestamp: TimeStamp) => void;
+  onDelete: (mark: MarkEntryWithTimestamp) => void;
 };
 
 // NOTE: Анимированыый компонент для аккордеона
@@ -43,7 +39,7 @@ export const MarkItemRow: React.FC<MarkItemProps> = memo(
     const removeWithDelay = useCallback(() => {
       setTimeout(() => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        onDelete(mark.timestamp);
+        onDelete(mark);
       }, 250);
     }, [mark, onDelete]);
 

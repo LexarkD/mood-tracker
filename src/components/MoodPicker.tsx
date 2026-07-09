@@ -71,16 +71,6 @@ export const MoodPicker: React.FC = () => {
     setCompletedEntry(null);
   };
 
-  //NOTE: Сетеры хука useState являются стабильными ссылочными объектами, поэтому можно не оборачивать ии в useCallback.
-  // const handleSelectMoodMark = useCallback<TypeSelectMood>(
-  //   description => setSelectedMoodMark(description),
-  //   [],
-  // );
-  // const handleSelectSleepMark = useCallback<TypeSelectSleep>(
-  //   description => setSelectedSleepMark(description),
-  //   [],
-  // );
-
   // NOTE: isDisabled(отключена = ture), если хотя бы одно из услловий не выполнено
   const isDisabledButton = !isAllMarksPicked || !isTimeoutOver;
 

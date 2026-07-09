@@ -22,15 +22,20 @@ export const History: React.FC = () => {
     }, []),
   );
 
+  const handleDeleteMark = useCallback(
+    (mark: MarkEntryWithTimestamp) => onDeleteMarkEntry(mark.timestamp),
+    [onDeleteMarkEntry],
+  );
+
   const renderItem = useCallback(
     ({ item, index }: ListRenderItemInfo<MarkEntryWithTimestamp>) => {
       // NOTE: логика стилизации "зеброй" для MarkItemRow.
       const isEven = index % 2 === 0;
       return (
-        <MarkItemRow mark={item} isEven={isEven} onDelete={onDeleteMarkEntry} />
+        <MarkItemRow mark={item} isEven={isEven} onDelete={handleDeleteMark} />
       );
     },
-    [onDeleteMarkEntry],
+    [handleDeleteMark],
   );
   //TODO: сделать легкий ресерч по useAnimatedStile+FlatList
   //Если ничего не найду, просто опишу проблему в комментарии и решение через тюнинг вертуализации
