@@ -5,20 +5,18 @@ import { AppText } from './AppText';
 import { theme } from '../constants/theme';
 import { AppEmoji } from './AppEmoji';
 
-//TODO: Исправлена семантика(название)компонента на FinalResultMark.
-// Исправить семантески другие сущности.
-type FinalResultScreenProps = {
+type FinalResultMarkProps = {
   moodMark: MoodType;
   sleepMark: SleepType;
   onBack: () => void;
 };
 
-export const FinalResultMark: React.FC<FinalResultScreenProps> = ({
+export const FinalResultMark: React.FC<FinalResultMarkProps> = ({
   moodMark,
   sleepMark,
   onBack,
 }) => (
-  <View style={styles.screenContainer}>
+  <View style={styles.componentContainer}>
     <View style={styles.contentContainer}>
       <View style={[styles.resultContainer, theme.shadowStyle]}>
         <AppText variant="h1" style={styles.header}>
@@ -52,7 +50,7 @@ export const FinalResultMark: React.FC<FinalResultScreenProps> = ({
 );
 
 const styles = StyleSheet.create({
-  screenContainer: {
+  componentContainer: {
     flex: 1,
   },
   contentContainer: {
