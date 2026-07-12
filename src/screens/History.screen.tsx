@@ -11,7 +11,7 @@ const keyExtractor = (item: MarkEntryWithTimestamp) =>
   item.timestamp.toString();
 
 export const History: React.FC = () => {
-  const { markList, onDeleteMarkEntry } = useMarkList();
+  const { markList } = useMarkList();
   const flatListRef = useRef<FlatList>(null);
 
   // NOTE: useFocusEffect отвечает за кратковременное отображение скролл индикатора при переходе на экран.
@@ -22,30 +22,22 @@ export const History: React.FC = () => {
     }, []),
   );
 
-  const handleDeleteMark = useCallback(
-    (mark: MarkEntryWithTimestamp) => onDeleteMarkEntry(mark.timestamp),
-    [onDeleteMarkEntry],
-  );
-
   const renderItem = useCallback(
     ({ item, index }: ListRenderItemInfo<MarkEntryWithTimestamp>) => {
       // NOTE: логика стилизации "зеброй" для MarkItemRow.
       const isEven = index % 2 === 0;
-      return (
-        <MarkItemRow mark={item} isEven={isEven} onDelete={handleDeleteMark} />
-      );
+      return <MarkItemRow mark={item} isEven={isEven} />;
     },
-    [handleDeleteMark],
+    [],
   );
-  //TODO: сделать легкий ресерч по useAnimatedStile+FlatList
+  //TODO: сделать легкий ресерч по проседанию UI fps useAnimatedStile+FlatList
   //Если ничего не найду, просто опишу проблему в комментарии и решение через тюнинг вертуализации
   return (
     <SafeAreaView edges={['top', 'right', 'left']} style={styles.screen}>
       <FlatList
-        // NOTE: removeClippedSubviews={true} конфликтует с удалением отметки свайпом. Можно будет выставить {true} после отказа от удаления свайпом.
         removeClippedSubviews={false}
-        //NOTE: Это решение мне не нравится- привязано к размеру экрана + использование "магических чисел"
-        //  initialNumToRender={13}
+        //NOTE:initialNumToRender. Это решение мне не нравится- привязано к размеру экрана + использование "магических чисел".
+        initialNumToRender={13}
         maxToRenderPerBatch={5}
         windowSize={7}
         ref={flatListRef}

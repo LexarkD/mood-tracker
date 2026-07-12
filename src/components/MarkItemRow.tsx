@@ -1,15 +1,6 @@
 import React, { useState, memo, useCallback } from 'react';
-import {
-  // Text,
-  View,
-  StyleSheet,
-  LayoutAnimation,
-  TouchableOpacity,
-} from 'react-native';
-import { scheduleOnRN } from 'react-native-worklets';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Animated, {
-  useSharedValue,
   useAnimatedStyle,
   withTiming,
   FadeIn,
@@ -25,138 +16,98 @@ import { AppEmoji } from './AppEmoji.tsx';
 type MarkItemProps = {
   mark: MarkEntryWithTimestamp;
   isEven: boolean;
-  onDelete: (mark: MarkEntryWithTimestamp) => void;
 };
 
 // NOTE: Анимированыый компонент для аккордеона
 const AnimatedTouch = Animated.createAnimatedComponent(TouchableOpacity);
 
-export const MarkItemRow: React.FC<MarkItemProps> = memo(
-  ({ mark, isEven, onDelete }) => {
-    const [expanded, setExpanded] = useState(false);
+export const MarkItemRow: React.FC<MarkItemProps> = memo(({ mark, isEven }) => {
+  const [expanded, setExpanded] = useState(false);
 
-    // FIXME: Удаление отметки свайпом. Не должно попасть в релизную версию приложения. Так как позволяет исправлять(манипулировать) историю, следовательно - статистику.
-    const removeWithDelay = useCallback(() => {
-      setTimeout(() => {
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        onDelete(mark);
-      }, 250);
-    }, [mark, onDelete]);
-
-    const offset = useSharedValue<number>(0);
-    const maxPan = 80;
-
-    const pan = Gesture.Pan()
-      .minDistance(10)
-      .failOffsetY([-1, 1])
-      .onChange(event => {
-        offset.value = event.translationX;
-      })
-      .onEnd(() => {
-        if (Math.abs(offset.value) > maxPan) {
-          offset.value = withTiming(Math.sign(offset.value) * 2000);
-          scheduleOnRN(removeWithDelay);
-        } else {
-          offset.value = withTiming(0);
-        }
-      });
-
-    // NOTE: Анимация улетания элемента за границы экрана при удалении
-    const deleteAnimationStyle = useAnimatedStyle(() => ({
-      transform: [{ translateX: offset.value }],
-    }));
-
-    // TODO: Исправить проблему. По какой-то причине использование arrowAnimationStyle + FlatList сильно роняет UI fps.
-    // NOTE: Анимация переворачивания стрелки при открытии аккордеона
-    const arrowAnimationStyle = useAnimatedStyle(() => {
-      const rotation = withTiming(expanded ? '180deg' : '0deg', {
-        duration: 250,
-      });
-      return {
-        transform: [{ rotate: rotation }],
-      };
+  // TODO: Исправить проблему. По какой-то причине использование arrowAnimationStyle + FlatList сильно роняет UI fps.
+  // NOTE: Анимация переворачивания стрелки при открытии аккордеона
+  const arrowAnimationStyle = useAnimatedStyle(() => {
+    const rotation = withTiming(expanded ? '180deg' : '0deg', {
+      duration: 250,
     });
+    return {
+      transform: [{ rotate: rotation }],
+    };
+  });
 
-    const toggleExpand = useCallback(() => {
-      setExpanded(perv => !perv);
-    }, []);
+  const toggleExpand = useCallback(() => {
+    setExpanded(perv => !perv);
+  }, []);
 
-    return (
-      <GestureDetector gesture={pan}>
-        <Animated.View
-          style={[
-            deleteAnimationStyle,
-            styles.itemContainer,
-            isEven ? styles.evenItemZebra : styles.oddItemZebra,
-          ]}
-          layout={LinearTransition}
-        >
-          <AnimatedTouch
-            style={styles.headerContainer}
-            onPress={toggleExpand}
-            activeOpacity={0.7}
+  return (
+    <Animated.View
+      style={[
+        styles.itemContainer,
+        isEven ? styles.evenItemZebra : styles.oddItemZebra,
+      ]}
+      layout={LinearTransition}
+    >
+      <AnimatedTouch
+        style={styles.headerContainer}
+        onPress={toggleExpand}
+        activeOpacity={0.7}
+      >
+        <View style={styles.emojiContainer}>
+          <AppEmoji size={theme.iconSize.medium} description={mark.moodMark} />
+        </View>
+        <View style={styles.descriptionContainer}>
+          <AppText
+            variant="description"
+            numberOfLines={1}
+            adjustsFontSizeToFit={true}
+            minimumFontScale={0.75}
           >
-            <View style={styles.emojiContainer}>
-              <AppEmoji
-                size={theme.iconSize.medium}
-                description={mark.moodMark}
-              />
-            </View>
-            <View style={styles.descriptionContainer}>
-              <AppText
-                variant="description"
-                numberOfLines={1}
-                adjustsFontSizeToFit={true}
-                minimumFontScale={0.75}
-              >
-                {mark.moodMark}
-              </AppText>
-            </View>
+            {mark.moodMark}
+          </AppText>
+        </View>
 
-            <View style={styles.dateContainer}>
-              <AppText variant="date">
-                {format(new Date(mark.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
-              </AppText>
-            </View>
-            <View style={styles.arrowContainer}>
-              <Animated.Text style={[styles.arrowIcon, arrowAnimationStyle]}>
-                ▼
-              </Animated.Text>
-              {/* <View
+        <View style={styles.dateContainer}>
+          <AppText variant="date">
+            {format(new Date(mark.timestamp), "dd MMM, yyyy 'at' h:mmaaa")}
+          </AppText>
+        </View>
+        <View style={styles.arrowContainer}>
+          <Animated.Text style={[styles.arrowIcon, arrowAnimationStyle]}>
+            ▼
+          </Animated.Text>
+          {/* <View
               style={[styles.arrowContainer, expanded && styles.arrowExpanded]}
             >
               <Text style={styles.arrowIcon}>▼</Text> */}
-            </View>
-          </AnimatedTouch>
-          {expanded && (
-            <Animated.View
-              entering={FadeIn.duration(700)}
-              exiting={FadeOut.duration(150)}
-              style={styles.contentContainer}
+        </View>
+      </AnimatedTouch>
+      {expanded && (
+        <Animated.View
+          entering={FadeIn.duration(700)}
+          exiting={FadeOut.duration(150)}
+          style={styles.contentContainer}
+        >
+          <View style={styles.emojiContainer}>
+            <AppEmoji
+              size={theme.iconSize.medium}
+              description={mark.sleepMark}
+            />
+          </View>
+          <View style={styles.descriptionContainer}>
+            <AppText
+              variant="description"
+              numberOfLines={1}
+              adjustsFontSizeToFit={true}
+              minimumFontScale={0.75}
             >
-              <View style={styles.emojiContainer}>
-                <AppEmoji
-                  size={theme.iconSize.medium}
-                  description={mark.sleepMark}
-                />
-              </View>
-              <View style={styles.descriptionContainer}>
-                <AppText
-                  variant="description"
-                  numberOfLines={1}
-                  adjustsFontSizeToFit={true}
-                  minimumFontScale={0.75}
-                >
-                  {mark.sleepMark}
-                </AppText>
-              </View>
-            </Animated.View>
-          )}
+              {mark.sleepMark}
+            </AppText>
+          </View>
         </Animated.View>
-      </GestureDetector>
-    );
-  },
-);
+      )}
+    </Animated.View>
+  );
+});
 
 const styles = StyleSheet.create({
   itemContainer: {
