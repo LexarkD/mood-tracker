@@ -30,16 +30,12 @@ export const History: React.FC = () => {
     },
     [],
   );
-  //TODO: сделать легкий ресерч по проседанию UI fps useAnimatedStile+FlatList
-  //Если ничего не найду, просто опишу проблему в комментарии и решение через тюнинг вертуализации
   return (
     <SafeAreaView edges={['top', 'right', 'left']} style={styles.screen}>
       <FlatList
-        removeClippedSubviews={false}
-        //NOTE:initialNumToRender. Это решение мне не нравится- привязано к размеру экрана + использование "магических чисел".
-        initialNumToRender={13}
+        removeClippedSubviews={true}
         maxToRenderPerBatch={5}
-        windowSize={7}
+        windowSize={5}
         ref={flatListRef}
         data={markList}
         renderItem={renderItem}
