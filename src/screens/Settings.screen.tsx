@@ -33,7 +33,7 @@ export const Settings: React.FC = () => {
         <AppText variant="h2" style={styles.header}>
           History settings
         </AppText>
-        <View style={theme.shadowStyle}>
+        <View style={styles.shadowContainer}>
           <Pressable
             style={({ pressed }) => [
               styles.settingButton,
@@ -49,7 +49,7 @@ export const Settings: React.FC = () => {
         <AppText variant="h2" style={styles.header}>
           DevTools
         </AppText>
-        <View style={theme.shadowStyle}>
+        <View style={styles.shadowContainer}>
           <Pressable
             style={({ pressed }) => [
               styles.settingButton,
@@ -78,6 +78,9 @@ const styles = StyleSheet.create({
   },
   header: {
     marginLeft: theme.spacing.m,
+  },
+  shadowContainer: {
+    ...theme.SHADOW,
   },
   settingButton: {
     justifyContent: 'center',

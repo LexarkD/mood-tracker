@@ -5,20 +5,20 @@ import { AppText } from './AppText';
 import { theme } from '../constants/theme';
 import { AppEmoji } from './AppEmoji';
 
-type FinalResultScreenProps = {
+type FinalResultMarkProps = {
   moodMark: MoodType;
   sleepMark: SleepType;
   onBack: () => void;
 };
 
-export const FinalResultScreen: React.FC<FinalResultScreenProps> = ({
+export const FinalResultMark: React.FC<FinalResultMarkProps> = ({
   moodMark,
   sleepMark,
   onBack,
 }) => (
-  <View style={styles.screenContainer}>
+  <View style={styles.componentContainer}>
     <View style={styles.contentContainer}>
-      <View style={[styles.resultContainer, theme.shadowStyle]}>
+      <View style={styles.resultContainer}>
         <AppText variant="h1" style={styles.header}>
           Thank you for sharing!
         </AppText>
@@ -38,7 +38,6 @@ export const FinalResultScreen: React.FC<FinalResultScreenProps> = ({
       <Pressable
         style={({ pressed }) => [
           theme.appButton,
-          theme.shadowStyle,
           { opacity: pressed ? 0.7 : 1 },
         ]}
         onPress={onBack}
@@ -50,7 +49,7 @@ export const FinalResultScreen: React.FC<FinalResultScreenProps> = ({
 );
 
 const styles = StyleSheet.create({
-  screenContainer: {
+  componentContainer: {
     flex: 1,
   },
   contentContainer: {
@@ -64,6 +63,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: theme.spacing.s,
     backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
     borderRadius: 12,
+    ...theme.SHADOW,
   },
   header: {
     marginBottom: theme.spacing.s,

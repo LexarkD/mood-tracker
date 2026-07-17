@@ -43,7 +43,7 @@ export const markListSlice = createSlice({
         };
       },
     },
-
+    //NOTE: В данный момент removeMarkEntry не используется.
     removeMarkEntry: (state, action: PayloadAction<TimeStamp>) => {
       state.markList = state.markList.filter(
         markEntry => markEntry.timestamp !== action.payload,

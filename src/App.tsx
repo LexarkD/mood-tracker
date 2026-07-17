@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 import { BottomTabsNavigator } from './screens/BottomTabs.navigator.tsx';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -13,12 +13,10 @@ export const App: React.FC = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <SafeAreaProvider>
-          <GestureHandlerRootView style={styles.container}>
-            <NavigationContainer>
-              <BottomTabsNavigator />
-            </NavigationContainer>
-          </GestureHandlerRootView>
+        <SafeAreaProvider style={styles.container}>
+          <NavigationContainer>
+            <BottomTabsNavigator />
+          </NavigationContainer>
         </SafeAreaProvider>
       </PersistGate>
     </Provider>
@@ -30,3 +28,4 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+//TODO: SelfTracker новое имя

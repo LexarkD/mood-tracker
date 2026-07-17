@@ -11,7 +11,7 @@ const keyExtractor = (item: MarkEntryWithTimestamp) =>
   item.timestamp.toString();
 
 export const History: React.FC = () => {
-  const { markList, onDeleteMarkEntry } = useMarkList();
+  const { markList } = useMarkList();
   const flatListRef = useRef<FlatList>(null);
 
   // NOTE: useFocusEffect отвечает за кратковременное отображение скролл индикатора при переходе на экран.
@@ -26,25 +26,21 @@ export const History: React.FC = () => {
     ({ item, index }: ListRenderItemInfo<MarkEntryWithTimestamp>) => {
       // NOTE: логика стилизации "зеброй" для MarkItemRow.
       const isEven = index % 2 === 0;
-      return (
-        <MarkItemRow mark={item} isEven={isEven} onDelete={onDeleteMarkEntry} />
-      );
+      return <MarkItemRow mark={item} isEven={isEven} />;
     },
-    [onDeleteMarkEntry],
+    [],
   );
-
   return (
     <SafeAreaView edges={['top', 'right', 'left']} style={styles.screen}>
       <FlatList
-        // NOTE: removeClippedSubviews={true} конфликтует с удалением отметки свайпом. Можно будет выставить {true} после отказа от удаления свайпом.
-        removeClippedSubviews={false}
-        initialNumToRender={13}
+        removeClippedSubviews={true}
         maxToRenderPerBatch={5}
-        windowSize={7}
+        windowSize={5}
         ref={flatListRef}
         data={markList}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        contentContainerStyle={styles.contsntStyle}
       />
     </SafeAreaView>
   );
@@ -55,5 +51,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 8,
     backgroundColor: theme.COLOR_CONFIG_UI.screenBackground,
+  },
+  contsntStyle: {
+    paddingHorizontal: theme.spacing.s,
+    gap: theme.spacing.xs,
   },
 });

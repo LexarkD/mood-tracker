@@ -45,8 +45,8 @@ export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
   };
 
   return (
-    <View style={[styles.container, theme.shadowStyle]}>
-      <View style={[styles.segmentButtonsContainer, theme.shadowStyle]}>
+    <View style={styles.container}>
+      <View style={styles.segmentButtonsContainer}>
         <Pressable
           style={({ pressed }) => [
             styles.button,
@@ -112,11 +112,13 @@ const styles = StyleSheet.create({
     padding: theme.spacing.m,
     borderRadius: 12,
     backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
+    ...theme.SHADOW,
   },
   segmentButtonsContainer: {
     flexDirection: 'row',
     gap: 2,
     marginBottom: theme.spacing.s,
+    ...theme.SHADOW,
   },
   button: {
     flex: 1,

@@ -12,11 +12,8 @@ import { checkingTimeout } from '../utils/checkingTimeout.ts';
 import { theme } from '../constants/theme.ts';
 import { AppText } from './AppText.tsx';
 import { FocusableEmojiButtonMemo } from './FocusableEmojiButton.tsx';
-import { FinalResultScreen } from './FinalResultScreen.tsx';
+import { FinalResultMark } from './FinalResultMark.tsx';
 import { AnimatedSubmitButton } from './AnimatedSubmitButton.tsx';
-
-type TypeSelectMood = (description: MoodType) => void;
-type TypeSelectSleep = (description: SleepType) => void;
 
 export const MoodPicker: React.FC = () => {
   const { onAddMarkEntry, markList } = useMarkList();
@@ -74,16 +71,6 @@ export const MoodPicker: React.FC = () => {
     setCompletedEntry(null);
   };
 
-  const handleSelectMoodMark = useCallback<TypeSelectMood>(
-    description => setSelectedMoodMark(description),
-    [],
-  );
-
-  const handleSelectSleepMark = useCallback<TypeSelectSleep>(
-    description => setSelectedSleepMark(description),
-    [],
-  );
-
   // NOTE: isDisabled(отключена = ture), если хотя бы одно из услловий не выполнено
   const isDisabledButton = !isAllMarksPicked || !isTimeoutOver;
 
@@ -93,7 +80,7 @@ export const MoodPicker: React.FC = () => {
   // NOTE: окно с итоговой записью и кнопкой возврата.
   if (completedEntry) {
     return (
-      <FinalResultScreen
+      <FinalResultMark
         moodMark={completedEntry.moodMark}
         sleepMark={completedEntry.sleepMark}
         onBack={handleBack}
@@ -108,10 +95,10 @@ export const MoodPicker: React.FC = () => {
       <View style={styles.contentContainer}>
         <AppText variant="h1" style={styles.header}>
           {isTimeoutOver
-            ? 'Take a deep breath. \nHow was your day?'
-            : "You've done great today. \nSee you tomorrow!"}
+            ? 'Take a deep breath.\nHow was your day?'
+            : "You've done great today.\nSee you tomorrow!"}
         </AppText>
-        <View style={[styles.optionsContainer, theme.shadowStyle]}>
+        <View style={styles.optionsContainer}>
           <AppText variant="h1" style={styles.header}>
             How are you feeling today?
           </AppText>
@@ -121,7 +108,7 @@ export const MoodPicker: React.FC = () => {
                 <FocusableEmojiButtonMemo
                   description={mood}
                   isSelectOption={selectedMoodMark === mood}
-                  onSelect={handleSelectMoodMark}
+                  onSelect={setSelectedMoodMark}
                 />
                 <AppText
                   variant="description"
@@ -135,7 +122,7 @@ export const MoodPicker: React.FC = () => {
             ))}
           </View>
         </View>
-        <View style={[styles.optionsContainer, theme.shadowStyle]}>
+        <View style={styles.optionsContainer}>
           <AppText variant="h1" style={styles.header}>
             How did you sleep?
           </AppText>
@@ -145,7 +132,7 @@ export const MoodPicker: React.FC = () => {
                 <FocusableEmojiButtonMemo
                   description={sleep}
                   isSelectOption={selectedSleepMark === sleep}
-                  onSelect={handleSelectSleepMark}
+                  onSelect={setSelectedSleepMark}
                 />
                 <AppText
                   variant="description"
@@ -180,7 +167,7 @@ const styles = StyleSheet.create({
     gap: theme.spacing.m,
   },
   header: {
-    marginBottom: theme.spacing.s,
+    paddingBottom: theme.spacing.s,
     textAlign: 'center',
   },
   optionsContainer: {
@@ -190,6 +177,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: theme.spacing.s,
     backgroundColor: theme.COLOR_CONFIG_UI.cardBackground,
     borderRadius: 12,
+    ...theme.SHADOW,
   },
   optionsRow: {
     flex: 1,

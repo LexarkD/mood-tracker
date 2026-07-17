@@ -22,10 +22,19 @@ const COLOR_CONFIG_UI = {
   evenItemZebra: '#fff',
 };
 
+// NOTE: для iOS. Контейнер с свойством overflow: 'hidden', должен быть внутри shadowStyle
+const SHADOW = {
+  elevation: 3,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.1,
+  shadowRadius: 4,
+};
+
 export const theme = {
   COLOR_CONFIG_UI,
   COLOR_CONFIG_EMOJI,
-
+  SHADOW,
   typography: {
     h1: {
       fontFamily: 'NEXTART-Bold',
@@ -75,6 +84,7 @@ export const theme = {
     paddingVertical: 12,
     borderRadius: 12,
     backgroundColor: COLOR_CONFIG_UI.button,
+    ...SHADOW,
   } as const,
 
   spacing: {
@@ -89,15 +99,6 @@ export const theme = {
     small: 30,
     medium: 40,
     large: 50,
-  },
-
-  // NOTE: для iOS. Контейнер с свойством overflow: 'hidden', должен быть внутри shadowStyle
-  shadowStyle: {
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
   },
 };
 
