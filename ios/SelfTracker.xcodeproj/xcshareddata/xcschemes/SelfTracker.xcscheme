@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "MoodTracker.app"
-               BlueprintName = "MoodTracker"
-               ReferencedContainer = "container:MoodTracker.xcodeproj">
+               BuildableName = "SelfTracker.app"
+               BlueprintName = "SelfTracker"
+               ReferencedContainer = "container:SelfTracker.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "MoodTrackerTests.xctest"
-               BlueprintName = "MoodTrackerTests"
-               ReferencedContainer = "container:MoodTracker.xcodeproj">
+               BuildableName = "SelfTrackerTests.xctest"
+               BlueprintName = "SelfTrackerTests"
+               ReferencedContainer = "container:SelfTracker.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "MoodTracker.app"
-            BlueprintName = "MoodTracker"
-            ReferencedContainer = "container:MoodTracker.xcodeproj">
+            BuildableName = "SelfTracker.app"
+            BlueprintName = "SelfTracker"
+            ReferencedContainer = "container:SelfTracker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "MoodTracker.app"
-            BlueprintName = "MoodTracker"
-            ReferencedContainer = "container:MoodTracker.xcodeproj">
+            BuildableName = "SelfTracker.app"
+            BlueprintName = "SelfTracker"
+            ReferencedContainer = "container:SelfTracker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
