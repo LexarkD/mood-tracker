@@ -88,17 +88,14 @@ lodash
 
 [Изолированный слой данных](./src/store/slices/markListSlice.ts)
 
-[Вынесение логики из компонентов](./src/utils)
+[Вынесение логики из компонентов](./src/components/AppPieChart.tsx)
 
-//TODO: имя компонента MoodPicker семантически больше не подходит -> MarkPicker.ts
-//TODO: для более яркого примера декомпозиции вынести дублирующийся код в MarkCard.ts
-[UI декомпозиция](./src/constants/MoodPicker.ts)
-
+[UI декомпозиция](./src/constants/Analytics.screen.tsx)
 
 ### Применение патернов react- /react native - оптимизации:
 
 [Виртуализация](.src/screen/History.screen.tsx)
- 
+
 [Bынос анимации в worklet / Mемоизация](.src/screen/History.MarkItemRow.tsx)
 
 ## Видео

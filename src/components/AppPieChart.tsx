@@ -1,10 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { Pressable, View, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
-import { filterMarkByTime } from '../utils/filterMarkByTime.ts';
 import { theme } from '../constants/theme.ts';
 import useMarkList from '../hooks/useMarkList.ts';
 import { AppText } from './AppText.tsx';
+import { filterMarkByTime } from '../utils/filterMarkByTime.ts';
 import { calculateChartData } from '../utils/calculateChartData.ts';
 
 export type TimeFilterOptions = 'all' | 'year' | 'month';
