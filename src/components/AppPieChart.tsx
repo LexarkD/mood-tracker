@@ -11,6 +11,7 @@ export type TimeFilterOptions = 'all' | 'year' | 'month';
 
 type AppPieChartProps = { markOption: 'moodMark' | 'sleepMark' };
 
+// NOTE: Является оберткой для PieChart. Отрисовывает аналитику взависимости от markOption.
 export const AppPieChart: React.FC<AppPieChartProps> = ({ markOption }) => {
   const { markList } = useMarkList();
   const [selectedFilterOptions, setSelectedFilterOptions] =

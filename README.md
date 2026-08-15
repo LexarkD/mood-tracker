@@ -90,12 +90,12 @@ lodash
 
 [Вынесение логики из компонентов](./src/components/AppPieChart.tsx)
 
-[UI декомпозиция](./src/constants/Analytics.screen.tsx)
+[UI декомпозиция](./src/components/FocusableEmojiButton.tsx)
 
 ### Применение патернов react- /react native - оптимизации:
 
-[Виртуализация](.src/screen/History.screen.tsx)
+[Виртуализация](./src/screens/History.screen.tsx)
 
-[Bынос анимации в worklet / Mемоизация](.src/screen/History.MarkItemRow.tsx)
+[Bынос анимации в worklet / Mемоизация](./src/components/MarkItemRow.tsx)
 
 ## Видео
