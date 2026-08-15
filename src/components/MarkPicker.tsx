@@ -15,7 +15,7 @@ import { FocusableEmojiButtonMemo } from './FocusableEmojiButton.tsx';
 import { FinalResultMark } from './FinalResultMark.tsx';
 import { AnimatedSubmitButton } from './AnimatedSubmitButton.tsx';
 
-export const MoodPicker: React.FC = () => {
+export const MarkPicker: React.FC = () => {
   const { onAddMarkEntry, markList } = useMarkList();
   // NOTE: selectedMoodMark и selectedSleepMark- хранят выборанную отметку + поддержка анимации выбора отметки
   const [selectedMoodMark, setSelectedMoodMark] = useState<MoodType>();
