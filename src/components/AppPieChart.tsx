@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     gap: theme.spacing.m,
+    minHeight: 440,
     marginHorizontal: theme.spacing.s,
     padding: theme.spacing.m,
     borderRadius: 12,
